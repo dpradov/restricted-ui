@@ -1,0 +1,16 @@
+﻿Friend Class Constants
+    Public Const ERROR_CONTROL_NOTFOUND As String = "Control no localizado:"
+    Public Const ERROR_ROLES_LIST_INCORRECT As String = "Lista de roles incorrecta:"
+    Public Const GROUP_NOTDEFINED As String = "Grupo no definido:"
+    Public Const GROUP_INCORRECT As String = "Grupo incorrecto. Será ignorado: "
+    Public Const RESTRICTION_WILL_BE_IGNORED As String = "-> Se ignorará la restricción: "
+    Public Const ERROR_INCORRECT_DEFINITION As String = "Definición incorrecta : "
+    Public Const ERROR_CLASS_METHOD_NOTFOUND As String = "Clase o método (GetInstance) no encontrado en la DLL"
+    Public Const ERROR_DLL_NOTFOUND As String = "Archivo DLL no encontrado"
+    Public Const ERROR_INSTANCING_FACTORY As String = "Imposible instanciar la factoría"
+    Public Const ERROR_INCORRECT_ROL_ID As String = "Código de rol incorrecto:"
+    Public Const ERROR_INCORRECT_STATE_ID As String = "Código de estado incorrecto:"
+    Public Const ERROR_PROCESSING_CONFIGFILE As String = "Se produjo un error al procesar la configuración de seguridad: "
+    Public Const ERROR_EXITING_APPLICATION As String = "Se abandonará la aplicación"
+    Public Const ERROR_ROL_NOTRECOGNIZED As String = "Rol no reconocido: "
+End Class
