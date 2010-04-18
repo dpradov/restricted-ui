@@ -1528,9 +1528,9 @@ Friend Class FrmRestrictionsUIDefinition
 
         Dim sec As New ComponentSecurity
         sec.Groups = groups
-        sec.Authorizations = restrictions
+        sec.Restrictions = restrictions
         sec.Roles = particularRoles.ToArray
-        sec.States = GetParticularStates.ToArray        
+        sec.States = GetParticularStates.ToArray
         SecurityEnvironment.AddSecurityDefinition(_securityComponent.ID, sec, False)
 
         If cbSaveOnApplying.Checked Then
@@ -1606,7 +1606,7 @@ Friend Class FrmRestrictionsUIDefinition
             secBak.States = sec.States
             secBak.Roles = sec.Roles
             secBak.Groups = sec.Groups
-            secBak.Authorizations = sec.Authorizations
+            secBak.Restrictions = sec.Restrictions
             _componentsSecurityBak.Add(idForm, secBak)
         Next
         _backupAvailable = True
@@ -1623,7 +1623,7 @@ Friend Class FrmRestrictionsUIDefinition
             sec.States = secBak.States
             sec.Roles = secBak.Roles
             sec.Groups = secBak.Groups
-            sec.Authorizations = secBak.Authorizations
+            sec.Restrictions = secBak.Restrictions
             SecurityEnvironment.AddSecurityDefinition(idForm, sec, True)
         Next
     End Sub
@@ -1637,7 +1637,7 @@ Friend Class FrmRestrictionsUIDefinition
         SecurityEnvironment.GetAuthorizationsAndGroups(GetDefinedRestrictions(True, particularRoles.ToArray, commonRoles), restrictions, groups)  ' Usaremos Alias para que el archivo sea más descriptivo. En el archivo lo normal será que también vengan los roles con sus ID y sus alias
         sec = New ComponentSecurity
         sec.Groups = groups
-        sec.Authorizations = restrictions
+        sec.Restrictions = restrictions
         sec.Roles = particularRoles.ToArray
         sec.States = GetParticularStates.ToArray
 

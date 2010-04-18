@@ -75,7 +75,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties DocumentationScope="PublicOnly" IsDocProject="true" ProcessComponentTypeName="DocProject.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Visual Studio 2005" Sandcastle_ProduceHelp1x="True" ExternalSources="" />
+      <UserProperties Sandcastle_DocumentationSetName="RestrictedUI" ExternalSources="" Sandcastle_ProduceHelp1x="True" Sandcastle_PresentationName="Visual Studio 2005" Sandcastle_Version="2.4.10520.1" BuildEngineProviderName="Sandcastle" DocProjectVersion="1.11.0.0" ProcessComponentTypeName="DocProject.BuildProcess" IsDocProject="true" DocumentationScope="PublicOnly" />
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
@@ -94,6 +94,15 @@
     <Content Include="bin\Release\RestrictedWinFormsUI_Infragistics.dll" />
     <Content Include="bin\Release\RestrictedWinFormsUI_Infragistics.pdb" />
     <Content Include="bin\Release\RestrictedWinFormsUI_Infragistics.xml" />
+    <Content Include="Help\Art\frmrestrictionsuidefinition.gif" />
+    <Content Include="Help\Art\frmrestrictionsuidefinition_reduced.gif" />
+    <Content Include="Help\Art\frmrestrictionsuidefinition_test.gif" />
+    <Content Include="Help\Art\frmRestrictionsUIDefinition_text.gif" />
+    <Content Include="Help\Art\IconRestrictedUI.gif" />
+    <Content Include="Help\Art\modelo1.gif" />
+    <Content Include="Help\Art\modelo2.gif" />
+    <Content Include="Help\Art\testform1.gif" />
+    <Content Include="Help\Art\testform2.gif" />
     <Content Include="Help\Comments\project.xml" />
     <Content Include="Help\Icons\adm.gif" />
     <Content Include="Help\Icons\adm_arch.gif" />
@@ -233,6 +242,7 @@
     <Content Include="Help\Settings\metadata.xml" />
     <Content Include="Help\Settings\Projects\help2x.xslt" />
     <Content Include="Help\Settings\tokens.xml" />
+    <Content Include="Help\Settings\topics.xml" />
     <Content Include="Help\Styles\Presentation.css" />
     <Content Include="Help\Styles\TopicDesigner.css" />
     <Content Include="Help\Styles\Whidbey\presentation.css" />
@@ -301,7 +311,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
-    <Folder Include="Help\Art\" />
     <Folder Include="Help\Topics\" />
   </ItemGroup>
 </Project>
