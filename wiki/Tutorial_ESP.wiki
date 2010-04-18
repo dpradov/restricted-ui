@@ -379,7 +379,8 @@ Tenemos la opción de salvar las restricciones establecidas en un archivo de con
 Podemos leer la configuración de seguridad del componente desde el que hemos lanzado este formulario, o todos los que pueda haber incluidos en el archivo.
 
 Contamos para mayor facilidad con dos formas de mostrar los permisos: tabular o de texto, ambas editables.
-http://restricted-ui.googlecode.com/svn/wiki/images/Spanish/frmRestrictionsUIDefinition_test.gif
+<br>
+http://restricted-ui.googlecode.com/svn/wiki/images/Spanish/frmRestrictionsUIDefinition_text.gif
 
 Si usamos este formulario en tiempo de ejecución podremos también hacer doble click en un control para hacerlo resaltar (parpadeará varias veces) Tendremos también la posibilidad de modificar (si el objeto que implemente la interface `IHost` lo permite) el estado y el rol o roles asociados a este componente e instancia, para así testear la seguridad. Para mayor comodidad podemos reducir este formulario para que sólo ofrezca estos controles:
 
