@@ -18,7 +18,7 @@ Imports System.Runtime.InteropServices
 <Assembly: ComVisible(False)>
 
 'El siguiente GUID sirve como identificador de la biblioteca de tipos si este proyecto se expone a COM
-<Assembly: Guid("c9c23cc2-4c43-4804-bbe2-7e984f8b4ef8")> 
+<Assembly: Guid("c9c23cc2-4c43-4804-bbe2-7e984f8b4ef7")> 
 
 ' La información de versión de un ensamblado consta de los cuatro valores siguientes:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' mediante el asterisco ('*'), como se muestra a continuación:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.0.0.1")> 
+<Assembly: AssemblyFileVersion("1.0.0.1")> 
