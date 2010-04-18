@@ -54,7 +54,7 @@ Public Class ComponentSecurity
     Public Roles As Rol()
     Public States As State()
     Public Groups As Group()
-    Public Authorizations As String()
+    Public Restrictions As String()
 End Class
 
 #End Region
@@ -656,7 +656,7 @@ Public Class SecurityEnvironment
                                 _IDControlRestrictedUI = ""
                             Case "[GROUPS]"
                                 actualBlock = ConfigurationBlocks.Groups
-                            Case "[AUTHORIZATIONS]"
+                            Case "[RESTRICTIONS]"
                                 actualBlock = ConfigurationBlocks.Authorizations
                             Case "[ROLES]"
                                 actualBlock = ConfigurationBlocks.Roles
@@ -674,7 +674,7 @@ Public Class SecurityEnvironment
                         If actualBlock <> previousBlock Then
                             Select Case previousBlock
                                 Case ConfigurationBlocks.Authorizations
-                                    securityComp.Authorizations = lCad.ToArray
+                                    securityComp.Restrictions = lCad.ToArray
                                     lCad.Clear()
                                 Case ConfigurationBlocks.States
                                     securityComp.States = lStates.ToArray
@@ -765,7 +765,7 @@ Public Class SecurityEnvironment
                 '===========================
                 Select Case actualBlock
                     Case ConfigurationBlocks.Authorizations
-                        securityComp.Authorizations = lCad.ToArray
+                        securityComp.Restrictions = lCad.ToArray
                     Case ConfigurationBlocks.States
                         securityComp.States = lStates.ToArray
                     Case ConfigurationBlocks.Roles
@@ -915,9 +915,9 @@ Public Class SecurityEnvironment
                     Next
                     sw.WriteLine()
                 End If
-                If sf.Authorizations IsNot Nothing Then
-                    sw.WriteLine("[Authorizations]")
-                    For Each p As String In sf.Authorizations
+                If sf.Restrictions IsNot Nothing Then
+                    sw.WriteLine("[Restrictions]")
+                    For Each p As String In sf.Restrictions
                         sw.WriteLine(p)
                     Next
                 End If
@@ -1224,11 +1224,11 @@ Public Class SecurityEnvironment
         Dim sec As ComponentSecurity = Nothing
         ComponentsSecurity.TryGetValue(IDControlRestrictedUI, sec)
 
-        If sec IsNot Nothing AndAlso Not (sec.Authorizations Is Nothing And sec.Groups Is Nothing) Then
+        If sec IsNot Nothing AndAlso Not (sec.Restrictions Is Nothing And sec.Groups Is Nothing) Then
             Dim nGroups As Integer = 0, nAuthorizations As Integer = 0
             Dim cad As String, x As Integer = 0
 
-            If sec.Authorizations IsNot Nothing Then nAuthorizations = sec.Authorizations.Length
+            If sec.Restrictions IsNot Nothing Then nAuthorizations = sec.Restrictions.Length
             If sec.Groups IsNot Nothing Then nGroups = sec.Groups.Length
             Dim def(nGroups + nAuthorizations - 1) As String
 
@@ -1239,7 +1239,7 @@ Public Class SecurityEnvironment
                     x += 1
                 Next
             End If
-            If sec.Authorizations IsNot Nothing Then sec.Authorizations.CopyTo(def, x)
+            If sec.Restrictions IsNot Nothing Then sec.Restrictions.CopyTo(def, x)
             Return def
         Else
             Return New String(0) {""}
