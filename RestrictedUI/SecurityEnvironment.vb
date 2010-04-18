@@ -949,25 +949,6 @@ Public Class SecurityEnvironment
     ''' el ejecutable, por lo que en tpo. de ejecución se ignorará la ruta y se utilizará únicamente el nombre del fichero
     ''' Nota: es posible utilizar también rutas absolutas.
     ''' </remarks>
-    'Public Shared Function AdaptFilePath(ByRef file As String, ByVal designTime As Boolean) As Boolean
-    '    ' Si la ruta expresada lleva al archivo (es absoluta o no requiere ningún tipo de adaptación) la devolvemos sin más
-    '    If String.IsNullOrEmpty(file) Then Return False
-    '    If Not My.Computer.FileSystem.FileExists(file) Then
-    '        If Not designTime Then
-    '            Dim ext As String = file.Substring(file.LastIndexOf(".")).ToUpper
-    '            Dim posInicioNombre As Integer = file.LastIndexOf("\")
-    '            Dim nombreFichero As String = file.Substring(posInicioNombre + 1)
-
-    '            If ext = "DLL" Then
-    '                file = nombreFichero
-    '            Else
-    '                Dim rutaFichero As String = file.Substring(0, posInicioNombre)
-    '                file = Application.StartupPath.Substring(0, Application.StartupPath.ToUpper.IndexOf(rutaFichero.ToUpper) + Len(rutaFichero)) + "\" + nombreFichero
-    '            End If
-    '        End If
-    '    End If
-    '    Return My.Computer.FileSystem.FileExists(file)
-    'End Function
     Public Shared Function AdaptFilePath(ByRef file As String, ByVal designTime As Boolean) As Boolean
         ' Si la ruta expresada lleva al archivo (es absoluta o no requiere ningún tipo de adaptación) la devolvemos sin más
         If String.IsNullOrEmpty(file) Then Return False
