@@ -75,7 +75,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties Sandcastle_DocumentationSetName="RestrictedUI" ExternalSources="" Sandcastle_ProduceHelp1x="True" Sandcastle_PresentationName="Visual Studio 2005" Sandcastle_Version="2.4.10520.1" BuildEngineProviderName="Sandcastle" DocProjectVersion="1.11.0.0" ProcessComponentTypeName="DocProject.BuildProcess" IsDocProject="true" DocumentationScope="PublicOnly" />
+      <UserProperties DocumentationScope="PublicOnly" IsDocProject="true" ProcessComponentTypeName="DocProject.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Visual Studio 2005" Sandcastle_ProduceHelp1x="True" ExternalSources="" Sandcastle_DocumentationSetName="RestrictedUI" />
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
@@ -249,6 +249,25 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Release\DocProject.chm" />
+    <None Include="Help\Art\.svn\all-wcprops" />
+    <None Include="Help\Art\.svn\entries" />
+    <None Include="Help\Art\.svn\prop-base\frmrestrictionsuidefinition.gif.svn-base" />
+    <None Include="Help\Art\.svn\prop-base\frmrestrictionsuidefinition_reduced.gif.svn-base" />
+    <None Include="Help\Art\.svn\prop-base\frmRestrictionsUIDefinition_text.gif.svn-base" />
+    <None Include="Help\Art\.svn\prop-base\IconRestrictedUI.gif.svn-base" />
+    <None Include="Help\Art\.svn\prop-base\modelo1.gif.svn-base" />
+    <None Include="Help\Art\.svn\prop-base\modelo2.gif.svn-base" />
+    <None Include="Help\Art\.svn\prop-base\testform1.gif.svn-base" />
+    <None Include="Help\Art\.svn\prop-base\testform2.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\frmrestrictionsuidefinition.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\frmrestrictionsuidefinition_reduced.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\frmrestrictionsuidefinition_test.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\frmRestrictionsUIDefinition_text.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\IconRestrictedUI.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\modelo1.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\modelo2.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\testform1.gif.svn-base" />
+    <None Include="Help\Art\.svn\text-base\testform2.gif.svn-base" />
     <None Include="Help\Presentation\Shared\configuration\xamlSyntax.config" />
     <None Include="Help\Presentation\Shared\copyHavana.bat" />
     <None Include="Help\Presentation\Shared\HxsTemplate\template.HxF" />
@@ -311,6 +330,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
+    <Folder Include="Help\Art\.svn\props\" />
+    <Folder Include="Help\Art\.svn\tmp\prop-base\" />
+    <Folder Include="Help\Art\.svn\tmp\props\" />
+    <Folder Include="Help\Art\.svn\tmp\text-base\" />
     <Folder Include="Help\Topics\" />
   </ItemGroup>
 </Project>
