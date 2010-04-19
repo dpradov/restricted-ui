@@ -333,11 +333,9 @@ End Class
 ''' <item><description>Control a supervisar (a través de un adaptador)</description></item>
 ''' <item><description>Propiedades a controlar (Visible y/o Enabled)</description></item>
 ''' <item><description>Contexto de la aplicación para el que se define la restricción:</description></item>
-'''   <list type="bullet">
-'''   <item><description>Rol o roles del usuario de la aplicación</description></item>
-'''   <item><description>Estado o estados de la aplicación</description></item>
-'''   </list>
 ''' </list>
+'''    - Rol o roles del usuario de la aplicación
+'''    - Estado o estados de la aplicación
 ''' 
 ''' <para>
 ''' Estos elementos podrán ser aplicados en lógica positiva (permisos) o negativa (prohibiciones).
