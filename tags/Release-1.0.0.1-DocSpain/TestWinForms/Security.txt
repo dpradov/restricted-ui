@@ -1,0 +1,63 @@
+[Factories]
+; Las rutas relativas se expresarán de manera relativa a la carpeta de la solución (.sln). Esta ruta se utilizará para localizar las DLL en tiempo de diseño
+; Se supondrá que la DLL se encuentra en la misma carpeta que el ejecutable, por lo que en tpo. de ejecución se ignorará la ruta y se utilizará únicamente el nombre del fichero
+; Nota: es posible utilizar también rutas absolutas.
+TestWinForms\bin\Debug\RestrictedWinFormsUI_Infragistics.dll, RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_Factory
+
+[CommonRoles]
+99,Administrator,Adm
+10,Director,Dtor
+20,Consultant,Cons
+
+[CommonStates]
+0,Initial
+1,Pending Validating
+2,Validated
+
+;=======================================================
+[SECURITYCONTROL=Form1]
+[Roles]
+30,Auxiliar,Aux
+
+[States]
+3,Special State
+
+[Groups]
+Group Disable Buttons= gbCommands.btnDisableEnabled, gbCommands.btnDisableVisible
+Group Enabled Buttons= gbCommands.btnEnableEnabled, gbCommands.btnEnableVisible, gbCommands.btnEnableVisible_N
+Group Trees= TreeView1, UltraTree1
+
+[Restrictions]
++123/TextBox,V,2
++Adm/$Group Trees,E/MenuStrip1.EditarToolStripMenuItem.CortarToolStripMenuItem,V
++Dtor/GroupBox1.CheckBox1,V
+-0/MenuStrip1.ArchivoToolStripMenuItem.NuevoToolStripMenuItem,E/ToolStrip1.ToolStripComboBox1,E/ToolStrip1.ToolStripSplitButton1,E
+-Aux/cControles.Name,V,1,2,3/$Group Enabled Buttons,V
+-Cons/combo,V/$Group Disable Buttons,E
+
+;=======================================================
+[SECURITYCONTROL=Form2_Sub1]
+[Roles]
+
+[States]
+
+[Groups]
+Grupo 0= CheckBox1, TextBox1
+Grupo 1 - nuevo grupo= Button1, TextBox1
+
+[Restrictions]
++0/$Grupo 0,E
+-0/CheckBox1,E/Button1,E
+
+;=======================================================
+[SECURITYCONTROL=Form2_sub2]
+[Roles]
+123,Mi Rol 1,MiR1
+
+[States]
+77,Estado 77
+
+[Groups]
+
+[Restrictions]
+-0/TreeView1.Nodo0.Nodo1,E/TreeView1.Nodo3.Nodo4.Nodo5,V

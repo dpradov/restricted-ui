@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_Factory" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAgA=</HashCode>
+      <FileName>AdapterInfragisticsWinForms_Factory.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_UltraTreeNode" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACFACAAAIABAAAAAgAQAgAAAAAIAAAgAACAAEA=</HashCode>
+      <FileName>AdapterInfragisticsWinForms_UltraTreeNode.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_UltraGrid" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="1.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIABAAAAAggQAAAAAAEAQAAgIAAAAAA=</HashCode>
+      <FileName>AdapterInfragisticsWinForms_UltraGrid.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_UltraGridColumn" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACFACAAAIABAAAAAgAQAgAAAAAIAAAgAACAAEA=</HashCode>
+      <FileName>AdapterInfragisticsWinForms_UltraGridColumn.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_UltraTree" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>AdapterInfragisticsWinForms_UltraTree.vb</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
