@@ -8,14 +8,17 @@
 Una parte delicada de la implementación de la seguridad en aplicaciones, especialmente corporativas, consiste en determinar qué funcionalidad debe estar o no accesible al usuario en función de su rol, o qué elementos deben o no mostrarse.
 
 Lo habitual es incluir en el código la lógica necesaria para ocultar o deshabilitar determinadas opciones, botones, etc, dependiendo del tipo de usuario que accede a la aplicación. Esto puede complicarse cuando aparte del tipo de usuario también debe tenerse en cuenta el estado en que se encuentra la aplicación, por ejemplo el estado de tramitación de una entidad.
+
 Es bastante usual que esta política deba cambiar con cierta frecuencia, de la misma forma que deben evolucionar los requerimientos de las aplicaciones. Modificaciones en la estructura organizativa de la empresa, cambios en los protocolos de gestión de las unidades implicadas o simplemente la identificación de carencias tras el uso de la aplicación, entre otras causas, llevan a tener que hacer adaptaciones a esta lógica ligada a la interface.
 
 En respuesta a esta problemática cabe también la opción de centralizar la definición de esta política, en un repositorio común a múltiples aplicaciones. En base a esta definición, soportada por un modelo de datos determinado, es posible definir una librería que utilicen las aplicaciones, y que haga posible modificar la política de seguridad sin necesidad de recompilar y redistribuir las aplicaciones. La idea principal es la siguiente: el programador desarrolla como si sólo hubiera un tipo de usuario, el administrador, con permisos para hacer cualquier cosa. Es la librería la que controla si debe impedirse un intento de hacer visible o de habilitar determinados controles.
 
 Este enfoque es el que se usa actualmente en la empresa en la que trabajo. Aun ofreciendo gran flexibilidad en su concepción, la implementación concreta de la misma presenta desde mi punto de vista una serie de limitaciones y dificultades concretas que he intentado corregir con esta otra librería/arquitectura:
 
+<br/>
 ==Características principales==
 Por un lado la librería / arquitectura que aquí se explica no obliga a centralizar la definición de esta seguridad, pero sí la contempla como un caso más; por otro lado para asegurar el cumplimiento de estas restricciones no es necesario obligar al programador a utilizar métodos ni propiedades específicas de la librería, que verifiquen si el cambio se permite o no, ni tiene que ser controlado por código a añadir; simplemente cualquier intento de hacer visible o habilitar cualquier elemento de interface supervisado que no sea admitido por la política de seguridad es interceptado e impedido. 
+
 Se permite definir la política de restricciones no sólo en base a roles sino a estados de la aplicación, tanto en aplicaciones !WinForms como Web; y para simplificar la definición de esta política se ofrece un formulario de mantenimiento, disponible tanto en tiempo de diseño como de ejecución.
 
 Notas:
@@ -41,6 +44,7 @@ http://restricted-ui.googlecode.com/svn/wiki/images/modelo2.gif
 Las clases principales y con las que se interactuará serán fundamentalmente: *`ControlRestrictedUI`* (a través de alguna de los componentes concretos que se ofrecen, bien para !WinForms bien para Web), *`SecurityEnvironment`* e *`IHost`*. La primera contiene la mayor parte de la lógica de negocio, y es la responsable de asegurar la seguridad UI en el control en el que se encuentra, apoyándose en otras clases. La segunda, `SecurityEnvironment`, es un objeto Singleton que permite configurar aspectos comunes a todos los componentes y sobre todo hace posible el establecimiento masivo de la seguridad, para todos o parte de los componentes (necesario para la carga de las restricciones desde un repositorio centralizado). La tercera, `IHost`, es la interface que debe ofrecer la aplicación que haga uso de esta librería y que permitirá saber el estado de la aplicación y el rol o roles del usuario.
  
 La política de restricciones que se aplican en un componente `ControlRestrictedUI` se almacenan bajo la forma de un objeto `UIRestrictions` y éste a su vez contiene una lista de restricciones (permisos y prohibiciones), que no son más que estructuras `RestrictionOnControl`. Más abajo se describen con un poco más de detalle estas dos entidades y con ellas cómo se define la política de seguridad.
+
 En el caso de que se necesite trabajar con controles que no estén ya contemplados o se necesite gestionar alguno de ellos de una manera diferente, se habrán de crear los adaptadores correspondientes (`IControlAdapter`) y también la factoría que los genere (`IControlAdapterFactory`). Lo único que habrá que hacer en estos casos es preparar un nueva librería que incluya los nuevos adaptadores necesarios así como la factoría correspondiente. Este factoría se añadiría al objeto `SecurityEnvironment` como se explica en el ejemplo que se describe más adelante. Para crear estos adaptadores y factorías puede basarse en los ya disponibles.
 
 
@@ -83,8 +87,11 @@ Adaptación, para aplicaciones !WinForms, del componente `ControlRestrictedUI`.
 
 <br/>
 ===`IControlAdapter`===
-Envuelve un 'control' con el objetivo de ofrecer de manera homogénea el acceso a sus propiedades `Enabled` y `Visible`, así como a sus 'controles' hijo, permitiendo además ofrecer la supervisión del cambio de esas propiedades, dando así opción a impedir dichos cambios en base a un esquema de seguridad. Lo que el adaptador envuelva no tiene necesariamente que ser un objeto de una clase determinada puede ser cualquier elemento que el adaptador 'entienda', sobre el cual se pueda e interese controlar su visibilidad y/o si está o no habilitado, y que un adaptador 'padre' haya reconocido como hijo.
+Envuelve un 'control' con el objetivo de ofrecer de manera homogénea el acceso a sus propiedades `Enabled` y `Visible`, así como a sus 'controles' hijo, permitiendo además ofrecer la supervisión del cambio de esas propiedades, dando así opción a impedir dichos cambios en base a un esquema de seguridad. 
+
+Lo que el adaptador envuelva no tiene necesariamente que ser un objeto de una clase determinada puede ser cualquier elemento que el adaptador 'entienda', sobre el cual se pueda e interese controlar su visibilidad y/o si está o no habilitado, y que un adaptador 'padre' haya reconocido como hijo.
 Las propiedades realmente controladas no tienen por qué ser exactamente `Visible` y `Enabled`; es responsabilidad del adaptador de control ofrecer esa interface y actuar sobre las propiedades que tenga el control (por ejemplo, algunos controles no ofrecen `Enabled` pero sí `ReadOnly`)
+
 Los controles que ofrece el formulario de mantenimiento de la seguridad (`FrmRestrictionsUIDefinition`) así como los controles donde busca el componente `ControlRestrictedUI` son todos aquellos ofrecidos como 'hijos' por el control en donde esté incrustado el componente. El adaptador de este control padre irá preguntando a los adaptadores de sus controles hijo, lo que irá haciendo descubrir nuevos controles. Así, si se cuenta con un adaptador que entienda de controles !DataGridView, por ejemplo, es posible ofrecer cada una de las columnas como un hijo a supervisar. De esta manera, el número de controles a supervisar dependerá de los adaptadores con los que se trabaje, y esto dependerá a su vez de las factorías que se hayan podido incorporar:
 
 
@@ -92,32 +99,43 @@ Los controles que ofrece el formulario de mantenimiento de la seguridad (`FrmRes
 ===`IControlAdapterFactory`===
 Define una factoría externa de adaptadores de control. Éstas serán consultadas antes que la factoría base (interna) a la hora de localizar el adaptador a utilizar. 
 Sólo define el siguiente método GetAdapter
+
 Devuelve el adaptador más idóneo correspondiente al control que se le pasa, según la factoría. Si la factoría no tiene ningún adaptador adecuado para ese control devolverá el adaptador especial `NullControlAdapter`
 
 
 <br/>
 ===`UIRestrictions`===
 Contiene todas las restricciones de interface (UI) (permisos y prohibiciones) que definen la seguridad para un componente `ControlRestrictedUI`, y que afectan normalmente por tanto a un formulario o control de usuario. 
+
 Todas las restricciones se aplican a nivel de controles individuales, teniendo presente que las prohibiciones tendrán prioridad sobre los permisos, esto es, primero se aplicarán los permisos y luego se restringirán en base a las prohibiciones:
-Prohibiciones: sólo se impedirán las modificaciones de las propiedades `Visible` / `Enabled` en las situaciones aquí señaladas.
-Permisos: sólo se autorizarán las modificaciones de las propiedades `Visible` / `Enabled` en las situaciones aquí señaladas
+
+ * Prohibiciones: sólo se impedirán las modificaciones de las propiedades `Visible` / `Enabled` en las situaciones aquí señaladas.
+
+ * Permisos: sólo se autorizarán las modificaciones de las propiedades `Visible` / `Enabled` en las situaciones aquí señaladas
+
 Esta clase guarda restricciones individuales (ver `RestrictionOnControl`) y detemina si se deben considerar en lógica positiva (permisos) o negativa (prohibiciones). Es la encargada de serializar y deserializar estos permisos.
 
 
 <br/>
 ===`RestrictionOnControl`===
 Define los elementos que configuran una restricción concreta a supervisar. Esta restricción sólo tendrá pleno sentido interpretada conjuntamente con el resto de restricciones incluidas en una definición de seguridad definida en un objeto `UIRestrictions` y gestionada por un componente `ControlRestrictedUI`.
-<br/>
+
+
 Los elementos que configuran una restricción individual son: 
-Control a supervisar (a través de un adaptador) 
-Propiedades a controlar (`Visible` y/o `Enabled`) 
-Contexto de la aplicación para el que se define la restricción:
+ * Control a supervisar (a través de un adaptador) 
+ * Propiedades a controlar (`Visible` y/o `Enabled`) 
+ * Contexto de la aplicación para el que se define la restricción:
+  * Rol o roles del usuario de la aplicación
+  * Estado o estados de la aplicación
+
 Estos elementos podrán ser aplicados en lógica positiva (permisos) o negativa (prohibiciones). Esta interpretación no la ofrece esta estructura sino la clase `UIRestrictions` dependiendo de que esta restricción haya sido incluida en una línea de permisos o prohibiciones.
+
  * Si la restricción consiste en un permiso indicará que las propiedades supervisadas del control sólo las podrán 'activar' (hacer visible o habilitar) los roles indicados y únicamente cuando la aplicación esté en los estados señalados.
  * Si la restricción consiste en una prohibición indicará que las propiedades supervisadas del control no podrán ser 'activadas' por los roles indicados cuando la aplicación esté en los estados señalados. Para cualquier combinación de roles/estado distinta sí será posible la activación.
  * Si no se aporta ningún rol (por defecto se asume rol = 0) entonces aplicará a todos los roles: a todos se les permitirá o impedirá (según) en los estados señalados
  * Si no se aporta ningún estado entonces la restricción aplicará a los roles que correspondan con independencia del estado en que esté la aplicación.
  * Si un control no tiene ningún elemento de restricción asociado (ni positivo ni negativo) entonces no será supervisado, y cualquier rol y en cualquier estado podrá activar sus propiedades `Visible` y `Enabled`.
+
 Las propiedades realmente controladas en el control no tienen por qué ser exactamente '`Visible`' y '`Enabled`' (como se indica en `IControlAdapter`)
 Sólo se supervisa y tal vez se impida (según la política definida) la 'activación' de esas propiedades, esto es, el intento de hacer visible o habilitar el control. No se impide el hacer invisible o deshabilitar un control.
 
@@ -125,8 +143,11 @@ Sólo se supervisa y tal vez se impida (según la política definida) la 'activa
 <br/>
 ===`IHost`===
 Indica que el objeto puede actuar como intermediario en la comunicación necesaria entre la aplicación Host y la librería de Interface Restringida permitiendo a ésta consultar en cualquier momento el estado de la aplicación y el rol o roles que pueda tener el usuario de la misma. Informa también mediante eventos de cambios en estos valores. 
+
 Estos datos (estado y roles) podrán ser dependientes del formulario o control de usuario desde el que se pregunte (tipo e instancia concreta).
+
 Este enfoque permite, por ejemplo, mantener abiertas diferentes instancias de una determinada ventana, cada una de ellas en un estado o fase de tramitación diferente y por tanto con requerimientos de seguridad distintos.
+
 Aunque es más común que el rol o roles del usuario sean uniformes por toda la aplicación se permite que puedan también depender de donde se ubique el componente de seguridad y de la instancia concreta. De esta manera se da más margen de maniobra a la hora de configurar la seguridad.
 
 
@@ -189,7 +210,7 @@ Al arranque de la aplicación hacemos la siguiente inicialización, donde la ún
  (Más adelante se muestra un ejemplo de fichero de configuración que puede ser cargado mediante `LoadFrom`)
 
 <br/>
-El objeto _host sería de la clase Host, que implementaría la interface `IHost`, por ejemplo de esta forma (prueba):
+El objeto _host sería de la clase Host, que implementaría la interface `IHost`, por ejemplo de esta forma (TestForm):
 
 {{{
 Public Class Host
