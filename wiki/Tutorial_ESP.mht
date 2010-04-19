@@ -1,15 +1,15 @@
 From: <Saved by UnMHT>
 Subject: =?iso-2022-jp?B?VHV0b3JpYWxfRVNQIC0gcmVzdHJpY3RlZC11aSAtIFR1dG9yaWFsIGNvbnRhaW5pbmcgQVBJIHJlZmVyZW5jZSBhbmQgZXhhbXBsZSB1c2FnZXMgLSBQcm9qZWN0IEhvc3Rpbmcgb24gR29vZ2xlIENvZGU=?=
-Date: Sun, Apr 18 2010 20:09:26 GMT+0200
+Date: Mon, Apr 19 2010 19:44:40 GMT+0200
 MIME-Version: 1.0
 Content-Type: multipart/related;
-	boundary="----=_NextPart_000_0000_0CB932B6.C649966A";
+	boundary="----=_NextPart_000_0000_DB857DCE.6C94783E";
 	type="text/html"
 
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/index.html
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/index.html
 
 =EF=BB=BF<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "ht=
 tp://www.w3.org/TR/html4/loose.dtd">
@@ -59,7 +59,7 @@ codesite/ph/11982002900633812604/css/d_ie.css" >
 <link media=3D"all" href=3D"index.css" type=3D"text/css" rel=3D"stylesheet"=
 ></link>
 <base href=3D"file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFO=
-RMATICA/data/20100418200051/"></base></head><body class=3D"t6">
+RMATICA/data/20100419194255/"></base></head><body class=3D"t6">
 =20
 =20
  <div style=3D"left: 0pt;" class=3D"gbh"></div>
@@ -106,7 +106,9 @@ de.google.com/p/restricted-ui/">restricted-ui</a>
  </div>
 =20
  </td>
- </tr>
+ <td style=3D"white-space: nowrap; text-align: right;">
+=20
+ </td></tr>
  </tbody></table>
 
 
@@ -144,9 +146,11 @@ de.google.com/p/restricted-ui/">restricted-ui</a>
 ">
  <div class=3D"tab inactive">
  <div class=3D"round4"></div>
- <div class=3D"round2"></div>
- <div class=3D"round1"></div>
 =20
+=20
+ <div class=3D"box-inner">
+=20
+ </div>
  </div>
  </th>
 =20
@@ -170,7 +174,11 @@ n=3D"center" class=3D"st">
 =20
 =20
 =20
+ <td valign=3D"top" height=3D"4" align=3D"right" class=3D"bevel-right">
 =20
+=20
+ <div class=3D"round1"></div>
+ </td>
  </tr>
 </tbody></table>
 
@@ -200,7 +208,7 @@ n=3D"center" class=3D"st">
 =20
  <div style=3D"margin-bottom: 1em;" id=3D"wikiheader">
 =20
- <span style=3D"font-size: 120%; font-weight: bold;">Tutorial_ESP</span>
+=20
  &nbsp;
 =20
 =20
@@ -236,113 +244,116 @@ ultar o deshabilitar determinadas opciones, botones, etc, dependiendo del=
  tipo de usuario que accede a la aplicaci=C3=B3n. Esto puede complicarse cu=
 ando aparte del tipo de usuario tambi=C3=A9n debe tenerse en cuenta el esta=
 do en que se encuentra la aplicaci=C3=B3n, por ejemplo el estado de tramita=
-ci=C3=B3n de una entidad. Es bastante usual que esta pol=C3=ADtica deba cam=
-biar con cierta frecuencia, de la misma forma que deben evolucionar los req=
-uerimientos de las aplicaciones. Modificaciones en la estructura organizati=
-va de la empresa, cambios en los protocolos de gesti=C3=B3n de las unidades=
- implicadas o simplemente la identificaci=C3=B3n de carencias tras el uso=
- de la aplicaci=C3=B3n, entre otras causas, llevan a tener que hacer adapta=
-ciones a esta l=C3=B3gica ligada a la interface. </a></p><p><a name=3D"1._I=
-ntroducci=C3=B3n">En respuesta a esta problem=C3=A1tica cabe tambi=C3=A9n=
- la opci=C3=B3n de centralizar la definici=C3=B3n de esta pol=C3=ADtica, en=
- un repositorio com=C3=BAn a m=C3=BAltiples aplicaciones. En base a esta de=
-finici=C3=B3n, soportada por un modelo de datos determinado, es posible def=
-inir una librer=C3=ADa que utilicen las aplicaciones, y que haga posible mo=
-dificar la pol=C3=ADtica de seguridad sin necesidad de recompilar y redistr=
-ibuir las aplicaciones. La idea principal es la siguiente: el programador=
- desarrolla como si s=C3=B3lo hubiera un tipo de usuario, el administrador,=
- con permisos para hacer cualquier cosa. Es la librer=C3=ADa la que control=
-a si debe impedirse un intento de hacer visible o de habilitar determinados=
- controles. </a></p><p><a name=3D"1._Introducci=C3=B3n">Este enfoque es el=
- que se usa actualmente en la empresa en la que trabajo. Aun ofreciendo gra=
-n flexibilidad en su concepci=C3=B3n, la implementaci=C3=B3n concreta de la=
- misma presenta desde mi punto de vista una serie de limitaciones y dificul=
-tades concretas que he intentado corregir con esta otra librer=C3=ADa/arqui=
-tectura: </a></p><h2><a name=3D"Caracter=C3=ADsticas_principales">Caracter=
-=C3=ADsticas principales</a></h2><p><a name=3D"Caracter=C3=ADsticas_princip=
-ales">Por un lado la librer=C3=ADa / arquitectura que aqu=C3=AD se explica=
- no obliga a centralizar la definici=C3=B3n de esta seguridad, pero s=C3=AD=
- la contempla como un caso m=C3=A1s; por otro lado para asegurar el cumplim=
-iento de estas restricciones no es necesario obligar al programador a utili=
-zar m=C3=A9todos ni propiedades espec=C3=ADficas de la librer=C3=ADa, que=
- verifiquen si el cambio se permite o no, ni tiene que ser controlado por=
- c=C3=B3digo a a=C3=B1adir; simplemente cualquier intento de hacer visible=
- o habilitar cualquier elemento de interface supervisado que no sea admitid=
-o por la pol=C3=ADtica de seguridad es interceptado e impedido.  Se permite=
- definir la pol=C3=ADtica de restricciones no s=C3=B3lo en base a roles sin=
-o a estados de la aplicaci=C3=B3n, tanto en aplicaciones WinForms como Web;=
- y para simplificar la definici=C3=B3n de esta pol=C3=ADtica se ofrece un=
- formulario de mantenimiento, disponible tanto en tiempo de dise=C3=B1o com=
-o de ejecuci=C3=B3n. </a></p><p><a name=3D"Caracter=C3=ADsticas_principales=
-">Notas: </a></p><ul><li><a name=3D"Caracter=C3=ADsticas_principales">No es=
- objetivo de esta librer=C3=ADa controlar la autenticaci=C3=B3n del usuario=
-. Se asume que =C3=A9sta es realizada correctamente y que se conoce, con ga=
-rant=C3=ADas, el rol o roles que ostenta el usuario. </a></li><li><a name=
-=3D"Caracter=C3=ADsticas_principales">El nombre de la librer=C3=ADa, Restri=
-ctedUI, hace referencia al hecho de que ciertos elementos de la interface=
- estar=C3=A1n restringidos seg=C3=BAn la seguridad establecida (&#x27;=C3=
-=A1rea restringida&#x27;) </a></li></ul><p><a name=3D"Caracter=C3=ADsticas_=
-principales"><br><br> </a></p><hr><h1><a name=3D"2._Usando_el_c=C3=B3digo">=
-2. Usando el c=C3=B3digo</a></h1><p><a name=3D"2._Usando_el_c=C3=B3digo">Pa=
-so a describir a continuaci=C3=B3n con m=C3=A1s detalle esta librer=C3=ADa:=
- </a></p><h2><a name=3D"2.1._Entidades_principales">2.1. Entidades principa=
-les</a></h2><p><a name=3D"2.1._Entidades_principales"><br> <img src=3D"mode=
-lo1.gif"> </a></p><p><a name=3D"2.1._Entidades_principales"><br><br> </a></=
-p><p><a name=3D"2.1._Entidades_principales"><img src=3D"modelo2.gif"> </a><=
-/p><p><a name=3D"2.1._Entidades_principales"><br> Las clases principales y=
- con las que se interactuar=C3=A1 ser=C3=A1n fundamentalmente: <strong><tt>=
-ControlRestrictedUI</tt></strong> (a trav=C3=A9s de alguna de los component=
-es concretos que se ofrecen, bien para WinForms bien para Web), <strong><tt=
->SecurityEnvironment</tt></strong> e <strong><tt>IHost</tt></strong>. La pr=
-imera contiene la mayor parte de la l=C3=B3gica de negocio, y es la respons=
-able de asegurar la seguridad UI en el control en el que se encuentra, apoy=
-=C3=A1ndose en otras clases. La segunda, <tt>SecurityEnvironment</tt>, es=
- un objeto Singleton que permite configurar aspectos comunes a todos los co=
-mponentes y sobre todo hace posible el establecimiento masivo de la segurid=
-ad, para todos o parte de los componentes (necesario para la carga de las=
- restricciones desde un repositorio centralizado). La tercera, <tt>IHost</t=
-t>, es la interface que debe ofrecer la aplicaci=C3=B3n que haga uso de est=
-a librer=C3=ADa y que permitir=C3=A1 saber el estado de la aplicaci=C3=B3n=
- y el rol o roles del usuario.   La pol=C3=ADtica de restricciones que se=
- aplican en un componente <tt>ControlRestrictedUI</tt> se almacenan bajo la=
- forma de un objeto <tt>UIRestrictions</tt> y =C3=A9ste a su vez contiene=
- una lista de restricciones (permisos y prohibiciones), que no son m=C3=A1s=
- que estructuras <tt>RestrictionOnControl</tt>. M=C3=A1s abajo se describen=
- con un poco m=C3=A1s de detalle estas dos entidades y con ellas c=C3=B3mo=
- se define la pol=C3=ADtica de seguridad. En el caso de que se necesite tra=
-bajar con controles que no est=C3=A9n ya contemplados o se necesite gestion=
-ar alguno de ellos de una manera diferente, se habr=C3=A1n de crear los ada=
-ptadores correspondientes (<tt>IControlAdapter</tt>) y tambi=C3=A9n la fact=
-or=C3=ADa que los genere (<tt>IControlAdapterFactory</tt>). Lo =C3=BAnico=
- que habr=C3=A1 que hacer en estos casos es preparar un nueva librer=C3=ADa=
- que incluya los nuevos adaptadores necesarios as=C3=AD como la factor=C3=
-=ADa correspondiente. Este factor=C3=ADa se a=C3=B1adir=C3=ADa al objeto <t=
-t>SecurityEnvironment</tt> como se explica en el ejemplo que se describe m=
-=C3=A1s adelante. Para crear estos adaptadores y factor=C3=ADas puede basar=
-se en los ya disponibles. </a></p><p><a name=3D"2.1._Entidades_principales"=
->Las clases y m=C3=A9todos m=C3=A1s destacables son: </a></p><p><a name=3D"=
-2.1._Entidades_principales"><br> </a></p><h3><a name=3D"ControlRestrictedUI=
-"><tt>ControlRestrictedUI</tt></a></h3><p><a name=3D"ControlRestrictedUI">C=
-omponente base de la librer=C3=ADa de Interface Restringida (!RestrictedUI)=
-: permite restringir la visibilidad y estado de habilitaci=C3=B3n de los co=
-ntroles incluidos en un formulario o control de usuario en base a una defin=
-ici=C3=B3n de seguridad establecida, en la que intervienen el estado actual=
- de la aplicaci=C3=B3n en dicho formulario o contenedor as=C3=AD como el ro=
-l o roles que tenga el usuario de la aplicaci=C3=B3n.  </a></p><ul><li><a=
- name=3D"ControlRestrictedUI"><strong><tt>ChangeAllowed</tt></strong> Es el=
- m=C3=A9todo que eval=C3=BAa la pol=C3=ADtica de restricciones y decide si=
- permite o no un determinado cambio sobre un control. Comprueba si el cambi=
-o sobre la propiedad Visible o Enabled (o la correspondiente del control)=
- es v=C3=A1lido atendiendo a la definici=C3=B3n de seguridad, a los roles=
- del usuario y al estado actual de la aplicaci=C3=B3n.  </a></li></ul><ul><=
-li><a name=3D"ControlRestrictedUI"><strong><tt>VerifyChange</tt></strong>=
- - Comprueba si el cambio sobre la propiedad indicada (<tt>TChange</tt>) es=
- v=C3=A1lido atendiendo a la definici=C3=B3n de seguridad, a los roles del=
- usuario y al estado actual de la aplicaci=C3=B3n. Si el cambio no es v=C3=
-=A1lido se deshar=C3=A1, esto es, se establecer=C3=A1 nuevamente a False =
- </a></li></ul><blockquote><a name=3D"ControlRestrictedUI">Los adaptadores=
- de control llaman a este m=C3=A9todo del componente de seguridad en respue=
-sta al intento de modificaci=C3=B3n de las propiedades supervisadas. =20
+ci=C3=B3n de una entidad. </a></p><p><a name=3D"1._Introducci=C3=B3n">Es ba=
+stante usual que esta pol=C3=ADtica deba cambiar con cierta frecuencia, de=
+ la misma forma que deben evolucionar los requerimientos de las aplicacione=
+s. Modificaciones en la estructura organizativa de la empresa, cambios en=
+ los protocolos de gesti=C3=B3n de las unidades implicadas o simplemente la=
+ identificaci=C3=B3n de carencias tras el uso de la aplicaci=C3=B3n, entre=
+ otras causas, llevan a tener que hacer adaptaciones a esta l=C3=B3gica lig=
+ada a la interface. </a></p><p><a name=3D"1._Introducci=C3=B3n">En respuest=
+a a esta problem=C3=A1tica cabe tambi=C3=A9n la opci=C3=B3n de centralizar=
+ la definici=C3=B3n de esta pol=C3=ADtica, en un repositorio com=C3=BAn a=
+ m=C3=BAltiples aplicaciones. En base a esta definici=C3=B3n, soportada por=
+ un modelo de datos determinado, es posible definir una librer=C3=ADa que=
+ utilicen las aplicaciones, y que haga posible modificar la pol=C3=ADtica=
+ de seguridad sin necesidad de recompilar y redistribuir las aplicaciones.=
+ La idea principal es la siguiente: el programador desarrolla como si s=C3=
+=B3lo hubiera un tipo de usuario, el administrador, con permisos para hacer=
+ cualquier cosa. Es la librer=C3=ADa la que controla si debe impedirse un=
+ intento de hacer visible o de habilitar determinados controles. </a></p><p=
+><a name=3D"1._Introducci=C3=B3n">Este enfoque es el que se usa actualmente=
+ en la empresa en la que trabajo. Aun ofreciendo gran flexibilidad en su co=
+ncepci=C3=B3n, la implementaci=C3=B3n concreta de la misma presenta desde=
+ mi punto de vista una serie de limitaciones y dificultades concretas que=
+ he intentado corregir con esta otra librer=C3=ADa/arquitectura: </a></p><p=
+><a name=3D"1._Introducci=C3=B3n"><br> </a></p><h2><a name=3D"Caracter=C3=
+=ADsticas_principales">Caracter=C3=ADsticas principales</a></h2><p><a name=
+=3D"Caracter=C3=ADsticas_principales">Por un lado la librer=C3=ADa / arquit=
+ectura que aqu=C3=AD se explica no obliga a centralizar la definici=C3=B3n=
+ de esta seguridad, pero s=C3=AD la contempla como un caso m=C3=A1s; por ot=
+ro lado para asegurar el cumplimiento de estas restricciones no es necesari=
+o obligar al programador a utilizar m=C3=A9todos ni propiedades espec=C3=AD=
+ficas de la librer=C3=ADa, que verifiquen si el cambio se permite o no, ni=
+ tiene que ser controlado por c=C3=B3digo a a=C3=B1adir; simplemente cualqu=
+ier intento de hacer visible o habilitar cualquier elemento de interface su=
+pervisado que no sea admitido por la pol=C3=ADtica de seguridad es intercep=
+tado e impedido.  </a></p><p><a name=3D"Caracter=C3=ADsticas_principales">S=
+e permite definir la pol=C3=ADtica de restricciones no s=C3=B3lo en base a=
+ roles sino a estados de la aplicaci=C3=B3n, tanto en aplicaciones WinForms=
+ como Web; y para simplificar la definici=C3=B3n de esta pol=C3=ADtica se=
+ ofrece un formulario de mantenimiento, disponible tanto en tiempo de dise=
+=C3=B1o como de ejecuci=C3=B3n. </a></p><p><a name=3D"Caracter=C3=ADsticas_=
+principales">Notas: </a></p><ul><li><a name=3D"Caracter=C3=ADsticas_princip=
+ales">No es objetivo de esta librer=C3=ADa controlar la autenticaci=C3=B3n=
+ del usuario. Se asume que =C3=A9sta es realizada correctamente y que se co=
+noce, con garant=C3=ADas, el rol o roles que ostenta el usuario. </a></li><=
+li><a name=3D"Caracter=C3=ADsticas_principales">El nombre de la librer=C3=
+=ADa, RestrictedUI, hace referencia al hecho de que ciertos elementos de la=
+ interface estar=C3=A1n restringidos seg=C3=BAn la seguridad establecida (&=
+#x27;=C3=A1rea restringida&#x27;) </a></li></ul><p><a name=3D"Caracter=C3=
+=ADsticas_principales"><br><br> </a></p><hr><h1><a name=3D"2._Usando_el_c=
+=C3=B3digo">2. Usando el c=C3=B3digo</a></h1><p><a name=3D"2._Usando_el_c=
+=C3=B3digo">Paso a describir a continuaci=C3=B3n con m=C3=A1s detalle esta=
+ librer=C3=ADa: </a></p><h2><a name=3D"2.1._Entidades_principales">2.1. Ent=
+idades principales</a></h2><p><a name=3D"2.1._Entidades_principales"><br>=
+ <img src=3D"modelo1.gif"> </a></p><p><a name=3D"2.1._Entidades_principales=
+"><br><br> </a></p><p><a name=3D"2.1._Entidades_principales"><img src=3D"mo=
+delo2.gif"> </a></p><p><a name=3D"2.1._Entidades_principales"><br> Las clas=
+es principales y con las que se interactuar=C3=A1 ser=C3=A1n fundamentalmen=
+te: <strong><tt>ControlRestrictedUI</tt></strong> (a trav=C3=A9s de alguna=
+ de los componentes concretos que se ofrecen, bien para WinForms bien para=
+ Web), <strong><tt>SecurityEnvironment</tt></strong> e <strong><tt>IHost</t=
+t></strong>. La primera contiene la mayor parte de la l=C3=B3gica de negoci=
+o, y es la responsable de asegurar la seguridad UI en el control en el que=
+ se encuentra, apoy=C3=A1ndose en otras clases. La segunda, <tt>SecurityEnv=
+ironment</tt>, es un objeto Singleton que permite configurar aspectos comun=
+es a todos los componentes y sobre todo hace posible el establecimiento mas=
+ivo de la seguridad, para todos o parte de los componentes (necesario para=
+ la carga de las restricciones desde un repositorio centralizado). La terce=
+ra, <tt>IHost</tt>, es la interface que debe ofrecer la aplicaci=C3=B3n que=
+ haga uso de esta librer=C3=ADa y que permitir=C3=A1 saber el estado de la=
+ aplicaci=C3=B3n y el rol o roles del usuario.   La pol=C3=ADtica de restri=
+cciones que se aplican en un componente <tt>ControlRestrictedUI</tt> se alm=
+acenan bajo la forma de un objeto <tt>UIRestrictions</tt> y =C3=A9ste a su=
+ vez contiene una lista de restricciones (permisos y prohibiciones), que no=
+ son m=C3=A1s que estructuras <tt>RestrictionOnControl</tt>. M=C3=A1s abajo=
+ se describen con un poco m=C3=A1s de detalle estas dos entidades y con ell=
+as c=C3=B3mo se define la pol=C3=ADtica de seguridad. </a></p><p><a name=3D=
+"2.1._Entidades_principales">En el caso de que se necesite trabajar con con=
+troles que no est=C3=A9n ya contemplados o se necesite gestionar alguno de=
+ ellos de una manera diferente, se habr=C3=A1n de crear los adaptadores cor=
+respondientes (<tt>IControlAdapter</tt>) y tambi=C3=A9n la factor=C3=ADa qu=
+e los genere (<tt>IControlAdapterFactory</tt>). Lo =C3=BAnico que habr=C3=
+=A1 que hacer en estos casos es preparar un nueva librer=C3=ADa que incluya=
+ los nuevos adaptadores necesarios as=C3=AD como la factor=C3=ADa correspon=
+diente. Este factor=C3=ADa se a=C3=B1adir=C3=ADa al objeto <tt>SecurityEnvi=
+ronment</tt> como se explica en el ejemplo que se describe m=C3=A1s adelant=
+e. Para crear estos adaptadores y factor=C3=ADas puede basarse en los ya di=
+sponibles. </a></p><p><a name=3D"2.1._Entidades_principales">Las clases y=
+ m=C3=A9todos m=C3=A1s destacables son: </a></p><p><a name=3D"2.1._Entidade=
+s_principales"><br> </a></p><h3><a name=3D"ControlRestrictedUI"><tt>Control=
+RestrictedUI</tt></a></h3><p><a name=3D"ControlRestrictedUI">Componente bas=
+e de la librer=C3=ADa de Interface Restringida (!RestrictedUI): permite res=
+tringir la visibilidad y estado de habilitaci=C3=B3n de los controles inclu=
+idos en un formulario o control de usuario en base a una definici=C3=B3n de=
+ seguridad establecida, en la que intervienen el estado actual de la aplica=
+ci=C3=B3n en dicho formulario o contenedor as=C3=AD como el rol o roles que=
+ tenga el usuario de la aplicaci=C3=B3n.  </a></p><ul><li><a name=3D"Contro=
+lRestrictedUI"><strong><tt>ChangeAllowed</tt></strong> Es el m=C3=A9todo qu=
+e eval=C3=BAa la pol=C3=ADtica de restricciones y decide si permite o no un=
+ determinado cambio sobre un control. Comprueba si el cambio sobre la propi=
+edad Visible o Enabled (o la correspondiente del control) es v=C3=A1lido at=
+endiendo a la definici=C3=B3n de seguridad, a los roles del usuario y al es=
+tado actual de la aplicaci=C3=B3n.  </a></li></ul><ul><li><a name=3D"Contro=
+lRestrictedUI"><strong><tt>VerifyChange</tt></strong> - Comprueba si el cam=
+bio sobre la propiedad indicada (<tt>TChange</tt>) es v=C3=A1lido atendiend=
+o a la definici=C3=B3n de seguridad, a los roles del usuario y al estado ac=
+tual de la aplicaci=C3=B3n. Si el cambio no es v=C3=A1lido se deshar=C3=A1,=
+ esto es, se establecer=C3=A1 nuevamente a False  </a></li></ul><blockquote=
+><a name=3D"ControlRestrictedUI">Los adaptadores de control llaman a este=
+ m=C3=A9todo del componente de seguridad en respuesta al intento de modific=
+aci=C3=B3n de las propiedades supervisadas. =20
 </a></blockquote><ul><li><a name=3D"ControlRestrictedUI"><strong><tt>Regist=
 erControls</tt></strong> - Fuerza el registro o actualizaci=C3=B3n de los=
  controles existentes en el formulario o contenedor en donde est=C3=A1 incr=
@@ -397,74 +408,83 @@ jetivo de ofrecer de manera homog=C3=A9nea el acceso a sus propiedades <tt>=
 Enabled</tt> y <tt>Visible</tt>, as=C3=AD como a sus &#x27;controles&#x27;=
  hijo, permitiendo adem=C3=A1s ofrecer la supervisi=C3=B3n del cambio de es=
 as propiedades, dando as=C3=AD opci=C3=B3n a impedir dichos cambios en base=
- a un esquema de seguridad. Lo que el adaptador envuelva no tiene necesaria=
-mente que ser un objeto de una clase determinada puede ser cualquier elemen=
-to que el adaptador &#x27;entienda&#x27;, sobre el cual se pueda e interese=
- controlar su visibilidad y/o si est=C3=A1 o no habilitado, y que un adapta=
-dor &#x27;padre&#x27; haya reconocido como hijo. Las propiedades realmente=
- controladas no tienen por qu=C3=A9 ser exactamente <tt>Visible</tt> y <tt>=
-Enabled</tt>; es responsabilidad del adaptador de control ofrecer esa inter=
-face y actuar sobre las propiedades que tenga el control (por ejemplo, algu=
-nos controles no ofrecen <tt>Enabled</tt> pero s=C3=AD <tt>ReadOnly</tt>)=
- Los controles que ofrece el formulario de mantenimiento de la seguridad (<=
-tt>FrmRestrictionsUIDefinition</tt>) as=C3=AD como los controles donde busc=
-a el componente <tt>ControlRestrictedUI</tt> son todos aquellos ofrecidos=
- como &#x27;hijos&#x27; por el control en donde est=C3=A9 incrustado el com=
-ponente. El adaptador de este control padre ir=C3=A1 preguntando a los adap=
-tadores de sus controles hijo, lo que ir=C3=A1 haciendo descubrir nuevos co=
-ntroles. As=C3=AD, si se cuenta con un adaptador que entienda de controles=
- DataGridView, por ejemplo, es posible ofrecer cada una de las columnas com=
-o un hijo a supervisar. De esta manera, el n=C3=BAmero de controles a super=
-visar depender=C3=A1 de los adaptadores con los que se trabaje, y esto depe=
-nder=C3=A1 a su vez de las factor=C3=ADas que se hayan podido incorporar:=
- </a></p><p><a name=3D"IControlAdapter"><br> </a></p><h3><a name=3D"IContro=
-lAdapterFactory"><tt>IControlAdapterFactory</tt></a></h3><p><a name=3D"ICon=
-trolAdapterFactory">Define una factor=C3=ADa externa de adaptadores de cont=
-rol. =C3=89stas ser=C3=A1n consultadas antes que la factor=C3=ADa base (int=
-erna) a la hora de localizar el adaptador a utilizar.  S=C3=B3lo define el=
- siguiente m=C3=A9todo GetAdapter</a><a href=3D"http://code.google.com/p/re=
-stricted-ui/w/edit/GetAdapter">?</a> Devuelve el adaptador m=C3=A1s id=C3=
-=B3neo correspondiente al control que se le pasa, seg=C3=BAn la factor=C3=
-=ADa. Si la factor=C3=ADa no tiene ning=C3=BAn adaptador adecuado para ese=
- control devolver=C3=A1 el adaptador especial <tt>NullControlAdapter</tt>=
- </p><p><br> </p><h3><a name=3D"UIRestrictions"><tt>UIRestrictions</tt></a>=
-</h3><p><a name=3D"UIRestrictions">Contiene todas las restricciones de inte=
-rface (UI) (permisos y prohibiciones) que definen la seguridad para un comp=
-onente <tt>ControlRestrictedUI</tt>, y que afectan normalmente por tanto a=
- un formulario o control de usuario.  Todas las restricciones se aplican a=
- nivel de controles individuales, teniendo presente que las prohibiciones=
- tendr=C3=A1n prioridad sobre los permisos, esto es, primero se aplicar=C3=
-=A1n los permisos y luego se restringir=C3=A1n en base a las prohibiciones:=
- Prohibiciones: s=C3=B3lo se impedir=C3=A1n las modificaciones de las propi=
-edades <tt>Visible</tt> / <tt>Enabled</tt> en las situaciones aqu=C3=AD se=
-=C3=B1aladas. Permisos: s=C3=B3lo se autorizar=C3=A1n las modificaciones de=
+ a un esquema de seguridad.  </a></p><p><a name=3D"IControlAdapter">Lo que=
+ el adaptador envuelva no tiene necesariamente que ser un objeto de una cla=
+se determinada puede ser cualquier elemento que el adaptador &#x27;entienda=
+&#x27;, sobre el cual se pueda e interese controlar su visibilidad y/o si=
+ est=C3=A1 o no habilitado, y que un adaptador &#x27;padre&#x27; haya recon=
+ocido como hijo. Las propiedades realmente controladas no tienen por qu=C3=
+=A9 ser exactamente <tt>Visible</tt> y <tt>Enabled</tt>; es responsabilidad=
+ del adaptador de control ofrecer esa interface y actuar sobre las propieda=
+des que tenga el control (por ejemplo, algunos controles no ofrecen <tt>Ena=
+bled</tt> pero s=C3=AD <tt>ReadOnly</tt>) </a></p><p><a name=3D"IControlAda=
+pter">Los controles que ofrece el formulario de mantenimiento de la segurid=
+ad (<tt>FrmRestrictionsUIDefinition</tt>) as=C3=AD como los controles donde=
+ busca el componente <tt>ControlRestrictedUI</tt> son todos aquellos ofreci=
+dos como &#x27;hijos&#x27; por el control en donde est=C3=A9 incrustado el=
+ componente. El adaptador de este control padre ir=C3=A1 preguntando a los=
+ adaptadores de sus controles hijo, lo que ir=C3=A1 haciendo descubrir nuev=
+os controles. As=C3=AD, si se cuenta con un adaptador que entienda de contr=
+oles DataGridView, por ejemplo, es posible ofrecer cada una de las columnas=
+ como un hijo a supervisar. De esta manera, el n=C3=BAmero de controles a=
+ supervisar depender=C3=A1 de los adaptadores con los que se trabaje, y est=
+o depender=C3=A1 a su vez de las factor=C3=ADas que se hayan podido incorpo=
+rar: </a></p><p><a name=3D"IControlAdapter"><br> </a></p><h3><a name=3D"ICo=
+ntrolAdapterFactory"><tt>IControlAdapterFactory</tt></a></h3><p><a name=3D"=
+IControlAdapterFactory">Define una factor=C3=ADa externa de adaptadores de=
+ control. =C3=89stas ser=C3=A1n consultadas antes que la factor=C3=ADa base=
+ (interna) a la hora de localizar el adaptador a utilizar.  S=C3=B3lo defin=
+e el siguiente m=C3=A9todo GetAdapter</a><a href=3D"http://code.google.com/=
+p/restricted-ui/w/edit/GetAdapter">?</a> </p><p>Devuelve el adaptador m=C3=
+=A1s id=C3=B3neo correspondiente al control que se le pasa, seg=C3=BAn la=
+ factor=C3=ADa. Si la factor=C3=ADa no tiene ning=C3=BAn adaptador adecuado=
+ para ese control devolver=C3=A1 el adaptador especial <tt>NullControlAdapt=
+er</tt> </p><p><br> </p><h3><a name=3D"UIRestrictions"><tt>UIRestrictions</=
+tt></a></h3><p><a name=3D"UIRestrictions">Contiene todas las restricciones=
+ de interface (UI) (permisos y prohibiciones) que definen la seguridad para=
+ un componente <tt>ControlRestrictedUI</tt>, y que afectan normalmente por=
+ tanto a un formulario o control de usuario.  </a></p><p><a name=3D"UIRestr=
+ictions">Todas las restricciones se aplican a nivel de controles individual=
+es, teniendo presente que las prohibiciones tendr=C3=A1n prioridad sobre lo=
+s permisos, esto es, primero se aplicar=C3=A1n los permisos y luego se rest=
+ringir=C3=A1n en base a las prohibiciones: </a></p><ul><li><a name=3D"UIRes=
+trictions">Prohibiciones: s=C3=B3lo se impedir=C3=A1n las modificaciones de=
  las propiedades <tt>Visible</tt> / <tt>Enabled</tt> en las situaciones aqu=
-=C3=AD se=C3=B1aladas Esta clase guarda restricciones individuales (ver <tt=
->RestrictionOnControl</tt>) y detemina si se deben considerar en l=C3=B3gic=
-a positiva (permisos) o negativa (prohibiciones). Es la encargada de serial=
-izar y deserializar estos permisos. </a></p><p><a name=3D"UIRestrictions"><=
-br> </a></p><h3><a name=3D"RestrictionOnControl"><tt>RestrictionOnControl</=
-tt></a></h3><p><a name=3D"RestrictionOnControl">Define los elementos que co=
-nfiguran una restricci=C3=B3n concreta a supervisar. Esta restricci=C3=B3n=
- s=C3=B3lo tendr=C3=A1 pleno sentido interpretada conjuntamente con el rest=
-o de restricciones incluidas en una definici=C3=B3n de seguridad definida=
- en un objeto <tt>UIRestrictions</tt> y gestionada por un componente <tt>Co=
-ntrolRestrictedUI</tt>. <br> Los elementos que configuran una restricci=C3=
-=B3n individual son:  Control a supervisar (a trav=C3=A9s de un adaptador)=
-  Propiedades a controlar (<tt>Visible</tt> y/o <tt>Enabled</tt>)  Contexto=
- de la aplicaci=C3=B3n para el que se define la restricci=C3=B3n: Estos ele=
-mentos podr=C3=A1n ser aplicados en l=C3=B3gica positiva (permisos) o negat=
-iva (prohibiciones). Esta interpretaci=C3=B3n no la ofrece esta estructura=
- sino la clase <tt>UIRestrictions</tt> dependiendo de que esta restricci=C3=
-=B3n haya sido incluida en una l=C3=ADnea de permisos o prohibiciones. </a>=
-</p><ul><li><a name=3D"RestrictionOnControl">Si la restricci=C3=B3n consist=
-e en un permiso indicar=C3=A1 que las propiedades supervisadas del control=
- s=C3=B3lo las podr=C3=A1n &#x27;activar&#x27; (hacer visible o habilitar)=
- los roles indicados y =C3=BAnicamente cuando la aplicaci=C3=B3n est=C3=A9=
- en los estados se=C3=B1alados. </a></li><li><a name=3D"RestrictionOnContro=
-l">Si la restricci=C3=B3n consiste en una prohibici=C3=B3n indicar=C3=A1 qu=
-e las propiedades supervisadas del control no podr=C3=A1n ser &#x27;activad=
-as&#x27; por los roles indicados cuando la aplicaci=C3=B3n est=C3=A9 en los=
+=C3=AD se=C3=B1aladas. </a></li></ul><ul><li><a name=3D"UIRestrictions">Per=
+misos: s=C3=B3lo se autorizar=C3=A1n las modificaciones de las propiedades=
+ <tt>Visible</tt> / <tt>Enabled</tt> en las situaciones aqu=C3=AD se=C3=B1a=
+ladas </a></li></ul><p><a name=3D"UIRestrictions">Esta clase guarda restric=
+ciones individuales (ver <tt>RestrictionOnControl</tt>) y detemina si se de=
+ben considerar en l=C3=B3gica positiva (permisos) o negativa (prohibiciones=
+). Es la encargada de serializar y deserializar estos permisos. </a></p><p>=
+<a name=3D"UIRestrictions"><br> </a></p><h3><a name=3D"RestrictionOnControl=
+"><tt>RestrictionOnControl</tt></a></h3><p><a name=3D"RestrictionOnControl"=
+>Define los elementos que configuran una restricci=C3=B3n concreta a superv=
+isar. Esta restricci=C3=B3n s=C3=B3lo tendr=C3=A1 pleno sentido interpretad=
+a conjuntamente con el resto de restricciones incluidas en una definici=C3=
+=B3n de seguridad definida en un objeto <tt>UIRestrictions</tt> y gestionad=
+a por un componente <tt>ControlRestrictedUI</tt>. </a></p><p><a name=3D"Res=
+trictionOnControl">Los elementos que configuran una restricci=C3=B3n indivi=
+dual son:  </a></p><ul><li><a name=3D"RestrictionOnControl">Control a super=
+visar (a trav=C3=A9s de un adaptador)  </a></li><li><a name=3D"RestrictionO=
+nControl">Propiedades a controlar (<tt>Visible</tt> y/o <tt>Enabled</tt>)=
+  </a></li><li><a name=3D"RestrictionOnControl">Contexto de la aplicaci=C3=
+=B3n para el que se define la restricci=C3=B3n: </a></li><ul><li><a name=3D=
+"RestrictionOnControl">Rol o roles del usuario de la aplicaci=C3=B3n </a></=
+li><li><a name=3D"RestrictionOnControl">Estado o estados de la aplicaci=C3=
+=B3n </a></li></ul></ul><p><a name=3D"RestrictionOnControl">Estos elementos=
+ podr=C3=A1n ser aplicados en l=C3=B3gica positiva (permisos) o negativa (p=
+rohibiciones). Esta interpretaci=C3=B3n no la ofrece esta estructura sino=
+ la clase <tt>UIRestrictions</tt> dependiendo de que esta restricci=C3=B3n=
+ haya sido incluida en una l=C3=ADnea de permisos o prohibiciones. </a></p>=
+<ul><li><a name=3D"RestrictionOnControl">Si la restricci=C3=B3n consiste en=
+ un permiso indicar=C3=A1 que las propiedades supervisadas del control s=C3=
+=B3lo las podr=C3=A1n &#x27;activar&#x27; (hacer visible o habilitar) los=
+ roles indicados y =C3=BAnicamente cuando la aplicaci=C3=B3n est=C3=A9 en=
+ los estados se=C3=B1alados. </a></li><li><a name=3D"RestrictionOnControl">=
+Si la restricci=C3=B3n consiste en una prohibici=C3=B3n indicar=C3=A1 que=
+ las propiedades supervisadas del control no podr=C3=A1n ser &#x27;activada=
+s&#x27; por los roles indicados cuando la aplicaci=C3=B3n est=C3=A9 en los=
  estados se=C3=B1alados. Para cualquier combinaci=C3=B3n de roles/estado di=
 stinta s=C3=AD ser=C3=A1 posible la activaci=C3=B3n. </a></li><li><a name=
 =3D"RestrictionOnControl">Si no se aporta ning=C3=BAn rol (por defecto se=
@@ -477,48 +497,49 @@ ndan con independencia del estado en que est=C3=A9 la aplicaci=C3=B3n. </a>=
 n elemento de restricci=C3=B3n asociado (ni positivo ni negativo) entonces=
  no ser=C3=A1 supervisado, y cualquier rol y en cualquier estado podr=C3=A1=
  activar sus propiedades <tt>Visible</tt> y <tt>Enabled</tt>. </a></li></ul=
-><a name=3D"RestrictionOnControl">Las propiedades realmente controladas en=
- el control no tienen por qu=C3=A9 ser exactamente &#x27;<tt>Visible</tt>&#=
-x27; y &#x27;<tt>Enabled</tt>&#x27; (como se indica en <tt>IControlAdapter<=
-/tt>) S=C3=B3lo se supervisa y tal vez se impida (seg=C3=BAn la pol=C3=ADti=
-ca definida) la &#x27;activaci=C3=B3n&#x27; de esas propiedades, esto es,=
- el intento de hacer visible o habilitar el control. No se impide el hacer=
- invisible o deshabilitar un control. </a><p><a name=3D"RestrictionOnContro=
-l"><br> </a></p><h3><a name=3D"IHost"><tt>IHost</tt></a></h3><p><a name=3D"=
-IHost">Indica que el objeto puede actuar como intermediario en la comunicac=
-i=C3=B3n necesaria entre la aplicaci=C3=B3n Host y la librer=C3=ADa de Inte=
-rface Restringida permitiendo a =C3=A9sta consultar en cualquier momento el=
- estado de la aplicaci=C3=B3n y el rol o roles que pueda tener el usuario=
- de la misma. Informa tambi=C3=A9n mediante eventos de cambios en estos val=
-ores.  Estos datos (estado y roles) podr=C3=A1n ser dependientes del formul=
-ario o control de usuario desde el que se pregunte (tipo e instancia concre=
-ta). Este enfoque permite, por ejemplo, mantener abiertas diferentes instan=
-cias de una determinada ventana, cada una de ellas en un estado o fase de=
- tramitaci=C3=B3n diferente y por tanto con requerimientos de seguridad dis=
-tintos. Aunque es m=C3=A1s com=C3=BAn que el rol o roles del usuario sean=
- uniformes por toda la aplicaci=C3=B3n se permite que puedan tambi=C3=A9n=
- depender de donde se ubique el componente de seguridad y de la instancia=
- concreta. De esta manera se da m=C3=A1s margen de maniobra a la hora de co=
-nfigurar la seguridad. </a></p><p><a name=3D"IHost"><br> </a></p><h3><a nam=
-e=3D"SecurityEnvironment"><tt>SecurityEnvironment</tt></a></h3><p><a name=
-=3D"SecurityEnvironment">Clase Singleton (v=C3=ADa Shared) que mantiene asp=
-ectos generales a todo el esquema de seguridad. </a></p><ul><li><a name=3D"=
-SecurityEnvironment"><strong><tt>CommonStates, CommonRoles</tt></strong> -=
- Permiten establecer los estados y roles comunes, que se ofrecen en todos=
- los componentes de seguridad </a></li></ul><ul><li><a name=3D"SecurityEnvi=
-ronment"><strong><tt>ComponentsSecurity</tt></strong> - Devuelve el objeto=
- diccionario en el que se guarda la definici=C3=B3n de seguridad (pol=C3=AD=
-tica de restricciones de interface) de los diferentes componentes, seg=C3=
-=BAn pueda haberse establecido a partir de la carga de un fichero de config=
-uraci=C3=B3n o de una cadena de texto. </a></li></ul><blockquote><a name=3D=
-"SecurityEnvironment">La seguridad aqu=C3=AD contenida no tiene por qu=C3=
-=A9 ser igual a la embebida en los distintos componentes. La que aplique fi=
-nalmente en el componente depende de una propiedad del mismo (<tt>ProrityEm=
-beddedSecurity</tt>) M=C3=A9todos como <tt>LoadFrom</tt> o <tt>LoadFromStri=
-ng</tt>, por ejemplo, forzar=C3=A1n la prioridad a la seguridad del entorno=
- sobre la embebida, para un componente, cuando en el fichero o cadena (p.ej=
-) aparezca referenciado ese componente, aunque sea con un definici=C3=B3n=
- vac=C3=ADa. =20
+><p><a name=3D"RestrictionOnControl">Las propiedades realmente controladas=
+ en el control no tienen por qu=C3=A9 ser exactamente &#x27;<tt>Visible</tt=
+>&#x27; y &#x27;<tt>Enabled</tt>&#x27; (como se indica en <tt>IControlAdapt=
+er</tt>) S=C3=B3lo se supervisa y tal vez se impida (seg=C3=BAn la pol=C3=
+=ADtica definida) la &#x27;activaci=C3=B3n&#x27; de esas propiedades, esto=
+ es, el intento de hacer visible o habilitar el control. No se impide el ha=
+cer invisible o deshabilitar un control. </a></p><p><a name=3D"RestrictionO=
+nControl"><br> </a></p><h3><a name=3D"IHost"><tt>IHost</tt></a></h3><p><a=
+ name=3D"IHost">Indica que el objeto puede actuar como intermediario en la=
+ comunicaci=C3=B3n necesaria entre la aplicaci=C3=B3n Host y la librer=C3=
+=ADa de Interface Restringida permitiendo a =C3=A9sta consultar en cualquie=
+r momento el estado de la aplicaci=C3=B3n y el rol o roles que pueda tener=
+ el usuario de la misma. Informa tambi=C3=A9n mediante eventos de cambios=
+ en estos valores.  </a></p><p><a name=3D"IHost">Estos datos (estado y role=
+s) podr=C3=A1n ser dependientes del formulario o control de usuario desde=
+ el que se pregunte (tipo e instancia concreta). </a></p><p><a name=3D"IHos=
+t">Este enfoque permite, por ejemplo, mantener abiertas diferentes instanci=
+as de una determinada ventana, cada una de ellas en un estado o fase de tra=
+mitaci=C3=B3n diferente y por tanto con requerimientos de seguridad distint=
+os. </a></p><p><a name=3D"IHost">Aunque es m=C3=A1s com=C3=BAn que el rol=
+ o roles del usuario sean uniformes por toda la aplicaci=C3=B3n se permite=
+ que puedan tambi=C3=A9n depender de donde se ubique el componente de segur=
+idad y de la instancia concreta. De esta manera se da m=C3=A1s margen de ma=
+niobra a la hora de configurar la seguridad. </a></p><p><a name=3D"IHost"><=
+br> </a></p><h3><a name=3D"SecurityEnvironment"><tt>SecurityEnvironment</tt=
+></a></h3><p><a name=3D"SecurityEnvironment">Clase Singleton (v=C3=ADa Shar=
+ed) que mantiene aspectos generales a todo el esquema de seguridad. </a></p=
+><ul><li><a name=3D"SecurityEnvironment"><strong><tt>CommonStates, CommonRo=
+les</tt></strong> - Permiten establecer los estados y roles comunes, que se=
+ ofrecen en todos los componentes de seguridad </a></li></ul><ul><li><a nam=
+e=3D"SecurityEnvironment"><strong><tt>ComponentsSecurity</tt></strong> - De=
+vuelve el objeto diccionario en el que se guarda la definici=C3=B3n de segu=
+ridad (pol=C3=ADtica de restricciones de interface) de los diferentes compo=
+nentes, seg=C3=BAn pueda haberse establecido a partir de la carga de un fic=
+hero de configuraci=C3=B3n o de una cadena de texto. </a></li></ul><blockqu=
+ote><a name=3D"SecurityEnvironment">La seguridad aqu=C3=AD contenida no tie=
+ne por qu=C3=A9 ser igual a la embebida en los distintos componentes. La qu=
+e aplique finalmente en el componente depende de una propiedad del mismo (<=
+tt>ProrityEmbeddedSecurity</tt>) M=C3=A9todos como <tt>LoadFrom</tt> o <tt>=
+LoadFromString</tt>, por ejemplo, forzar=C3=A1n la prioridad a la seguridad=
+ del entorno sobre la embebida, para un componente, cuando en el fichero o=
+ cadena (p.ej) aparezca referenciado ese componente, aunque sea con un defi=
+nici=C3=B3n vac=C3=ADa. =20
 </a></blockquote><ul><li><a name=3D"SecurityEnvironment"><strong><tt>BaseFa=
 ctory, AditionalFactories</tt></strong> - Obtiene o establece la factor=C3=
 =ADa de adaptadores que se considera base, as=C3=AD como otras adicionales.=
@@ -605,23 +626,24 @@ s=3D"pun">)</span></pre><blockquote>(M=C3=A1s adelante se muestra un ejempl=
 o de fichero de configuraci=C3=B3n que puede ser cargado mediante <tt>LoadF=
 rom</tt>)=20
 </blockquote><p><br> El objeto <i>host ser=C3=ADa de la clase Host, que imp=
-lementar=C3=ADa la interface <tt>IHost</tt>, por ejemplo de esta forma (pru=
-eba): </i></p><pre class=3D"prettyprint"><span class=3D"typ">Public</span><=
-span class=3D"pln"> </span><span class=3D"typ">Class</span><span class=3D"p=
-ln"> </span><span class=3D"typ">Host</span><span class=3D"pln"><br>&nbsp;=
- &nbsp; </span><span class=3D"typ">Implements</span><span class=3D"pln"> </=
-span><span class=3D"typ">IHost</span><span class=3D"pln"><br><br>&nbsp; &nb=
-sp; </span><span class=3D"typ">Public</span><span class=3D"pln"> </span><sp=
-an class=3D"typ">Event</span><span class=3D"pln"> </span><span class=3D"typ=
-">StateChanged</span><span class=3D"pun">(</span><span class=3D"typ">ByVal<=
-/span><span class=3D"pln"> ID </span><span class=3D"typ">As</span><span cla=
-ss=3D"pln"> </span><span class=3D"typ">String</span><span class=3D"pun">,</=
-span><span class=3D"pln"> </span><span class=3D"typ">ByVal</span><span clas=
-s=3D"pln"> instanceID </span><span class=3D"typ">As</span><span class=3D"pl=
-n"> </span><span class=3D"typ">String</span><span class=3D"pun">,</span><sp=
-an class=3D"pln"> </span><span class=3D"typ">ByVal</span><span class=3D"pln=
-"> newState </span><span class=3D"typ">As</span><span class=3D"pln"> </span=
-><span class=3D"typ">Integer</span><span class=3D"pun">)</span><span class=
+lementar=C3=ADa la interface <tt>IHost</tt>, por ejemplo de esta forma (Tes=
+tForm<a href=3D"http://code.google.com/p/restricted-ui/w/edit/TestForm">?</=
+a>): </i></p><pre class=3D"prettyprint"><span class=3D"typ">Public</span><s=
+pan class=3D"pln"> </span><span class=3D"typ">Class</span><span class=3D"pl=
+n"> </span><span class=3D"typ">Host</span><span class=3D"pln"><br>&nbsp; &n=
+bsp; </span><span class=3D"typ">Implements</span><span class=3D"pln"> </spa=
+n><span class=3D"typ">IHost</span><span class=3D"pln"><br><br>&nbsp; &nbsp;=
+ </span><span class=3D"typ">Public</span><span class=3D"pln"> </span><span=
+ class=3D"typ">Event</span><span class=3D"pln"> </span><span class=3D"typ">=
+StateChanged</span><span class=3D"pun">(</span><span class=3D"typ">ByVal</s=
+pan><span class=3D"pln"> ID </span><span class=3D"typ">As</span><span class=
+=3D"pln"> </span><span class=3D"typ">String</span><span class=3D"pun">,</sp=
+an><span class=3D"pln"> </span><span class=3D"typ">ByVal</span><span class=
+=3D"pln"> instanceID </span><span class=3D"typ">As</span><span class=3D"pln=
+"> </span><span class=3D"typ">String</span><span class=3D"pun">,</span><spa=
+n class=3D"pln"> </span><span class=3D"typ">ByVal</span><span class=3D"pln"=
+> newState </span><span class=3D"typ">As</span><span class=3D"pln"> </span>=
+<span class=3D"typ">Integer</span><span class=3D"pun">)</span><span class=
 =3D"pln"> </span><span class=3D"typ">Implements</span><span class=3D"pln">=
  </span><span class=3D"typ">RestrictedUI</span><span class=3D"pun">.</span>=
 <span class=3D"typ">IHost</span><span class=3D"pun">.</span><span class=3D"=
@@ -1108,14 +1130,14 @@ ido (si alguno) para el componente. Podemos leer la configuraci=C3=B3n de=
 os los que pueda haber incluidos en el archivo. </a></p><p><a name=3D"Mante=
 nimiento_de_la_pol=C3=ADtica_de_seguridad:_FrmRestrictionsUIDef">Contamos=
  para mayor facilidad con dos formas de mostrar los permisos: tabular o de=
- texto, ambas editables. <img src=3D"frmrestrictionsuidefinition_test.gif">=
- </a></p><p><a name=3D"Mantenimiento_de_la_pol=C3=ADtica_de_seguridad:_FrmR=
-estrictionsUIDef">Si usamos este formulario en tiempo de ejecuci=C3=B3n pod=
-remos tambi=C3=A9n hacer doble click en un control para hacerlo resaltar (p=
-arpadear=C3=A1 varias veces) Tendremos tambi=C3=A9n la posibilidad de modif=
-icar (si el objeto que implemente la interface <tt>IHost</tt> lo permite)=
- el estado y el rol o roles asociados a este componente e instancia, para=
- as=C3=AD testear la seguridad. Para mayor comodidad podemos reducir este=
+ texto, ambas editables. <br> <img src=3D"frmrestrictionsuidefinition_text.=
+gif"> </a></p><p><a name=3D"Mantenimiento_de_la_pol=C3=ADtica_de_seguridad:=
+_FrmRestrictionsUIDef">Si usamos este formulario en tiempo de ejecuci=C3=B3=
+n podremos tambi=C3=A9n hacer doble click en un control para hacerlo resalt=
+ar (parpadear=C3=A1 varias veces) Tendremos tambi=C3=A9n la posibilidad de=
+ modificar (si el objeto que implemente la interface <tt>IHost</tt> lo perm=
+ite) el estado y el rol o roles asociados a este componente e instancia, pa=
+ra as=C3=AD testear la seguridad. Para mayor comodidad podemos reducir este=
  formulario para que s=C3=B3lo ofrezca estos controles: </a></p><p><a name=
 =3D"Mantenimiento_de_la_pol=C3=ADtica_de_seguridad:_FrmRestrictionsUIDef"><=
 img src=3D"frmrestrictionsuidefinition_reduced.gif"> </a></p><p><a name=3D"=
@@ -1226,7 +1248,9 @@ aci=C3=B3n extremedamente c=C3=B3moda y potente. En concreto me he basado=
 =20
 =20
 =20
+ <div id=3D"commentform">
 =20
+ </div>
 =20
 =20
 =20
@@ -1236,8 +1260,8 @@ lComment.do" name=3D"delcom">
  <input type=3D"hidden" name=3D"sequence_num" value=3D""></input>
  <input type=3D"hidden" name=3D"mode" value=3D""></input>
  <input type=3D"hidden" name=3D"pagename" value=3D"Tutorial_ESP"></input>
- <input type=3D"hidden" name=3D"token" value=3D"0afffcfc4159f5c3c0deb562a0e=
-e8729"></input>
+ <input type=3D"hidden" name=3D"token" value=3D"6e604483450962c8502eb86f883=
+43d9d"></input>
 </form>
 
 
@@ -1264,7 +1288,7 @@ e8729"></input>
 
 =20
  <div class=3D"menuDiv instance0" id=3D"menuDiv-projects-dropdown" style=3D=
-"position: absolute; display: none; top: 19px; left: 1466px;"><b class=3D"c=
+"position: absolute; display: none; top: 19px; left: 1237px;"><b class=3D"c=
 ategoryTitle projects" style=3D"display: block;">Projects</b><div class=3D"=
 menuCategory projects first"><a class=3D"menuItem" style=3D"display: block;=
 " href=3D"http://code.google.com/p/keynote-nf/">keynote-nf</a><a class=3D"m=
@@ -1274,10 +1298,10 @@ ass=3D"menuSeparator"><a class=3D"menuItem" style=3D"display: block;" href=
 =3D"http://code.google.com/more/">Find developer products...</a><a class=3D=
 "menuItem" style=3D"display: block;" href=3D"http://code.google.com/hosting=
 /">Find open source projects...</a></div></div></body></html>
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/x-icon
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/phosting.ico
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/phosting.ico
 
 AAABAAEAICAAAAEAGACoDAAAFgAAACgAAAAgAAAAQAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAD////////////////p5uCyppCmmYCmmYCmmYCmmYCmmYCmmYCmmYCmmYCmmYCmmYCmmYCm
@@ -1337,11 +1361,10 @@ rnXVlkezXgChVgBNMwBNMwC9s6D///+yppCFc1B9ZjqFc1C9s6D/////////////////////////
 AAAP4AAAB+AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA8AAAAPAAAADwAAAA4AA
 AAEAAAAAAAAAAAAAAAAAAAAAgAAAAeAAAAPwAAAH+AAAB/wAAAf+AAAH/wAAB/+AAA//wAAP/+AE
 H//wD///+B////5//w==
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: text/css
 Content-Transfer-Encoding: quoted-printable
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/index.css
-
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/index.css
 
 /* ::::: http://www.gstatic.com/codesite/ph/11982002900633812604/css/ph_cor=
 e.css ::::: */
@@ -1368,41 +1391,18 @@ ht: 1px; }
 .bevel-left, .bevel-right { padding: 0pt; }
 .bevel-right .round4, .bevel-right .round2, .bevel-right .round1 { border-l=
 eft: medium none; }
-.bevel-left .round4, .bevel-left .round2, .bevel-left .round1 { border-righ=
-t: medium none; }
-.bevel-left .box-inner, .bevel-right .box-inner { padding: 0pt; }
 .active { background: none repeat scroll 0% 0% rgb(195, 217, 255); }
 .active a:link { color: rgb(0, 0, 204); }
 .inactive { background: none repeat scroll 0% 0% rgb(229, 236, 249); }
 #mt { margin-top: 0.5ex; }
-.bubble_bg { background: none repeat scroll 0% 0% rgb(195, 217, 255); margi=
-n-bottom: 0.6em; }
-.bubble { padding: 4px; }
-#bub { padding: 0pt 1px; }
-.bub-top { margin: 0pt 2px 2px; }
-.bub-bottom { margin: 2px 2px 0pt; }
-.drop-down-bub { font-size: 80%; margin-top: -1px; }
 table#mt th { cursor: pointer; text-align: center; font-weight: bold; }
 table#mt th a { text-decoration: none; color: black; }
-.t5 h4 { background-color: rgb(229, 236, 249); margin: 4px 4px 0pt; border-=
-top: 1px solid rgb(51, 102, 204); padding: 2px; }
-.t5 .section { margin: 0pt 4px 1.6em; padding: 4px; }
-.t5 .section .submit { margin: 8px; }
 table.st { background-color: rgb(195, 217, 255); }
 table.st span { padding: 0pt 4px; }
 #maincol { margin-top: 3px; padding: 3px; }
-.t5 #maincol { padding: 0pt; }
 .isf, .at { padding: 4px 3px 3px 4px; background: none repeat scroll 0% 0%=
  rgb(195, 217, 255); }
 .isf a, .at a, .isf a:visited, .at a:visited { color: rgb(0, 0, 204); }
-.st1 .inst1 a, .st2 .inst2 a, .st3 .inst3 a, .st4 .inst4 a, .st5 .inst5 a,=
- .st6 .inst6 a, .st7 .inst7 a, .st8 .inst8 a, .st9 .inst9 a { color: black;=
- font-weight: bold; text-decoration: none; }
-.notice, .error { background: none repeat scroll 0% 0% rgb(250, 209, 99);=
- font-weight: bold; }
-.adminonly { color: red; font-style: italic; }
-.fieldhelp { color: grey; }
-.fielderror { color: red; font-weight: bold; padding: 4px; }
 .tip { background: none repeat scroll 0% 0% rgb(229, 236, 249); font-size:=
  92%; margin: 5px; width: 14em; }
 .tip .box-inner { padding: 6px; }
@@ -1411,80 +1411,25 @@ t; position: absolute; top: 24px; width: 100%; }
 #pname { font-size: 180%; font-weight: bold; }
 #psum { font-style: italic; margin-top: 3px; }
 .vt { vertical-align: top; }
-.indicator { font-size: x-small; color: rgb(0, 0, 204); }
-div.h4, table.h4 { background-color: rgb(229, 236, 249); margin-bottom: 2px=
-; border-top: 1px solid rgb(51, 102, 204); padding: 2px; font-weight: bold;=
- position: relative; margin-top: 2px; }
-.mainhdr { background-color: rgb(229, 236, 249); border-top: 1px solid rgb(=
-51, 102, 204); font-weight: bold; font-size: 133%; padding: 2px; }
 h1 { font-size: x-large; margin-top: 0px; }
 h2 { font-size: large; }
 h3 { font-size: medium; background: none repeat scroll 0% 0% rgb(229, 236,=
  249); border-top: 1px solid rgb(51, 102, 204); padding: 0.5ex 0.5em; margi=
 n-right: 2em; }
-h4 { font-size: small; }
 img { border: 0pt none; }
 #gaia { text-align: right; }
 #gaia a { color: rgb(0, 0, 204); text-decoration: none; }
-#header { position: relative; height: 55px; padding-top: 6px; margin-bottom=
-: -9px; }
-#logo { padding-right: 18px; position: absolute; top: 0pt; left: 0pt; }
-#logo img { width: 153px; height: 55px; }
-#title { margin-left: 171px; border-top: 1px solid rgb(51, 102, 204); backg=
-round-color: rgb(229, 236, 249); font-size: large; font-weight: bold; paddi=
-ng-left: 3px; padding-top: 1px; padding-bottom: 1px; }
 #footer { clear: both; text-align: center; margin-top: 3.5em; margin-bottom=
 : 1em; height: 53px; background-repeat: no-repeat; background-position: lef=
 t center; }
 #footer .text { padding-top: 20px; }
-.label { text-decoration: none; color: green ! important; }
-.label:hover { text-decoration: underline; }
-.results th, .results td { border-bottom: 1px solid rgb(187, 187, 187); }
-.results th { border-left: 1px solid rgb(187, 187, 187); }
-.results th { background: none repeat scroll 0% 0% rgb(229, 236, 249); text=
--align: left; padding-right: 1px; }
-.results th a, .results th a:visited { color: rgb(0, 0, 204); padding-right=
-: 12px; margin-right: 12px; }
-.results td { background: none repeat scroll 0% 0% rgb(255, 255, 255); }
-.results td { cursor: pointer; }
-.results td { padding: 4px; }
-.results td a { color: rgb(0, 0, 0); text-decoration: none; }
-.results td.id a { color: rgb(0, 0, 204); text-decoration: underline; }
-.results td.id a:visited { color: purple; text-decoration: underline; }
-.results td.id a:hover { color: red; text-decoration: underline; }
-table.results tr.hover td { color: rgb(0, 0, 153); background-color: rgb(24=
-4, 244, 255); }
-table.results tr.hover td a { color: rgb(0, 0, 153); }
-.results .label { font-size: 80%; }
-.results .selected td { background: none repeat scroll 0% 0% rgb(255, 255,=
- 204); }
-.results td tt { color: rgb(153, 153, 153); font-style: italic; font-weight=
-: bold; }
-.flipper { font-family: monospace; font-size: 120%; }
-.flipper ul { list-style-type: none; padding: 0pt; margin: 0em 0.3em; }
-.flipper b { margin: 0em 0.3em; }
-.closed .ifOpened { display: none; }
-.closed .opened span.ifOpened { display: inline; }
 .opened .ifClosed { display: none; }
-.opened .closed span.ifClosed { display: inline; }
-.h3 { font-size: 130%; font-weight: bolder; }
 input { padding-left: 1px; padding-right: 1px; }
 textarea { padding-left: 1px; padding-right: 1px; }
-.pagination { font-size: 100%; float: right; white-space: nowrap; }
-.pagination a { margin-left: 0.3em; margin-right: 0.3em; }
-.author { margin-bottom: 1em; }
-#searchtips { padding-left: 2em; }
-#searchtips p { margin-left: 2em; }
-.issueEntry .inIssueEntry a, .issueList .inIssueList span, .issueAdvSearch=
- .inIssueAdvSearch a, .issueSearchTips .inIssueSearchTips a { font-weight:=
- bold; text-decoration: none; color: black; }
-iframe[frameborder=3D"1"] { border: 1px solid rgb(153, 153, 153); }
 .menuDiv { margin-top: 5px; border-color: rgb(201, 215, 241) rgb(51, 102,=
  204) rgb(51, 102, 204) rgb(162, 186, 231); border-style: solid; border-wid=
 th: 1px; z-index: 1001; padding: 0pt; width: 175px; background: none repeat=
  scroll 0% 0% rgb(255, 255, 255); overflow: hidden; }
-.menuDiv .menuText { padding: 3px; text-decoration: none; background: none=
- repeat scroll 0% 0% rgb(255, 255, 255); }
 .menuDiv .menuItem { color: rgb(0, 0, 204); padding: 3px; text-decoration:=
  none; background: none repeat scroll 0% 0% rgb(255, 255, 255); }
 .menuDiv .menuItem:hover { color: rgb(255, 255, 255); background: none repe=
@@ -1495,26 +1440,11 @@ at scroll 0% 0% rgb(51, 102, 204); }
 -width: 1px 0pt 0pt; border-style: solid none none; border-color: rgb(201,=
  215, 241) -moz-use-text-color -moz-use-text-color; }
 .hostedBy { text-align: center; }
-.fullscreen-popup { position: fixed; right: 4%; left: 4%; top: 5%; max-heig=
-ht: 90%; opacity: 0.85; -moz-border-radius: 10px 10px 10px 10px; background=
-: none repeat scroll 0% 0% black; color: white; font-weight: bold; padding:=
- 1em; z-index: 10; overflow-x: hidden; overflow-y: auto; }
-.fullscreen-popup a { color: rgb(160, 172, 255); }
-div#keys_help th { color: yellow; text-align: left; }
-div#keys_help td { font-weight: normal; color: white; }
-td.shortcut { text-align: right; }
-span.letter { color: rgb(136, 221, 0); font-weight: bold; font-family: mono=
-space; font-size: medium; }
-
 /* ::::: http://www.gstatic.com/codesite/ph/11982002900633812604/css/ph_det=
 ail.css ::::: */
 
 .pmeta_bubble_bg { background: none repeat scroll 0% 0% rgb(229, 236, 249);=
  margin-bottom: 0.6em; }
-.pmeta { text-align: left; }
-.pmeta th, .pmeta td { vertical-align: top; }
-.pmeta ul { padding: 0pt; margin: 0pt; }
-.pmeta li { padding: 0pt 0pt 2px; list-style-type: none; }
 #wikicontent h3, #wikipreview h3 { background: none repeat scroll 0% 0% tra=
 nsparent; border: 0pt none; padding-left: 0pt; margin: 0pt; }
 #wikicontent p, #wikicontent ul, #wikicontent ol, #wikicontent blockquote=
@@ -1529,10 +1459,6 @@ pre.prettyprint { margin-left: 2em; padding: 0.5em; border-left: 3px solid=
 .prettyprint .lit { color: rgb(0, 102, 102); }
 .prettyprint .pun { color: rgb(102, 102, 0); }
 .prettyprint .pln { color: rgb(0, 0, 0); }
-.prettyprint .tag { color: rgb(0, 0, 136); }
-.prettyprint .atn { color: rgb(102, 0, 102); }
-.prettyprint .atv { color: rgb(0, 136, 0); }
-.prettyprint .dec { color: rgb(102, 0, 102); }
 @media print {
   .prettyprint .str { color: rgb(0, 102, 0); }
   .prettyprint .kwd { color: rgb(0, 0, 102); font-weight: bold; }
@@ -1545,81 +1471,14 @@ pre.prettyprint { margin-left: 2em; padding: 0.5em; border-left: 3px solid=
   .prettyprint .atn { color: rgb(68, 0, 68); }
   .prettyprint .atv { color: rgb(0, 102, 0); }
 }
-.closed_ref { text-decoration: line-through; }
-.notes { background: none repeat scroll 0% 0% rgb(255, 255, 204); border-st=
-yle: solid; border-color: rgb(153, 153, 153); border-width: 0pt 1px 1px 0pt=
-; padding: 2px; width: 818px; }
-.rowmajor th { text-align: right; }
-.labelediting input { margin: 0pt 3px 4px 0pt; }
-.labelediting input { color: rgb(0, 102, 0); }
-.collapse .ifExpand { display: none; }
-.expand .ifCollapse { display: none; }
-.inplace input { width: 100%; }
-.inplace td { border: 0pt none; }
-#issueheader { margin: 0.5em 0pt 0em; border: 3px solid rgb(195, 217, 255);=
- background: none repeat scroll 0% 0% rgb(195, 217, 255); }
-#issueheader td { background: none repeat scroll 0% 0% rgb(195, 217, 255); }
-.issuepage { margin-top: 0pt; }
-.issuepage td { padding: 0.5em 0.5em 0.5em 0pt; }
-.issuecomment { border-top: 3px solid rgb(195, 217, 255); }
-.issuedescription pre, .issuecomment pre { overflow: hidden; padding-left:=
- 0.7em; }
-.issuedescription pre b, .issuecomment pre b { font-size: 110%; font-weight=
-: bolder; padding: 3px 0pt; }
-.author { padding-left: 0.7em; }
-#issuemeta { width: 12em; border-right: 3px solid rgb(195, 217, 255); font-=
-size: 95%; vertical-align: top; }
-#issuemeta table tr.hover a { text-decoration: underline; }
-#issuemeta table td, #issuemeta table th { margin: 0pt; padding: 5px 0pt 0p=
-t; }
-.rel_issues a { white-space: nowrap; }
-.updates { margin: 1em 0pt 0pt 0.7em; background: none repeat scroll 0% 0%=
- rgb(195, 217, 255); width: 80%; font-size: 90%; }
-.fakelink { color: rgb(0, 0, 204); cursor: pointer; white-space: nowrap; }
-.undef { color: rgb(102, 102, 102); }
-table.advquery, table.issueimport { border: 3px solid rgb(195, 217, 255);=
- }
-table.advquery td, table.issueimport td { white-space: nowrap; padding: 2px=
-; }
-.focus td { background: none repeat scroll 0% 0% rgb(195, 217, 255); }
-#ac-list { border: 1px solid rgb(102, 102, 102); background: none repeat sc=
-roll 0% 0% rgb(224, 236, 255); color: rgb(0, 0, 204); padding: 0pt 0pt 1px;=
- z-index: 10; }
-#ac-list { font-size: 95%; }
-#ac-list { padding: 2px; }
-#ac-list tr { margin: 1px; cursor: pointer; padding: 0pt 10px; }
-#ac-list th { color: rgb(51, 51, 51); text-align: left; }
-#ac-list .selected, #ac-list .selected td { background: none repeat scroll=
- 0% 0% rgb(195, 217, 255); }
-#ac-list td, #ac-list th { white-space: nowrap; }
-.eg { color: rgb(102, 102, 102); font-size: 90%; }
-#submit { font-weight: bold; }
-div td .novel { color: rgb(68, 51, 0); }
-div td .exclconflict { color: rgb(170, 0, 51); }
-.delcom { background: none repeat scroll 0% 0% rgb(232, 232, 232); }
-.numberentry { text-align: right; }
-
-/* ::::: null ::::: */
-
-.menuIcon.off { background: url('dropdown_sprite.gif') no-repeat scroll 0pt=
- -42px transparent; }
-.menuIcon.on { background: url('dropdown_sprite.gif') no-repeat scroll 0pt=
- -28px transparent; }
-.menuIcon.down { background: url('dropdown_sprite.gif') no-repeat scroll 0p=
-t 0pt transparent; }
-
-/* ::::: null ::::: */
-
 .artifactcomment, #commentform { margin: 0.5em 0pt 0pt; padding: 0.3em 0pt=
  0.3em 0.3em; border-top: 3px solid rgb(195, 217, 255); }
 #commentform { padding-top: 1em; }
-.delcom { background: none repeat scroll 0% 0% rgb(232, 232, 232); }
-.commentcontent { margin: 1em 0pt; }
 
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: application/octet-stream
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/logo
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/logo
 
 iVBORw0KGgoAAAANSUhEUgAAADoAAAA3CAYAAABdJVn2AAAABHNCSVQICAgIfAhkiAAAF7tJREFU
 aIGNmtm3HMeR3n8RmVXV3XcjAILgTpBaKFEcjWT5eOb4SfrT7TM+Glu26JFEaUgRFAiQAkEsBO7S
@@ -1729,10 +1588,10 @@ jZdYdXDzKHP65iG70emkgPYMnTck3e/2QtUiXswUkVons1cJGtNpBF6TXlJgltqm8qJ+ErTBK8oi
 lAmiLRL2kzGxdAt6qV11S7kpl58Lb7mdknLzxku8/eYtTtYDudeO4w2suo6X1jO3rq04f/2EcaqE
 Gdo54kpSWUI22on4oquGt0MjcWsQH0JKLV9b9EU7PfVFxZZlc6JxoJRj0culIY7tjWo/951rC6RW
 TlyEJIFIULyJ1LJvmZaGXERYr1ZcPzrk4GDg/wEAALqT6/vQZwAAAABJRU5ErkJggg==
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/modelo1.gif
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/modelo1.gif
 
 R0lGODdhLgKmAucAAAQCBHKFTcTCfa6RPNHHdH4zf7OJsurjklSDxBNFk8zKxbCqpVNLJH6kyrKo
 XkhYeINtJt64ptLl9u/F74yebLR2XPPk1ri2tNWwUZPG69PVz4+FSJSiqcTa7YNch+zCVLPDz2Jk
@@ -2604,10 +2463,10 @@ n/ItINNuPU+9U+sCP/REr4ZAz+DuPRtsfNoLbiW2p/T0fUmvRt/fS/WSY3u3jeCO6Kv0rfRSb/VW
 H99V3974/ce3XdPv7atqf/W3DeD7XdM7Efe3PfcFTve9fYs76cf7/e9F3/d+P1X1/cdoX/ZC49/4
 jeAFPi5Wr/UK3vaMfx8GbtqgDfZaN9/Gl9TbAi72XhP5+Q3hkK/gDR70afzeZj/6x33fpe+rf7/6
 rN/6rv/6sB/7sj/7tF/7tm8TAQEAOw==
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/modelo2.gif
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/modelo2.gif
 
 R0lGODdh6QFCAucAAAQCBHSGTMHCkbeMVM/GcvfmlbyGvHYueWaKvs3FuL2oTXRYELilnNHjyezM
 vFZIEpGdXXekzPDk1q9uWeiyoNPV0OKrfhhGkp2IN5PG6IVZhvPLX7e2tZmkquz04761Y7HE0pSt
@@ -3298,10 +3157,10 @@ qogiQTeTAfrdu+Yiz8mH31y++/fz4Z+vT88efoXx48HXDx/ffFDw8PGD196fjCI2w47AAg08EMEE
 ndKMQe4cbLC7zc4b774IHfxvs/nk+45CCxnccDsPLfTvQaBEfHBC8CiE0EEBH1QQxhhlnJFGrLa7
 EMUc9dNwxfeC2vFDHjf0LsQfM2xPxwY5ZJFFEgMEEUodkdSsxiqtvBLLLLXckssuvfwSzDDFHJPM
 Ms08E8001VyTzTbdfBPOOOWck846YwwIADs=
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/frmrestrictionsuidefinition.gif
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/frmrestrictionsuidefinition.gif
 
 R0lGODdhogPgAucAAAQCBD6NPpyEQDxOSpXH/EpFTBtGk/HEPxZjzszGvNPq+5lTUSRGnOGIcvzs
 nCppxHiFi1wkIAQVk0xWtG2r+QlG0s1QLZSdqrLj/GaDyypl3MTFtNP+wMluWBAygOzq3PzQvMUc
@@ -5379,20 +5238,218 @@ NF1THE3TMh1QN+3S9KRTPh1QWHCB24kCXxhUQi1UQz1URE1URV1URm1UR31USI1USZ1USq1US71U
 TM1UTd1UTu1UR5WARwVVRg0DTy1VUz3VUiVVVF1VVmVVVW1VWI1VU31VWb0dN5AAXM1VXd1VXu1V
 X/1VYA1WYR1WYi1WYz1WZE1WZV1WZm1WZ31WaI1WaZ1Waq1Wa71WbM1Wbd1Wbu1Wb/1WcHXWQSDJ
 gAAAOw==
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/frmrestrictionsuidefinition_test.gif
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/frmrestrictionsuidefinition_text.gif
 
-PCFET0NUWVBFIEhUTUwgUFVCTElDICItLy9JRVRGLy9EVEQgSFRNTCAyLjAvL0VOIj4KPGh0bWw+
-PGhlYWQ+Cjx0aXRsZT40MDQgTm90IEZvdW5kPC90aXRsZT4KPC9oZWFkPjxib2R5Pgo8aDE+Tm90
-IEZvdW5kPC9oMT4KPHA+VGhlIHJlcXVlc3RlZCBVUkwgL3N2bi93aWtpL2ltYWdlcy9TcGFuaXNo
-L2ZybVJlc3RyaWN0aW9uc1VJRGVmaW5pdGlvbl90ZXN0LmdpZiB3YXMgbm90IGZvdW5kIG9uIHRo
-aXMgc2VydmVyLjwvcD4KPC9ib2R5PjwvaHRtbD4K
-------=_NextPart_000_0000_0CB932B6.C649966A
+R0lGODdhgQMoAecAAOzp2NHRwNLSwtPTxdDQwNHRv9DQv+3q2u/t3/Px5/b17ff27/j28Pj38Pr6
+9vj38vn48vj38e/t3unm1H2ZqiVXgwA8dBZNfmyMpPT06vf27uXhz2aHoEpxk6OutNbQxdXQxNXP
+w7G3tkhukGqLovX06+PezL/HyuLf1uDe1OHe1d/c0tvXzba9vfPx5uLey+zr5uvr5ezr5eno4eTi
+2uDd1PHu4hxRgAAAAPDw6/Dw6u/u6Oro4eTi2fDu4fHx7/Pz8fX19Pf39vn5+Pv7+v39/P7+/v//
+//Hx7O/v6evq4+Xi2/Du4O/v7PLy7ezr5Obj3Ozs6fLy7vHx7fDw7Obj3ejo5fPz7u3s5efk3eXl
+4vT07+7t5ujl3uLi3vT08PPz7+7t5+jl3+Dg2/X18enm4N7e2fb28vX18vDv6ern4Nzc1/b28/Hw
+6uvo4fb29PHw6+vo4vj49/j49vf39fPx7u3q5vr6+vr6+fr6+PX08vDu6uHdyvz8/Pz8+/b08r/O
+3P7+/b/O23qVqFV9osDP3dXf6HuVqenn1eTfzubh0GeIoOjk0uDcydzWwn+dudLSxNPTxPX18/39
+/SGhIerq5ufn4+Xl4ePj3+Li3f//ze7t5dfXyMzMusnJtsXFscTEr8TEsMbGs+zs5eLi19razeXl
+2+bm3Obm3ePj2PHx69LSwerq4uvr4+zs5Onp4Ojo3+fn3u3t5uTk2czMue7u58nJws3NvM/PvtPT
+wtjYyff389/f0vf39Pz8+vPx7PTx7PTz7vX07/b18Pn49Pn59/v7+Pv7+f39+v7++wBG1QAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACwAAAAAgQMoAQAI/gABCBxo
+YKDBgwgTKlzIsKHDhxAjSpxIsaLFixgzatzIsaPHjyBDihxJsqTJkyhTqlyJsiDLlzBjypxJs6bN
+mzhz6tzJs6fPmC5/Ch1KtKjRo0iTKl3KtGnNoE6jSp1KtarVq1izapUJdavXr2DDih1LtqzZiV3P
+ql3Ltq3bt3DjUkwrt67du3jz6t3Lla/fv4ADCx58lwDhw4gTK17MmGcAAY0jS55MubLlhAYgXd7M
+ubPnz2sJGBhNurTp06hTq17NurXr17Bjy55Nu7bt27hz697Nu7fv38CDCx9OvLjx48iTK+cNurnz
+59CjS59Ovbr169iza9/Ovbv37+DD/osfT768+fPo06tfz769+/fw48ufT7++/fv48+vfz7+///8A
+BjieMgQSWJEyGiGYEIIKHtSgQA86FGGEDVEI0oQVhmShRxtCCECHClkIooAklkjSgyOKJKJEKQ5E
+YYsusjQijB4+RCNCLYJ4Y4wLmujjjycatCNHK0ZE44ssypihkRANySNDDC7k5IZOAmnllTgKCaGB
+HzJoIJcKctllg2K6WOCWYUbpZY0Fpkkmhmi6aaaZYJa5JZ10Runhl3GimaeDYp7Z5Yc8Curlmn4S
+WmeiWr4JJqFj4tlnpDViaemlA4lGGo5tVqpnmHtCqqeilUJKaqiKgjrqqqJqaSqr/qrGSKarsMpq
+66mmoppro7fOyiuouCL66ZOvekqqr7fuCixByzXr7LPQRivttNRWa+21uWGmmZScnglsrMWymeWe
+nYJ7bLLLFiprp+GmKuiTbdaKKqtj0vsnnL6W26q7fM7LrrHFqtktvexWienB9j22pKvqtpovvA4m
+K+6s8rYrrq60SjwunME6jK7FFEccsK3fKttriAWTbLKuBCPsso+GLQxxyed2nG7I846M86koGotz
+xT3b3OuwO9s7cs6Dhlxy0ftaLDTQRzf98tT/0SUyoDSDG+jWAydq7qeGcs1wwWLXy+icjJLN86Rk
+29l2oWDzmfWjF79rcspysh02/t1U982f1WoZzGFcgkvo9+H6AR44TP++VTiUiEcuEw6UV2755Zhn
+rvnmmyPE+eegh665RYpLbvrpduGAk+oHie76651XVDrqtNeuFus24T4Q5bnrLtHstgcvvFe+z1Q8
+7zUhP9fwzDcfVvGTew79S8qj5fz12Fs1PUzHb79S9b9nL/74S3nPUve9k07++uwLNf3lCplvfkLo
+NwS/SOBHBHz7/PePkvcAtB9F6ueQ+e2uIvmDyP78x8AGeiSAC5HfAKUHEQMKxIKtw+BBFujADnpw
+ghHMIOssd8EDjhB5CSxhBisoQhWqDoUpXKHsPkjDGmoEgp4DAO5eaMLW6ZAh/gQU4AFLOMIfGvGI
+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
+fWyEfP6gpsLvJmxiQmZS/WyCJugLCAA7
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/frmrestrictionsuidefinition_reduced.gif
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/frmrestrictionsuidefinition_reduced.gif
 
 R0lGODdh7wFFAOcAAAQCBSOG/IAwKAxDrDxKXqyIOA9i1JbH+QlFw+rDQmyGlIJqJiZRuHGr/C5k
 r1QkJAQdiwtU0UNoqmCa+MyCdMzO5F56t8FbOQs0jj9u27Tp/DFKZdDk775xXgRV5ezq3Cpi45Sb
@@ -5568,10 +5625,10 @@ kFZ0QNd2ddd3hdd4ldd25QPlw49s0A42eAN9v7WGlJEFfFW+gK1X7QCA7ChYg+WDglU+AGAD3UpY
 gn3Yhq1Xhp3YiE3YhmWDjGXYjMVYjdXYEZJYjZ1Yjk1YkN3YkJ2hjB3YleXYlrXXl80OgbXXmM1X
 EYFZmR1Ygc1Z+5jZnqVZnAXammVZmh3agHVZ5asAooXZeoUBGAgGVHCeqF2iqa2HqJXaq6XarMVa
 qU2ZrdVar7VarRVbrmUiJprarn0etD3bslVbtgXbsYXbt5VbsV3buA1bt+XaJQoIADs=
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/testform1.gif
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/testform1.gif
 
 R0lGODdhfwNWAucAAAQCBDiROIcyKqyIOCxDa0RRV5nD+wpi3urEQghEvczFsXSHkNDl+uCIcitp
 w4dsIidTtIyu3JSaoGODzQha0+zq3MDj+5ixxkRopkwmJAQVlMPEuixi48pdPF+Z+LSxo0Z03SRJ
@@ -7059,10 +7116,10 @@ cT896UWP99QDnvW0H7zu9W752E8+950PPO97//bQi8ERhIi6HpjP/Cc0H/rPh/70qV99618f+9nX
 /vazrwHoe5/54Bc/98lffvOfH/3TB78e1v/99L8f/vGX//zpX3/73x//+Z++9PXff///HwADUAAH
 kACvzx4AIequQQMWkAEb0AEfEAIjUAInkAIr0AIvEAMzUAM3kAM70AM/EARDUARHkARL0ARPEAVT
 UAVXkAVb0AVfEAZjUAZNMCAAADs=
-------=_NextPart_000_0000_0CB932B6.C649966A
+------=_NextPart_000_0000_DB857DCE.6C94783E
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
-Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100418200051/testform2.gif
+Content-Location: file:///D:/PERSONAL_Dani/Firefox/ScrapBook/ScrapBookPlus/INFORMATICA/data/20100419194255/testform2.gif
 
 R0lGODdhcgFuAecAAAQCBCOG/IEvJxlElDxMWKSGPAti3ZXH/OrEQgtEsiZStdfFn4JqJnKFjz1g
 siljtQlY087i7IyqyEwmJAQVlD9yvMyCdOzq3GODzcJfPAgyiFZzvGCZ+Sh07wRW5b5yX0By5cc4
@@ -7533,4 +7590,4 @@ RxzEQ5zENZzERbzEQFzESgzFTGzDQtzEVnzDUgzFW2zERHzFW9zEWTzDgEYcxmBcxVEsxGbcxWps
 xli8xmfMxXD8w2mMw31wCCasB3mcx++wx3rsx38MyIEsyINMyIVsyIeMyImsyIvMyI3syI8MyZEs
 yZNMyYNMAMZgwjxAAZvMyZ3syZ8MyqEsyqNMyqVsyqeMyqmsyp2syavsyq8My7Esy7NMy7UcygEB
 ADs=
-------=_NextPart_000_0000_0CB932B6.C649966A--
+------=_NextPart_000_0000_DB857DCE.6C94783E--
