@@ -23,21 +23,21 @@ Partial Class FrmRestrictionsUIDefinition
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle44 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+        Dim DataGridViewCellStyle45 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Me.btnApply = New System.Windows.Forms.Button
         Me.btnDeleteRestriction = New System.Windows.Forms.Button
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
@@ -54,6 +54,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnDuplicateRestriction = New System.Windows.Forms.Button
         Me.btnCancel = New System.Windows.Forms.Button
         Me.gbSecuritySource = New System.Windows.Forms.GroupBox
+        Me.cbRestrictionsSelectAll = New System.Windows.Forms.CheckBox
         Me.cbFilterOnSelectedRol = New System.Windows.Forms.CheckBox
         Me.btnRestrictionsGrid = New System.Windows.Forms.Button
         Me.btnRestrictionsTxt = New System.Windows.Forms.Button
@@ -95,7 +96,6 @@ Partial Class FrmRestrictionsUIDefinition
         Me.cHostSituation = New System.Windows.Forms.Panel
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.cConfigFile = New System.Windows.Forms.TextBox
-        Me.cbRestrictionsSelectAll = New System.Windows.Forms.CheckBox
         Me.gbSecuritySource.SuspendLayout()
         CType(Me.cRestrictions, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbRestrictionsDefinition.SuspendLayout()
@@ -115,7 +115,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnApply.Name = "btnApply"
         Me.btnApply.Size = New System.Drawing.Size(74, 23)
         Me.btnApply.TabIndex = 1
-        Me.btnApply.Text = "Aplicar"
+        Me.btnApply.Text = "Apply"
         Me.btnApply.UseVisualStyleBackColor = True
         '
         'btnDeleteRestriction
@@ -125,7 +125,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnDeleteRestriction.Name = "btnDeleteRestriction"
         Me.btnDeleteRestriction.Size = New System.Drawing.Size(58, 23)
         Me.btnDeleteRestriction.TabIndex = 33
-        Me.btnDeleteRestriction.Text = "Eliminar"
+        Me.btnDeleteRestriction.Text = "Remove"
         Me.btnDeleteRestriction.UseVisualStyleBackColor = True
         '
         'btnSelectFile
@@ -135,8 +135,8 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnSelectFile.Name = "btnSelectFile"
         Me.btnSelectFile.Size = New System.Drawing.Size(54, 23)
         Me.btnSelectFile.TabIndex = 51
-        Me.btnSelectFile.Text = "Selec."
-        Me.ToolTip1.SetToolTip(Me.btnSelectFile, "Seleccionar fichero de configuración en el que guardar la configuración aplicada")
+        Me.btnSelectFile.Text = "Select"
+        Me.ToolTip1.SetToolTip(Me.btnSelectFile, "Selects the configuration file in which to save the settings applied")
         Me.btnSelectFile.UseVisualStyleBackColor = True
         '
         'lbFichero
@@ -145,10 +145,10 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lbFichero.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbFichero.Location = New System.Drawing.Point(16, 15)
         Me.lbFichero.Name = "lbFichero"
-        Me.lbFichero.Size = New System.Drawing.Size(75, 13)
+        Me.lbFichero.Size = New System.Drawing.Size(68, 13)
         Me.lbFichero.TabIndex = 68
-        Me.lbFichero.Text = "Fichero cfg:"
-        Me.ToolTip1.SetToolTip(Me.lbFichero, "Fichero de configuración")
+        Me.lbFichero.Text = "Config file:"
+        Me.ToolTip1.SetToolTip(Me.lbFichero, "Configuration file")
         '
         'btnLoad
         '
@@ -157,8 +157,8 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnLoad.Name = "btnLoad"
         Me.btnLoad.Size = New System.Drawing.Size(54, 23)
         Me.btnLoad.TabIndex = 69
-        Me.btnLoad.Text = "Leer"
-        Me.ToolTip1.SetToolTip(Me.btnLoad, "Carga la configuracion de seguridad desde el archivo seleccionado")
+        Me.btnLoad.Text = "Load"
+        Me.ToolTip1.SetToolTip(Me.btnLoad, "Loads security settings from the selected file")
         Me.btnLoad.UseVisualStyleBackColor = True
         '
         'btnSave
@@ -168,9 +168,8 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnSave.Name = "btnSave"
         Me.btnSave.Size = New System.Drawing.Size(54, 23)
         Me.btnSave.TabIndex = 70
-        Me.btnSave.Text = "Grabar"
-        Me.ToolTip1.SetToolTip(Me.btnSave, "Guarda la configuracion de Seleccionar fichero de configuración en el fichero sel" & _
-                "eccionado")
+        Me.btnSave.Text = "Save"
+        Me.ToolTip1.SetToolTip(Me.btnSave, "Saves the settings applied in the configuration file selected")
         Me.btnSave.UseVisualStyleBackColor = True
         '
         'cbOnlyActualComponent
@@ -178,11 +177,10 @@ Partial Class FrmRestrictionsUIDefinition
         Me.cbOnlyActualComponent.AutoSize = True
         Me.cbOnlyActualComponent.Location = New System.Drawing.Point(137, 42)
         Me.cbOnlyActualComponent.Name = "cbOnlyActualComponent"
-        Me.cbOnlyActualComponent.Size = New System.Drawing.Size(141, 17)
+        Me.cbOnlyActualComponent.Size = New System.Drawing.Size(139, 17)
         Me.cbOnlyActualComponent.TabIndex = 71
-        Me.cbOnlyActualComponent.Text = "Solo componente actual"
-        Me.ToolTip1.SetToolTip(Me.cbOnlyActualComponent, "Leer y aplicar o grabar únicamente la informacion especifica del componente de se" & _
-                "guridad actual")
+        Me.cbOnlyActualComponent.Text = "Only current component"
+        Me.ToolTip1.SetToolTip(Me.cbOnlyActualComponent, "Loads / Saves only the information especific to the current security component")
         Me.cbOnlyActualComponent.UseVisualStyleBackColor = True
         '
         'btnProhibit
@@ -192,9 +190,8 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnProhibit.Name = "btnProhibit"
         Me.btnProhibit.Size = New System.Drawing.Size(75, 23)
         Me.btnProhibit.TabIndex = 58
-        Me.btnProhibit.Text = "Impedir"
-        Me.ToolTip1.SetToolTip(Me.btnProhibit, "Impedir activar las propiedades supervisadas para la selección hecha: controles o" & _
-                " grupos de controles / Roles / Estados")
+        Me.btnProhibit.Text = "Prevent"
+        Me.ToolTip1.SetToolTip(Me.btnProhibit, "Prohibit activating supervised properties for the selection made: controls or control groups / roles / states")
         Me.btnProhibit.UseVisualStyleBackColor = True
         '
         'btnAuthorize
@@ -204,9 +201,8 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnAuthorize.Name = "btnAuthorize"
         Me.btnAuthorize.Size = New System.Drawing.Size(75, 23)
         Me.btnAuthorize.TabIndex = 57
-        Me.btnAuthorize.Text = "Permitir"
-        Me.ToolTip1.SetToolTip(Me.btnAuthorize, "Permitir activar las propiedades supervisadas para la selección hecha: controles " & _
-                "o grupos de controles / Roles / Estados")
+        Me.btnAuthorize.Text = "Allow"
+        Me.ToolTip1.SetToolTip(Me.btnAuthorize, "Authorize activating supervised properties for the selection made: controls or control groups / roles / states")
         Me.btnAuthorize.UseVisualStyleBackColor = True
         '
         'cComponents
@@ -245,7 +241,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnDuplicateRestriction.Name = "btnDuplicateRestriction"
         Me.btnDuplicateRestriction.Size = New System.Drawing.Size(62, 23)
         Me.btnDuplicateRestriction.TabIndex = 47
-        Me.btnDuplicateRestriction.Text = "Duplicar"
+        Me.btnDuplicateRestriction.Text = "Duplicate"
         Me.btnDuplicateRestriction.UseVisualStyleBackColor = True
         '
         'btnCancel
@@ -256,7 +252,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(75, 23)
         Me.btnCancel.TabIndex = 48
-        Me.btnCancel.Text = "Cancelar"
+        Me.btnCancel.Text = "Cancel"
         Me.btnCancel.UseVisualStyleBackColor = True
         '
         'gbSecuritySource
@@ -275,17 +271,26 @@ Partial Class FrmRestrictionsUIDefinition
         Me.gbSecuritySource.Size = New System.Drawing.Size(900, 211)
         Me.gbSecuritySource.TabIndex = 49
         Me.gbSecuritySource.TabStop = False
-        Me.gbSecuritySource.Text = " Permisos definidos "
+        Me.gbSecuritySource.Text = " Restrictions defined"
+        '
+        'cbRestrictionsSelectAll
+        '
+        Me.cbRestrictionsSelectAll.AutoSize = True
+        Me.cbRestrictionsSelectAll.Location = New System.Drawing.Point(22, 180)
+        Me.cbRestrictionsSelectAll.Name = "cbRestrictionsSelectAll"
+        Me.cbRestrictionsSelectAll.Size = New System.Drawing.Size(15, 14)
+        Me.cbRestrictionsSelectAll.TabIndex = 76
+        Me.cbRestrictionsSelectAll.UseVisualStyleBackColor = True
         '
         'cbFilterOnSelectedRol
         '
         Me.cbFilterOnSelectedRol.AutoSize = True
         Me.cbFilterOnSelectedRol.Enabled = False
-        Me.cbFilterOnSelectedRol.Location = New System.Drawing.Point(584, 16)
+        Me.cbFilterOnSelectedRol.Location = New System.Drawing.Point(613, 16)
         Me.cbFilterOnSelectedRol.Name = "cbFilterOnSelectedRol"
-        Me.cbFilterOnSelectedRol.Size = New System.Drawing.Size(168, 17)
+        Me.cbFilterOnSelectedRol.Size = New System.Drawing.Size(131, 17)
         Me.cbFilterOnSelectedRol.TabIndex = 75
-        Me.cbFilterOnSelectedRol.Text = "Filtrar según Rol seleccionado"
+        Me.cbFilterOnSelectedRol.Text = "Filter on selected Role"
         Me.cbFilterOnSelectedRol.UseVisualStyleBackColor = True
         '
         'btnRestrictionsGrid
@@ -305,7 +310,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnRestrictionsTxt.Name = "btnRestrictionsTxt"
         Me.btnRestrictionsTxt.Size = New System.Drawing.Size(54, 21)
         Me.btnRestrictionsTxt.TabIndex = 73
-        Me.btnRestrictionsTxt.Text = "Texto"
+        Me.btnRestrictionsTxt.Text = "Text"
         Me.btnRestrictionsTxt.UseVisualStyleBackColor = True
         '
         'txtRestrictions
@@ -322,33 +327,33 @@ Partial Class FrmRestrictionsUIDefinition
         'cRestrictions
         '
         Me.cRestrictions.AllowUserToAddRows = False
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cRestrictions.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle31.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cRestrictions.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle31
         Me.cRestrictions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(205, Byte), Integer))
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.cRestrictions.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle32.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle32.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(205, Byte), Integer))
+        DataGridViewCellStyle32.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle32.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle32.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle32.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle32.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.cRestrictions.DefaultCellStyle = DataGridViewCellStyle32
         Me.cRestrictions.Location = New System.Drawing.Point(14, 41)
         Me.cRestrictions.Name = "cRestrictions"
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cRestrictions.RowHeadersDefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle33.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle33.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle33.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle33.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle33.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle33.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cRestrictions.RowHeadersDefaultCellStyle = DataGridViewCellStyle33
         Me.cRestrictions.RowHeadersVisible = False
         Me.cRestrictions.Size = New System.Drawing.Size(863, 133)
         Me.cRestrictions.TabIndex = 62
@@ -396,19 +401,19 @@ Partial Class FrmRestrictionsUIDefinition
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(10, 16)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(81, 13)
+        Me.Label1.Size = New System.Drawing.Size(74, 13)
         Me.Label1.TabIndex = 83
-        Me.Label1.Text = "Componente:"
+        Me.Label1.Text = "Component:"
         '
         'cbShowOnlySelectedGroup
         '
         Me.cbShowOnlySelectedGroup.AutoSize = True
         Me.cbShowOnlySelectedGroup.Enabled = False
-        Me.cbShowOnlySelectedGroup.Location = New System.Drawing.Point(395, 35)
+        Me.cbShowOnlySelectedGroup.Location = New System.Drawing.Point(424, 35)
         Me.cbShowOnlySelectedGroup.Name = "cbShowOnlySelectedGroup"
-        Me.cbShowOnlySelectedGroup.Size = New System.Drawing.Size(181, 17)
+        Me.cbShowOnlySelectedGroup.Size = New System.Drawing.Size(150, 17)
         Me.cbShowOnlySelectedGroup.TabIndex = 67
-        Me.cbShowOnlySelectedGroup.Text = "Mostrar sólo Grupo seleccionado"
+        Me.cbShowOnlySelectedGroup.Text = "Shows only selected Group"
         Me.cbShowOnlySelectedGroup.UseVisualStyleBackColor = True
         '
         'btnAddGroup
@@ -418,7 +423,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnAddGroup.Name = "btnAddGroup"
         Me.btnAddGroup.Size = New System.Drawing.Size(56, 23)
         Me.btnAddGroup.TabIndex = 66
-        Me.btnAddGroup.Text = "Añadir"
+        Me.btnAddGroup.Text = "Add"
         Me.btnAddGroup.UseVisualStyleBackColor = True
         '
         'lblGrupos
@@ -427,41 +432,41 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lblGrupos.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblGrupos.Location = New System.Drawing.Point(612, 39)
         Me.lblGrupos.Name = "lblGrupos"
-        Me.lblGrupos.Size = New System.Drawing.Size(121, 13)
+        Me.lblGrupos.Size = New System.Drawing.Size(97, 13)
         Me.lblGrupos.TabIndex = 65
-        Me.lblGrupos.Text = "Grupos de controles"
+        Me.lblGrupos.Text = "Control Groups"
         '
         'cGroups
         '
         Me.cGroups.AllowUserToAddRows = False
         Me.cGroups.AllowUserToDeleteRows = False
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle19.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cGroups.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle34.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle34.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle34.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle34.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle34.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle34.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle34.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cGroups.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle34
         Me.cGroups.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle20.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.cGroups.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle35.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle35.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle35.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle35.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle35.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle35.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle35.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.cGroups.DefaultCellStyle = DataGridViewCellStyle35
         Me.cGroups.Location = New System.Drawing.Point(615, 55)
         Me.cGroups.Name = "cGroups"
-        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle21.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cGroups.RowHeadersDefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle36.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle36.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle36.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle36.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle36.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle36.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle36.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cGroups.RowHeadersDefaultCellStyle = DataGridViewCellStyle36
         Me.cGroups.RowHeadersVisible = False
         Me.cGroups.Size = New System.Drawing.Size(271, 67)
         Me.cGroups.TabIndex = 64
@@ -473,7 +478,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnDeleteState.Name = "btnDeleteState"
         Me.btnDeleteState.Size = New System.Drawing.Size(60, 23)
         Me.btnDeleteState.TabIndex = 63
-        Me.btnDeleteState.Text = "Eliminar"
+        Me.btnDeleteState.Text = "Remove"
         Me.btnDeleteState.UseVisualStyleBackColor = True
         '
         'btnDeleteRol
@@ -483,7 +488,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnDeleteRol.Name = "btnDeleteRol"
         Me.btnDeleteRol.Size = New System.Drawing.Size(60, 23)
         Me.btnDeleteRol.TabIndex = 62
-        Me.btnDeleteRol.Text = "Eliminar"
+        Me.btnDeleteRol.Text = "Remove"
         Me.btnDeleteRol.UseVisualStyleBackColor = True
         '
         'cbStatesSelectAll
@@ -568,9 +573,9 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lbSupervisar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbSupervisar.Location = New System.Drawing.Point(204, 352)
         Me.lbSupervisar.Name = "lbSupervisar"
-        Me.lbSupervisar.Size = New System.Drawing.Size(71, 13)
+        Me.lbSupervisar.Size = New System.Drawing.Size(67, 13)
         Me.lbSupervisar.TabIndex = 54
-        Me.lbSupervisar.Text = "Supervisar:"
+        Me.lbSupervisar.Text = "Supervise:"
         '
         'cVisibility
         '
@@ -590,9 +595,9 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lbEstados.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbEstados.Location = New System.Drawing.Point(612, 260)
         Me.lbEstados.Name = "lbEstados"
-        Me.lbEstados.Size = New System.Drawing.Size(56, 13)
+        Me.lbEstados.Size = New System.Drawing.Size(47, 13)
         Me.lbEstados.TabIndex = 54
-        Me.lbEstados.Text = "Estados:"
+        Me.lbEstados.Text = "States:"
         '
         'lbRoles
         '
@@ -610,39 +615,39 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lblControles.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblControles.Location = New System.Drawing.Point(10, 38)
         Me.lblControles.Name = "lblControles"
-        Me.lblControles.Size = New System.Drawing.Size(60, 13)
+        Me.lblControles.Size = New System.Drawing.Size(53, 13)
         Me.lblControles.TabIndex = 54
-        Me.lblControles.Text = "Controles"
+        Me.lblControles.Text = "Controls"
         '
         'cStates
         '
-        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle22.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cStates.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle37.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle37.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle37.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle37.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle37.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle37.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle37.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cStates.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle37
         Me.cStates.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle23.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.cStates.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle38.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle38.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle38.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle38.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle38.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle38.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle38.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.cStates.DefaultCellStyle = DataGridViewCellStyle38
         Me.cStates.Location = New System.Drawing.Point(615, 276)
         Me.cStates.Name = "cStates"
-        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle24.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cStates.RowHeadersDefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle39.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle39.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle39.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle39.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle39.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle39.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle39.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cStates.RowHeadersDefaultCellStyle = DataGridViewCellStyle39
         Me.cStates.RowHeadersVisible = False
         Me.cStates.Size = New System.Drawing.Size(269, 67)
         Me.cStates.TabIndex = 50
@@ -651,33 +656,33 @@ Partial Class FrmRestrictionsUIDefinition
         '
         Me.cControls.AllowUserToAddRows = False
         Me.cControls.AllowUserToDeleteRows = False
-        DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle25.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cControls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle40.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cControls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle40
         Me.cControls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle26.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.cControls.DefaultCellStyle = DataGridViewCellStyle26
+        DataGridViewCellStyle41.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle41.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle41.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle41.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle41.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle41.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle41.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.cControls.DefaultCellStyle = DataGridViewCellStyle41
         Me.cControls.Location = New System.Drawing.Point(13, 55)
         Me.cControls.Name = "cControls"
-        DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle27.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cControls.RowHeadersDefaultCellStyle = DataGridViewCellStyle27
+        DataGridViewCellStyle42.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle42.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle42.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle42.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle42.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle42.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle42.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cControls.RowHeadersDefaultCellStyle = DataGridViewCellStyle42
         Me.cControls.RowHeadersVisible = False
         Me.cControls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.cControls.Size = New System.Drawing.Size(561, 288)
@@ -685,33 +690,33 @@ Partial Class FrmRestrictionsUIDefinition
         '
         'cRoles
         '
-        DataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle28.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cRoles.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle28
+        DataGridViewCellStyle43.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle43.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle43.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle43.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle43.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle43.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle43.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cRoles.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle43
         Me.cRoles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle29.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle29.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle29.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.cRoles.DefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle44.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle44.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle44.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle44.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle44.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle44.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.cRoles.DefaultCellStyle = DataGridViewCellStyle44
         Me.cRoles.Location = New System.Drawing.Point(617, 167)
         Me.cRoles.Name = "cRoles"
-        DataGridViewCellStyle30.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle30.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle30.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle30.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle30.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle30.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle30.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cRoles.RowHeadersDefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle45.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle45.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle45.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle45.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle45.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle45.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle45.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.cRoles.RowHeadersDefaultCellStyle = DataGridViewCellStyle45
         Me.cRoles.RowHeadersVisible = False
         Me.cRoles.Size = New System.Drawing.Size(269, 67)
         Me.cRoles.TabIndex = 50
@@ -723,7 +728,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnDeleteGroup.Name = "btnDeleteGroup"
         Me.btnDeleteGroup.Size = New System.Drawing.Size(56, 23)
         Me.btnDeleteGroup.TabIndex = 51
-        Me.btnDeleteGroup.Text = "Eliminar"
+        Me.btnDeleteGroup.Text = "Remove"
         Me.btnDeleteGroup.UseVisualStyleBackColor = True
         '
         'cbSaveOnApplying
@@ -731,11 +736,11 @@ Partial Class FrmRestrictionsUIDefinition
         Me.cbSaveOnApplying.AutoSize = True
         Me.cbSaveOnApplying.Checked = True
         Me.cbSaveOnApplying.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbSaveOnApplying.Location = New System.Drawing.Point(305, 43)
+        Me.cbSaveOnApplying.Location = New System.Drawing.Point(290, 43)
         Me.cbSaveOnApplying.Name = "cbSaveOnApplying"
-        Me.cbSaveOnApplying.Size = New System.Drawing.Size(267, 17)
+        Me.cbSaveOnApplying.Size = New System.Drawing.Size(150, 17)
         Me.cbSaveOnApplying.TabIndex = 68
-        Me.cbSaveOnApplying.Text = "Guardar configuración en fichero al aplicar/aceptar"
+        Me.cbSaveOnApplying.Text = "Save into file on Apply/Ok"
         Me.cbSaveOnApplying.UseVisualStyleBackColor = True
         '
         'OpenFileDialog1
@@ -750,7 +755,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.btnAccept.Name = "btnAccept"
         Me.btnAccept.Size = New System.Drawing.Size(74, 23)
         Me.btnAccept.TabIndex = 72
-        Me.btnAccept.Text = "Aceptar"
+        Me.btnAccept.Text = "OK"
         Me.btnAccept.UseVisualStyleBackColor = True
         '
         'txtState
@@ -766,9 +771,9 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lblEstado.AutoSize = True
         Me.lblEstado.Location = New System.Drawing.Point(155, 3)
         Me.lblEstado.Name = "lblEstado"
-        Me.lblEstado.Size = New System.Drawing.Size(40, 13)
+        Me.lblEstado.Size = New System.Drawing.Size(32, 13)
         Me.lblEstado.TabIndex = 78
-        Me.lblEstado.Text = "Estado"
+        Me.lblEstado.Text = "State"
         '
         'txtRoles
         '
@@ -783,9 +788,9 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lblRoles.AutoSize = True
         Me.lblRoles.Location = New System.Drawing.Point(286, 3)
         Me.lblRoles.Name = "lblRoles"
-        Me.lblRoles.Size = New System.Drawing.Size(73, 13)
+        Me.lblRoles.Size = New System.Drawing.Size(59, 13)
         Me.lblRoles.TabIndex = 80
-        Me.lblRoles.Text = "Roles Usuario"
+        Me.lblRoles.Text = "User Roles"
         '
         'lblSituacion
         '
@@ -793,9 +798,9 @@ Partial Class FrmRestrictionsUIDefinition
         Me.lblSituacion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblSituacion.Location = New System.Drawing.Point(3, 4)
         Me.lblSituacion.Name = "lblSituacion"
-        Me.lblSituacion.Size = New System.Drawing.Size(133, 13)
+        Me.lblSituacion.Size = New System.Drawing.Size(136, 13)
         Me.lblSituacion.TabIndex = 78
-        Me.lblSituacion.Text = "Situación actual Host:"
+        Me.lblSituacion.Text = "Current Host Situation:"
         '
         'cHostSituation
         '
@@ -834,15 +839,6 @@ Partial Class FrmRestrictionsUIDefinition
         Me.cConfigFile.Size = New System.Drawing.Size(411, 20)
         Me.cConfigFile.TabIndex = 83
         '
-        'cbRestrictionsSelectAll
-        '
-        Me.cbRestrictionsSelectAll.AutoSize = True
-        Me.cbRestrictionsSelectAll.Location = New System.Drawing.Point(22, 180)
-        Me.cbRestrictionsSelectAll.Name = "cbRestrictionsSelectAll"
-        Me.cbRestrictionsSelectAll.Size = New System.Drawing.Size(15, 14)
-        Me.cbRestrictionsSelectAll.TabIndex = 76
-        Me.cbRestrictionsSelectAll.UseVisualStyleBackColor = True
-        '
         'FrmRestrictionsUIDefinition
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -858,7 +854,7 @@ Partial Class FrmRestrictionsUIDefinition
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Name = "FrmRestrictionsUIDefinition"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Definición de Seguridad"
+        Me.Text = "Security Definition"
         Me.gbSecuritySource.ResumeLayout(False)
         Me.gbSecuritySource.PerformLayout()
         CType(Me.cRestrictions, System.ComponentModel.ISupportInitialize).EndInit()

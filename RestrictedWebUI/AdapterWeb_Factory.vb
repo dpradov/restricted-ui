@@ -32,10 +32,11 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Clase Singleton que ofrece una factoría de adaptadores (<see cref="IControlAdapterFactory "/>) para los
-''' controles de aplicaciones Web. Gestiona los controles GridView, ListControl, ListItem, DataControlField a través 
-''' de unos adaptadores específicos, para el resto de controles Web.UI.WebControls ofrece un único adaptador genérico, 
-''' AdaptadorWeb_WebControl. Ofrece también un adaptador para controles Web.UI.Control
+''' Singleton class that provides a factory of adapters (<see cref="IControlAdapterFactory "/>) for the controls of Web applications.
+''' Manages the controls <see cref="Web.UI.WebControls.GridView"/>, <see cref="Web.UI.WebControls.ListControl"/>, 
+''' <see cref="Web.UI.WebControls.ListItem"/> and <see cref="Web.UI.WebControls.DataControlField"/> through some specific adapters;
+''' for the rest of controls, <see cref="Web.UI.WebControls.WebControl"/> and <see cref="Web.UI.Control"/>, provides two generic 
+''' adapters, <see cref="AdapterWeb_WebControl "/> and <see cref="AdapterWeb_UIControl "/>
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWeb_Factory

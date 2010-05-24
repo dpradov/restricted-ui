@@ -32,9 +32,9 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Clase Singleton que ofrece una factoría de adaptadores (<see cref="IControlAdapterFactory "/>) para los
-''' controles de aplicaciones WinForms. Gestiona los controles TreeView y DataGridView a través de unos adaptadores
-''' específicos, para el resto ofrece un único adaptador genérico, <see cref="AdapterWinForms_Control  "/>
+''' Singleton class that provides a factory of adapters (<see cref="IControlAdapterFactory "/>) for the controls of WinForms applications.
+''' Manages the controls <see cref="Windows.Forms.TreeView"/>, <see cref="Windows.Forms.DataGridView"/> and <see cref="Windows.Forms.ToolStrip"/> 
+''' through some specific adapters. For the rest of controls provides a single generic adapter, <see cref="AdapterWinForms_Control "/>
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWinForms_Factory

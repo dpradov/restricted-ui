@@ -30,10 +30,10 @@
 
 
 ''' <summary>
-''' Ofrece un tratamiento de selección de filas en objetos DataGridView (con checkbox) similar al que ofrece Gmail en sus contactos:
-''' La columna con el control checkbox se marcará al seleccionar la fila. Es posible usar hacer clic en la propia
-''' columna del checkbox sin perder las marcas añadidas hasta el momento, bien por selección bien por otros clic en
-''' dicha columna
+''' It provides a treatment in the row selection of DataGridView objects (with checkbox) similar to that provided in Gmail contacts:
+''' The column with the checkbox control will be marked by selecting the row.
+''' You may click the checkbox column itself without losing the added marks so far, either by row selection or by clicking in that 
+''' checkbox column
 ''' </summary>
 ''' <remarks></remarks>
 Public Class GridSelectionMng
@@ -84,14 +84,15 @@ Public Class GridSelectionMng
     End Property
     Private _colorCheckedRow As Brush = Brushes.LightSalmon
 
-    ''' <summary>
-    ''' Fuerza que se resalten las filas seleccionadas 
-    ''' </summary>
-    ''' <param name="uncheckNotSelected">Si es <b>true</b> tan sólo se resaltarán las que estén actualmente seleccionadas, el resto que
-    ''' pudieran tener el check pero no estar seleccionadas se desmarcarán. Si es <b>false</b> las seleccionadas se añadirán a las que
-    ''' ya estén marcadas</param>
-    ''' <remarks>Se ofrece este método porque la selección de filas sólo se traduce en el marcado de las mismas, con el consiguiente
-    ''' resaltado de éstas, cuando el foco se encuentra en el control.</remarks>
+    ''' <summary>It forces selected rows to be checked and highlighted</summary>
+    ''' <param name="uncheckNotSelected">If it's <b>true</b> then it will be highlighted only those that are currently selected, 
+    ''' the rest that could have the check but are not selected will uncheck. 
+    ''' If it is <b>false</b> those selected will be added to the already marked
+    ''' </param>
+    ''' <remarks>
+    ''' We offer this method because the row selection makes rows being marked, therefore highlighting the latter,
+    ''' only when the focus is on control.
+    ''' </remarks>
     Public Sub CheckSelectedRows(ByVal uncheckNotSelected As Boolean)
         If uncheckNotSelected Then
             CheckOnlySelectedRows()
@@ -102,7 +103,7 @@ Public Class GridSelectionMng
     End Sub
 
     Private Sub cGrid_CellClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs)
-        If My.Computer.Keyboard.ShiftKeyDown Then Exit Sub ' Si Shift pulsado -> salir pues ya se habrá gestionado desde SelectionChanged
+        If My.Computer.Keyboard.ShiftKeyDown Then Exit Sub ' If Shift pressed -> Exit because it will already be managed from SelectionChanged
 
         If e.ColumnIndex <> 0 Then
             If Not (My.Computer.Keyboard.CtrlKeyDown Or My.Computer.Keyboard.ShiftKeyDown) Then
@@ -119,14 +120,14 @@ Public Class GridSelectionMng
         If _cGrid.Focused Then
             If Control.MouseButtons = Windows.Forms.MouseButtons.Left Then
                 If My.Computer.Keyboard.ShiftKeyDown Then
-                    CheckSelectedRows() ' Shift+Left Click -> Añadimos a las ya marcadas las filas seleccionadas
+                    CheckSelectedRows() ' Shift+Left Click -> We add selected rows to those already marked
                 End If
 
             ElseIf Control.MouseButtons = Windows.Forms.MouseButtons.None Then
                 If Not (My.Computer.Keyboard.CtrlKeyDown Or My.Computer.Keyboard.ShiftKeyDown) Then
-                    CheckOnlySelectedRows()  ' Selección modificada, no usado el ratón, y Shift y Control no pulsados -> marcamos exclusivamente los que estén seleccionados
+                    CheckOnlySelectedRows()  ' Selection changed, mouse not used, and Shift and Control not pressed -> mark only those that are selected
                 Else
-                    CheckSelectedRows()  ' Sólo teclado. Shift o Control pulsados -> se añadirán a las ya marcadas las filas seleccionadas
+                    CheckSelectedRows()  ' Only keyboard. Shift or Control pressed -> We add selected rows to those already marked
                 End If
             End If
         End If

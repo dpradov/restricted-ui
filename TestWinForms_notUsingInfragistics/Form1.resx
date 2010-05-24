@@ -123,6 +123,13 @@
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>381, 17</value>
   </metadata>
+  <data name="cbAditionalLogicOfRestriction.ToolTip" xml:space="preserve">
+    <value>If checked: only allow changes on CheckBox1 if, in addition to the security restrictions imposed, the contents of the controls TextBox and TextBox2 are the same.
+Note: Changes in TextBox1 or TextBox2 don't trigger automatically the visible or enabled state of the CheckBox1. This extra condition is analyzed only when there 
+is a modification in the conditions (application state, user roles, restrictions definition..) that makes necessary to reconsider the security applied, and of 
+course, when it is tried to make CheckBox1 visible.
+You can force to reconsider the security clicking in 'Reinitialize Security'</value>
+  </data>
   <metadata name="ToolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>475, 17</value>
   </metadata>

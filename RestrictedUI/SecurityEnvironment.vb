@@ -32,7 +32,7 @@ Imports System.Reflection
 
 
 
-#Region "Estructuras y clases que albergan la seguridad a nivel de entorno"
+#Region "Structures and classes that contain security policy at environment level"
 
 Public Structure Rol
     Public ID As Integer
@@ -59,9 +59,9 @@ End Class
 
 #End Region
 
-#Region "Estructura para la gestión de HotKey"
+#Region "Structure for HotKey management"
 ''' <summary>
-''' Teclas de acceso rápido (hot keys)
+''' Shortcut keys (Hot keys)
 ''' </summary>
 Public Structure HotKey
     Public Sub New(ByVal KeyCode As Keys, ByVal Modifiers As Keys, Optional ByVal EnabledHotKey As Boolean = False)
@@ -77,54 +77,56 @@ End Structure
 #End Region
 
 ''' <summary>
-''' Clase Singleton (vía Shared) que mantiene aspectos generales a todo el esquema de seguridad
+''' Singleton class (via Shared) that keeps general aspects to all security scheme.
 ''' </summary>
 ''' <remarks></remarks>
 Public Class SecurityEnvironment
 
-#Region "Eventos disparados"
+#Region "Events"
     Public Shared Event ControlAdapterFactoriesChanged()
     Public Shared Event SecurityChanged(ByVal IDControlRestriccionesUI As String)
     Public Shared Event HotKeyChanged()
     Protected Friend Shared Event SecurityChangedWithCancelInMind(ByVal IDControlRestriccionesUI As String, ByVal salvarPrioridad As Boolean, ByVal recuperarPrioridad As Boolean)
 
+
     ''' <summary>
-    ''' Señala un cambio en el estado actual de la aplicación (según comunica IHost). Este estado puede ser común a todas las pantallas
-    ''' o ser incluso específico para cada instancia de un tipo concreto de formulario (o contenedor)
+    ''' It signals a change in the current state of the application, a change that could affect all security components, 
+    ''' only to a specific component, even just a specific instance of one component.
     ''' </summary>
-    ''' <remarks>Si el ID del controlador es Nothing deberá ser atendido por todos los componentes de seguridad. Podrá también restringirse 
-    ''' a determinadas instancias mediante 'instanceID'</remarks> 
-    ''' <param name="ID">Identificador del controlador</param> 
-    ''' <param name="instanceID">Identificador de la instancia del controlador</param> 
+    ''' <remarks>If the parameter <paramref name="ID"/> is Nothing then it should be adressed by all components. It may also be 
+    ''' restricted to some instances using <paramref name="instanceID"/>
+    ''' </remarks> 
+    ''' <param name="ID">Identifier of the security component (referring in turn to a certain form or container)</param> 
+    ''' <param name="instanceID">Identifier of the instance of the security component</param> 
     Public Shared Event StateChanged(ByVal ID As String, ByVal instanceID As String, ByVal nuevoEstado As Integer)
 
     ''' <summary>
-    ''' Señala un cambio sobre el/los perfiles del usuario conectado (según comunica IHost). Estos roles pueden ser comunes para todas las pantallas
-    ''' o ser incluso específico para cada instancia de un tipo concreto de formulario (o contenedor)
+    ''' It signals a change on the roles of the application user, a change that could affect all security components, 
+    ''' only to a specific component, even just a specific instance of one component.
     ''' </summary>
-    ''' <remarks>Si el ID del controlador es Nothing deberá ser atendido por todos los componentes de seguridad. Podrá también restringirse 
-    ''' a determinadas instancias mediante 'instanceID'</remarks> 
-    ''' <param name="ID">Identificador del controlador</param> 
-    ''' <param name="instanceID">Identificador de la instancia del controlador</param> 
+    ''' <remarks>If the parameter <paramref name="ID"/> is Nothing then it should be adressed by all components. 
+    ''' It may also be restricted to some instances using <paramref name="instanceID"/>
+    ''' </remarks> 
+    ''' <param name="ID">Identifier of the security component (referring in turn to a certain form or container)</param> 
+    ''' <param name="instanceID">Identifier of the instance of the security component</param> 
     Public Shared Event RolesChanged(ByVal ID As String, ByVal instanceID As String)
 
 #End Region
 
     ''' <summary>
-    ''' Devuelve el adaptador <see cref="IControlAdapter"/> correspondiente al control indicado, en base a las factorías
-    ''' registradas en el Entorno.
+    ''' Returns the adapter (<see cref="IControlAdapter"/>) for the indicated control, based on registered factories in 
+    ''' the <see cref="SecurityEnvironment"/>.
     ''' </summary>
-    ''' <param name="control">Control para el que se busca un adaptador</param>
-    ''' <param name="parent "></param>
-    ''' <returns>Se devuelve siempre una instancia correcta de <see cref="IControlAdapter"/>. Cuando no se localiza ningún
-    ''' adaptador adecuado se devolverá <see cref="NullControlAdapter"/> (Special Case)
-    ''' </returns>
+    ''' <param name="control">The object for which you want to find an adapter</param>
+    ''' <param name="parent ">Parent object of that shown in <paramref name="control"/></param>
+    ''' <returns>If the factory has no proper adapter for this control, it will return the special adapter 
+    ''' <see cref="NullControlAdapter "/></returns>
     ''' <remarks>
-    ''' Se utilizan factorías de adaptadores (<see cref="IControlAdapterFactory"/>) para localizar el adaptador más idóneo. Los principales componentes de
-    ''' seguridad (ControlRestrictedUIWinForms y ControlRestrictedUIWeb) incluyen sus propias factorías internas para 
-    ''' reconocer los controles más usuales en sus respectivos entornos.
-    ''' Es posible asociar nuevas factorías (<see cref="IControlAdapterFactory"/>) al Entorno, que tendrán prioridad sobre
-    ''' las internas.
+    ''' Adapter factories are used ( <see cref="IControlAdapterFactory"/> ) to locate the most suitable control adapter.
+    ''' The main security components (ControlRestrictedUIWinForms and ControlRestrictedUIWeb) include their own internal factories
+    ''' to recognize the most common controls in their respective environments.
+    ''' It is possible to add new factories ( <see cref="IControlAdapterFactory"/> ) to the <see cref="SecurityEnvironment"/>, which 
+    ''' will take precedence over internal one.
     ''' <seealso cref="IControlAdapter"/>
     ''' <seealso cref="IControlAdapterFactory"/>
     ''' </remarks>
@@ -157,9 +159,8 @@ Public Class SecurityEnvironment
     End Function
 
     ''' <summary>
-    ''' Recupera o establece el objeto que implementa la interface <see cref="IHost"/> y a través de la cual el <see cref="SecurityEnvironment"/> y el resto
-    ''' de componentes de seguridad puede interaccionar con la aplicación Host a efectos de conocer el estado y roles actuales que
-    ''' deben considerarse.
+    ''' Gets or sets the object that implements the interface <see cref="IHost"/> and through which the <see cref="SecurityEnvironment"/> and 
+    ''' other security components may interact with the Host application in order to know the current status and roles to be considered.
     ''' </summary>
     Public Shared Property Host() As IHost
         Get
@@ -176,14 +177,16 @@ Public Class SecurityEnvironment
     Protected Shared _host As IHost
 
     ''' <summary>
-    ''' Comunica errores o incidencias a la aplicación a través del objeto que implementa la interface <see cref="IHost"/>
+    ''' It sends error o incidence messages generated by the security library to the Application through the object that implements 
+    ''' the interface <see cref="IHost"/>
     ''' </summary>
-    ''' <remarks>Algunas incidencias podrán ser ignoradas tranquilamente por la aplicación si indican que no se ha
-    ''' encontrado un determinado control y se sabe que éste es creado dinámicamente</remarks>
+    ''' <remarks>Some of the errors or incidences may be safely ignored by the application if they are related to a not found control
+    ''' and we know that this control is created dinamically
+    ''' </remarks>
     Protected Friend Shared Sub ShowError(ByVal [error] As String, Optional ByVal ParentControl As Object = Nothing, Optional ByVal IDControlRestrictedUI As String = "")
         Dim cad As String = ""
         If ParentControl IsNot Nothing Then
-            cad = cad + "ControlPadre=" + ParentControl.ToString
+            cad = cad + "ParentControl=" + ParentControl.ToString
         End If
         If Not String.IsNullOrEmpty(IDControlRestrictedUI) Then
             cad = cad + " IDControlRestriccionesUI=" + IDControlRestrictedUI
@@ -199,14 +202,15 @@ Public Class SecurityEnvironment
     End Sub
 
 
-#Region "Gestión de Factorías de adaptadores"
+#Region "Adapters Factory Management"
 
     ''' <summary>
-    ''' Obtiene o establece la factoría de adaptadores que se considera base
+    ''' Gets or sets the adapter factory that will be considered as base
     ''' </summary>
-    ''' <remarks>Los principales componentes de seguridad UI (ControlRestrictedUIWinForms y ControlRestrictedUIWeb) incluyen sus 
-    ''' propias factorías internas para reconocer los controles más usuales en sus respectivos entornos. Estos componentes
-    ''' indican al Entorno a través de esta propiedad cuál debe ser la factoría base a utilizar.
+    ''' <remarks>
+    ''' The main security components (ControlRestrictedUIWinForms and ControlRestrictedUIWeb) include their own internal factories
+    ''' to recognize the most common controls in their respective environments.
+    ''' These components indicate the SecurityEnvironment through this property which should be the base factory to use.
     ''' </remarks>
     Public Shared Property BaseFactory() As IControlAdapterFactory
         Get
@@ -220,15 +224,20 @@ Public Class SecurityEnvironment
     End Property
     Protected Shared _BaseFactory As IControlAdapterFactory
 
-
     ''' <summary>
-    ''' Obtiene la lista de factorías adicionales de adaptadores 
+    ''' Gets the list of additional factories of control adapters
     ''' </summary>
-    ''' <remarks>Las factorías adicionales tendrán prioridad sobre la factoría base (normalmente asociada al 
-    ''' componente de seguridad). A través de estas factorias adicionales es posible gestionar o interpretar
-    ''' controles específicos, o incluso ofrecer adaptadores altenativos para controles manejables por la 
-    ''' factoría base (> Plugin) 
-    ''' Como ejemplo de una factoría adicional, muy específica: AdapterInfragisticsWinForms_Factory
+    ''' <remarks>
+    ''' <para>
+    ''' Through these additional factories can be managed or interpret specific controls, or even provide alternative 
+    ''' adapters for controls contemplated in the factory base (-> plugin)
+    ''' As an example of an additional factory, very specific: AdapterInfragisticsWinForms_Factory
+    ''' </para>
+    ''' <para>
+    ''' The additional factories will take precedence over the factory base: 
+    ''' When it comes to finding the best control adapter it will start looking for it in the additional ones and 
+    ''' finally in the base factory if none is found before
+    ''' </para>
     ''' </remarks>
     Protected Friend Shared ReadOnly Property AditionalFactories() As IList(Of IControlAdapterFactory)
         Get
@@ -238,9 +247,9 @@ Public Class SecurityEnvironment
     Protected Shared _AditionalFactories As IList(Of IControlAdapterFactory) = New List(Of IControlAdapterFactory)
 
     ''' <summary>
-    ''' Agrega la factoría de adaptadores de control indicada. Será consultada antes que la factoría interna
+    ''' Adds the specified factory of control adapters. It will be consulted earlier than the internal factory.
     ''' </summary>
-    ''' <remarks>Si se agregan varias, se preguntarán en el orden en que se hayan añadido</remarks> 
+    ''' <remarks>If you add several ones, will be asked in the order they were added</remarks> 
     Public Shared Sub AddFactory(ByVal factory As IControlAdapterFactory)
         If Not _AditionalFactories.Contains(factory) Then
             _AditionalFactories.Add(factory)
@@ -250,7 +259,7 @@ Public Class SecurityEnvironment
     End Sub
 
     ''' <summary>
-    ''' Elimina la factoría de adaptadores de control indicada
+    ''' Removes the specified factory of control adapters.
     ''' </summary>
     ''' <remarks></remarks> 
     Public Shared Sub RemoveFactory(ByVal factory As IControlAdapterFactory)
@@ -262,11 +271,11 @@ Public Class SecurityEnvironment
     End Sub
 
     ''' <summary>
-    ''' Inicializa las factorías adicionales de adaptadores a partir de la configuración establecida en el archivo que se indica
+    ''' Initializes the additional factories of adapters from your settings in the file indicated
     ''' </summary>
     ''' <param name="file "></param>
     ''' <param name="auxDomain "></param>
-    ''' <remarks>Utilizable en tiempo de diseño</remarks>
+    ''' <remarks>Usable in design time</remarks>
     Friend Shared Sub LoadFactories(ByVal file As String, ByRef auxDomain As AppDomain)
         If String.IsNullOrEmpty(file) Then Exit Sub
 
@@ -278,13 +287,13 @@ Public Class SecurityEnvironment
 
 
     ''' <summary>
-    ''' Inicializa las factorías de adaptadores de controles mediante la lista de cadenas en las que se describen. Estas factorías
-    ''' se instanciarán y añadirán a la lista <see cref="AditionalFactories "/>
+    ''' Initializes the factories of control adapter through the list of strings where they are described.
+    ''' These factories are instantiated and added to the list <see cref="AditionalFactories "/>
     ''' </summary>
-    ''' <param name="factories ">Lista de cadenas de la forma [ruta de la DLL], [nombre completo de la clase]
-    ''' <example>PruebaWinForms\bin\Debug\Seguridad_AdaptadoresInfragistics.dll, Seguridad_AdaptadoresInfragistics.AdaptadorControlUltraGridWinFormsFactoria</example></param>
+    ''' <param name="factories ">List of strings of the form [DLL path], [class full name]
+    ''' <example>TestWinForms\bin\Debug\RestrictedWinFormsUI_Infragistics.dll, RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_Factory</example></param>
     ''' <param name="designTime"></param>
-    ''' <param name="domainAux">Dominio de aplicación (AppDomain) dentro del cual se cargarán en tiempo de ejecución estas DLL (en tiempo de diseño)</param>
+    ''' <param name="domainAux">Application domain (AppDomain) within which these DLL are loaded at design time (only used if <paramref name=" designTime "/> is True</param>
     ''' <remarks></remarks>
     Private Shared Sub SetFactories(ByVal factories As List(Of String), ByVal designTime As Boolean, Optional ByRef domainAux As System.AppDomain = Nothing)
         Dim campos As String()
@@ -310,9 +319,9 @@ Public Class SecurityEnvironment
     End Sub
 
     ''' <summary>
-    ''' Instancia y devuelve la factoría indicada mediante el nombre de la DLL y su nombre completo (para ser utilizada en tiempo de diseño)
+    ''' Instances and returns the factory indicated by the name of the DLL and its full name (to be used at design time)
     ''' </summary>
-    ''' <remarks>Se deberá descargar el dominio utilizado</remarks>
+    ''' <remarks>It should unload the domain used</remarks>
     Private Shared Function InstanceFactoria(ByVal dllFactory As String, ByVal ClassFullName As String, ByRef DomainAux As AppDomain) As IControlAdapterFactory
         Dim factory As IControlAdapterFactory = Nothing
         Dim assembly As Assembly = Nothing
@@ -330,7 +339,7 @@ Public Class SecurityEnvironment
                 ads.DisallowCodeDownload = True
                 ads.ConfigurationFile = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile
 
-                ' Dejo en dllFactoria exclusivamente el nombre de la dll, sin el path y sin la extensión
+                ' I assign to dllFactoria only the name of the dll, without path and without extension
                 dllFactory = dllFactory.Substring(posStartNameDLL + 1, dllFactory.Length - posStartNameDLL - 5)
                 DomainAux = AppDomain.CreateDomain("DomainAux", Nothing, ads)
                 DomainAux.Load(dllFactory)
@@ -357,7 +366,7 @@ Public Class SecurityEnvironment
     End Function
 
     ''' <summary>
-    ''' Instancia y devuelve la factoría indicada mediante el nombre de la DLL y su nombre completo (para ser utilizada en tiempo de ejecución)
+    ''' Instances and returns the factory indicated by the name of the DLL and its full name (to be used at runtime)
     ''' </summary>
     Private Shared Function InstanceFactoria(ByVal dllFactory As String, ByVal ClassFullName As String) As IControlAdapterFactory
         Dim factory As IControlAdapterFactory = Nothing
@@ -387,9 +396,9 @@ Public Class SecurityEnvironment
 
 #End Region
 
-#Region "Definición y acceso a la Seguridad a nivel de Entorno"
+#Region "Definition and access to the Security policy at Environment level"
     ''' <summary>
-    ''' Obtiene o establece los roles definidos como comunes (se ofrecen en todos los componentes de seguridad)
+    ''' Gets or sets the roles defined as common (offered in all security components)
     ''' </summary>
     Public Shared Property CommonRoles() As List(Of Rol)
         Get
@@ -402,7 +411,7 @@ Public Class SecurityEnvironment
     Protected Shared _CommonRoles As New List(Of Rol)
 
     ''' <summary>
-    ''' Obtiene o establece los estados definidos como comunes (se ofrecen en todos los componentes de seguridad)
+    ''' Gets or sets the states defined as common (offered in all security components)
     ''' </summary>
     Public Shared Property CommonStates() As List(Of State)
         Get
@@ -415,16 +424,17 @@ Public Class SecurityEnvironment
     Protected Shared _CommonStates As New List(Of State)
 
     ''' <summary>
-    ''' Devuelve el objeto diccionario en el que se guarda la definición de seguridad (política de restricciones de interface)
-    ''' de los diferentes componentes, según pueda haberse establecido a partir de la carga de un fichero de configuración o 
-    ''' de una cadena de texto.
-    ''' Ver <see cref="LoadFrom"/> y <see cref="LoadFromString"/> 
+    ''' It returns the dictionary object which stores the definition of security (policy interface constraints) 
+    ''' of the various components, as may have been established from the load of a configuration file or a text string.
+    ''' See <see cref="LoadFrom"/> and <see cref="LoadFromString"/>
     ''' </summary>
-    ''' <remarks>La seguridad aquí contenida no tiene por qué ser igual a la embebida en los distintos componentes. 
-    ''' La que aplique finalmente en el componente depende de una propiedad del mismo (PrioridadSeguridadEmbebida)
-    ''' Métodos como LoadFrom o LoadFromString, por ejemplo, forzarán la prioridad a la seguridad del entorno sobre la 
-    ''' embebida, para un componente, cuando en el fichero o cadena (p.ej) aparezca referenciado ese componente, aunque
-    ''' sea con un definición vacía.
+    ''' <remarks>
+    ''' The security herein needs not be equal to the embedded in the various components. 
+    ''' The restrictions finally applied in the component depend on one of its properties 
+    ''' (<see cref="ControlRestrictedUI.PriorityEmbeddedSecurity "/>). Methods like <see cref="LoadFrom"/> or 
+    ''' <see cref="LoadFromString"/>, for example, will establish on the <see cref="SecurityEnvironment"/> the restrictions to 
+    ''' apply to each of the components that are referenced in the file or string (even with an empty definition), 
+    ''' and set the indicated property so that the components use that restrictions.
     ''' </remarks>
     Public Shared ReadOnly Property ComponentsSecurity() As Dictionary(Of String, ComponentSecurity)
         Get
@@ -434,13 +444,15 @@ Public Class SecurityEnvironment
     Protected Shared _componentsSecurity As New Dictionary(Of String, ComponentSecurity)
 
     ''' <summary>
-    ''' Incorpora a la seguridad a nivel de entorno la definición correspondiente al componente indicado con <paramref name="IDControlRestriccionesUI "/>
+    ''' Incorporates to SecurityEnvironment the corresponding definition for the component indicated with <paramref name="IDControlRestriccionesUI "/>
     ''' </summary>
     ''' <param name="IDControlRestriccionesUI"></param>
     ''' <param name="seg"></param>
-    ''' <param name="restorePriority ">Indica si debe restaurarse la prioridad que se tenía respecto a la seguridad embebida</param>
-    ''' <remarks>Comunica al componente el cambio en la seguridad mediante un evento que indica si debe o no recordar el cambio en el caso
-    ''' de que deba ser deshecho posteriormente (este método es invocado desde el formulario de mantenimiento de la seguridad)</remarks>
+    ''' <param name="restorePriority ">Indicates if the priority to the embedded security must be restored</param>
+    ''' <remarks> 
+    ''' Communicates to the component the change in security with an event that indicates if it should remember the change 
+    ''' in case it is needed to be undone later (this method is invoked from the security maintenance form)
+    ''' </remarks>
     Protected Friend Shared Sub AddSecurityDefinition(ByVal IDControlRestriccionesUI As String, ByVal seg As ComponentSecurity, ByVal restorePriority As Boolean)
         If String.IsNullOrEmpty(IDControlRestriccionesUI) Then Exit Sub
 
@@ -454,18 +466,23 @@ Public Class SecurityEnvironment
 
 #End Region
 
-#Region "Gestión de Archivos/Cadenas de configuración"
+#Region "Configuration Files/Strings Management"
     ''' <summary>
-    ''' Carga la seguridad establecida a nivel de entorno (RolesComunes, EstadosComunes, SeguridadContenedores) con la definición de seguridad 
-    ''' establecida en el fichero facilitado como parámetro.
-    ''' Es posible cargar exclusivamente la seguridad correspondiente al componente de seguridad identificado con <paramref name=" IDControlRestrictedUI  "/>
+    ''' Loads the security policy (common roles, common states, components security) from a file, at environment level.
+    ''' You can load only the security definition for the component identified by <paramref name=" IDControlRestrictedUI "/>
     ''' </summary>
-    ''' <remarks>Mediante las opciones establecidas en <paramref name=" opc "/> es posible cargar los elementos comunes
-    ''' Mediante este método no se cargarán las factorías que puedan estar aquí definidas. Se recomienda asociar las factorías en tiempo de compilación. En
-    ''' cualquier caso se ofrece un método explícito para ello: <see cref="LoadFactories  "/> 
-    ''' Nota: Aquellos componentes de seguridad para los que no haya ninguna referencia en este archivo no se verán afectados y seguirá teniendo
-    ''' prioridad su definición de seguridad embebida. Si aparece el encabezado referente a ese componente de seguridad aunque vacío sí se tendrá 
-    ''' en cuenta y se considerará que no deberá aplicarse ninguna supervisión sobre el formulario o contenedor correspondiente</remarks> 
+    ''' <remarks>
+    ''' <para>Using the options set out in <paramref name=" opt "/> you can load common elements.></para>
+    ''' <para>This method will not load the factories that may be defined in the file. It is recommended to attach the 
+    ''' factories at compile time. In any case it is provided an explicit method for this: <see cref="LoadFactories "/>
+    ''' </para>
+    ''' <para>
+    ''' When calling <see cref="LoadFrom "/> or <see cref="LoadFromString "/>, the restrictions defined in the file, text string 
+    ''' or stream will take precedence over the ones embedded in the components. If in that text string there is no section 
+    ''' relative to a particular component it will continue to apply the security embedded in that component. If you would like 
+    ''' to remove all restrictions from a component it would be enough to include an empty paragraph related to that component.
+    ''' </para>
+    ''' </remarks> 
     Public Shared Sub LoadFrom(ByVal file As String, _
                                Optional ByVal opt As OptFileConfig = OptFileConfig.None, _
                                Optional ByVal IDControlRestrictedUI As String = "")
@@ -478,10 +495,10 @@ Public Class SecurityEnvironment
     End Sub
 
     ''' <summary>
-    ''' Carga la seguridad establecida a nivel de entorno, de manera equivalente a <see cref=" LoadFrom "/> con la única diferencia
-    ''' de que este método está pensado para permitir indicar al componente de seguridad que deshaga los cambios.
+    ''' Loads the security policy at environment level from a file, in equivalent manner to <see cref=" LoadFrom "/>,
+    ''' with the only difference being that this method is intended to allow the security component to undo the changes.
     ''' </summary>
-    ''' <remarks>Utilizado por el formulario de mantenimiento de la seguridad</remarks> 
+    ''' <remarks>It is used by the security maintenance form (<see cref="FrmRestrictionsUIDefinition "/>)</remarks> 
     Protected Friend Shared Sub LoadFromWithCancelInMind(ByVal file As String, _
                                Optional ByVal opt As OptFileConfig = OptFileConfig.None, _
                                Optional ByVal IDControlRestrictedUI As String = "", Optional ByVal savePriority As Boolean = False, Optional ByVal restorePriority As Boolean = False)
@@ -494,16 +511,21 @@ Public Class SecurityEnvironment
     End Sub
 
     ''' <summary>
-    ''' Carga la seguridad establecida a nivel de entorno (RolesComunes, EstadosComunes, SeguridadContenedores) con la definición de seguridad 
-    ''' ofrecida desde el stream facilitado.
-    ''' Es posible cargar exclusivamente la seguridad correspondiente al componente de seguridad identificado con <paramref name=" IDControlRestrictedUI  "/>
+    ''' Loads the security policy (common roles, common states, components security) from a stream, at environment level.
+    ''' You can load only the security definition for the component identified by <paramref name=" IDControlRestrictedUI "/>
     ''' </summary>
-    ''' <remarks>Mediante las opciones establecidas en <paramref name=" opc "/> es posible cargar los elementos comunes
-    ''' Mediante este método no se cargarán las factorías que puedan estar aquí definidas. Se recomienda asociar las factorías en tiempo de compilación. En
-    ''' cualquier caso se ofrece un método explícito para ello: <see cref="LoadFactories  "/>
-    ''' Nota: Aquellos componentes de seguridad para los que no haya ninguna referencia en este stream no se verán afectados y seguirá teniendo
-    ''' prioridad su definición de seguridad embebida. Si aparece el encabezado referente a ese componente de seguridad aunque vacío sí se tendrá 
-    ''' en cuenta y se considerará que no deberá aplicarse ninguna supervisión sobre el formulario o contenedor correspondiente</remarks>
+    ''' <remarks>
+    ''' <para>Using the options set out in <paramref name=" opt "/> you can load common elements</para>
+    ''' <para>This method will not load the factories that may be defined in the stream. It is recommended to attach the 
+    ''' factories at compile time. In any case it is provided an explicit method for this: <see cref="LoadFactories "/>
+    ''' </para>
+    ''' <para>
+    ''' When calling <see cref="LoadFrom "/> or <see cref="LoadFromString "/>, the restrictions defined in the file, text string 
+    ''' or stream will take precedence over the ones embedded in the components. If in that text string there is no section 
+    ''' relative to a particular component it will continue to apply the security embedded in that component. If you would like 
+    ''' to remove all restrictions from a component it would be enough to include an empty paragraph related to that component.
+    ''' </para>
+    ''' </remarks> 
     Public Shared Sub LoadFrom(ByVal stream As IO.StreamReader, _
                                      Optional ByVal opt As OptFileConfig = OptFileConfig.None, _
                                      Optional ByVal IDControlRestrictedUI As String = "")
@@ -515,10 +537,16 @@ Public Class SecurityEnvironment
     End Sub
 
     ''' <summary>
-    ''' Carga la seguridad establecida a nivel de entorno (RolesComunes, EstadosComunes, SeguridadContenedores) con la definición de seguridad 
-    ''' ofrecida desde la cadena facilitada, de manera equivalente a <see  cref=" LoadFrom "/>
-    ''' Es posible cargar exclusivamente la seguridad correspondiente al componente de seguridad identificado con <paramref name=" IDControlRestrictedUI  "/>
+    ''' Loads the security policy (common roles, common states, components security) from a string, at environment level, 
+    ''' in equivalent manner to <see  cref=" LoadFrom "/>
+    ''' You can load only the security definition for the component identified by <paramref name=" IDControlRestrictedUI "/>
     ''' </summary>
+    ''' <remarks>
+    ''' When calling <see cref="LoadFrom "/> or <see cref="LoadFromString "/>, the restrictions defined in the file, text string 
+    ''' or stream will take precedence over the ones embedded in the components. If in that text string there is no section 
+    ''' relative to a particular component it will continue to apply the security embedded in that component. If you would like 
+    ''' to remove all restrictions from a component it would be enough to include an empty paragraph related to that component.
+    ''' </remarks>
     Public Shared Sub LoadFromString(ByVal TxtConfiguration As String, _
                                      Optional ByVal opt As OptFileConfig = OptFileConfig.None, _
                                      Optional ByVal IDControlRestrictedUI As String = "")
@@ -531,8 +559,7 @@ Public Class SecurityEnvironment
 
 
     ''' <summary>
-    ''' Devuelve el contenido del archivo de texto facilitado, cuya ruta se adaptará según se necesite acceder en tiempo de diseño 
-    ''' o de ejecución
+    ''' Returns the contents of the text file provided, whose path will be adjusted as needed access at design time or runtime
     ''' </summary>
     Protected Friend Shared Function ReadFile(ByVal file As String, ByVal designTime As Boolean) As String
         Dim result As String = ""
@@ -546,7 +573,7 @@ Public Class SecurityEnvironment
     End Function
 
     ''' <summary>
-    ''' Devuelve el contenido del archivo de texto facilitado
+    ''' Returns the contents of the text file provided
     ''' </summary>
     Protected Friend Shared Function ReadFile(ByVal file As String) As String
         Dim result As String = ""
@@ -573,7 +600,7 @@ Public Class SecurityEnvironment
     End Enum
 
     ''' <summary>
-    ''' Enumeración (conjunto de bits) que ofrece las opciones a emplear sobre los métodos de lectura del fichero de configuración
+    ''' Enumeration (set of flags) offering the options to use on the methods of reading the configuration file
     ''' </summary>
     <Flags()> _
     Public Enum OptFileConfig As Short
@@ -584,11 +611,13 @@ Public Class SecurityEnvironment
     End Enum
 
     ''' <summary>
-    ''' Carga las variables facilitadas Factorias, RolesComunes, EstadosComunes, SeguridadFormularios con la definición de seguridad 
-    ''' establecida en la cadena de texto <paramref name=" TxtConfiguracion "/>
-    ''' Es posible cargar exclusivamente la seguridad correspondiente al componente de seguridad identificado con <paramref name=" IDControlRestrictedUI  "/>
+    ''' Loads the supplied variables Factories, CommonRoles, CommonStates, ComponentsSecurity with the security definition 
+    ''' established in the text string <paramref name=" TxtConfiguracion "/>
+    ''' You can load only the security definition for the component identified by <paramref name=" IDControlRestrictedUI "/>
     ''' </summary>
-    ''' <remarks>Mediante las opciones establecidas en <paramref name=" opc "/> es posible cargar sólo las factorías o sólo los elementos comunes</remarks> 
+    ''' <remarks>
+    ''' Using the options set out in <paramref name=" opt "/> you can load only the factories or only the common elements
+    ''' </remarks> 
     Protected Friend Shared Sub LoadConfiguration(ByVal TxtConfiguration As String, _
                                          Optional ByVal opt As OptFileConfig = OptFileConfig.None, _
                                          Optional ByRef Factories As List(Of String) = Nothing, _
@@ -638,7 +667,7 @@ Public Class SecurityEnvironment
                     line = line.Trim
                     If line = "" OrElse line(0) = ";"c Then Continue Do
 
-                    ' Identificar si se entra en un nuevo bloque
+                    ' Identify when entering a new block
                     '===========================
                     previousBlock = actualBlock
                     _IDControlRestrictedUIPrevious = _IDControlRestrictedUI
@@ -669,7 +698,7 @@ Public Class SecurityEnvironment
                                 End If
                         End Select
 
-                        ' Si se cambia de bloque, realizar las acciones necesarias en cada caso
+                        ' If you change of block, take the necessary action in each case
                         '===========================
                         If actualBlock <> previousBlock Then
                             Select Case previousBlock
@@ -686,13 +715,13 @@ Public Class SecurityEnvironment
                                     securityComp.Groups = lGroups.ToArray
                                     lGroups.Clear()
                             End Select
-                            ' Si se sale del conjunto de bloques específico de la seguridad de un formulario, el ID cambiará
+                            ' If you exit the set of blocks specific to a form's security, the ID will change
                             If _IDControlRestrictedUIPrevious <> "" And _IDControlRestrictedUI <> _IDControlRestrictedUIPrevious Then
-                                ' Si se ha facilitado un ID de control de seguridad sólo se leerá los datos de seguridad de ese control
+                                ' If given a security component's ID, it only will read data of that security component
                                 If String.IsNullOrEmpty(IDControlRestrictedUI) Or _IDControlRestrictedUIPrevious = IDControlRestrictedUI Then
                                     ComponentsSecurity.Remove(_IDControlRestrictedUIPrevious)
                                     ComponentsSecurity.Add(_IDControlRestrictedUIPrevious, securityComp)
-                                    securityComp = New ComponentSecurity  ' para el siguiente
+                                    securityComp = New ComponentSecurity  ' to the following
                                 End If
                             End If
                         End If
@@ -702,13 +731,13 @@ Public Class SecurityEnvironment
 
 
 
-                    ' Tratar cada bloque
+                    ' Treat each block
                     '===========================
-                    ' Si sólo hay que cargar factorías..
+                    ' If you only have to load factories ..
                     If ((opt And OptFileConfig.LoadOnlyFactories) <> 0) And actualBlock <> ConfigurationBlocks.Factories Then
                         Continue Do
                     End If
-                    ' Si sólo hay que leer el control de seguridad con ID facilitado como parámetro..
+                    ' If we only have to load the security component whose ID is the provided as parameter..
                     If (Not String.IsNullOrEmpty(IDControlRestrictedUI) And _IDControlRestrictedUI <> "") And _IDControlRestrictedUI <> IDControlRestrictedUI Then
                         Continue Do
                     End If
@@ -761,7 +790,7 @@ Public Class SecurityEnvironment
 
                 Loop
 
-                ' Atender al cierre del último bloque
+                ' Addressing the closing of the last block
                 '===========================
                 Select Case actualBlock
                     Case ConfigurationBlocks.Authorizations
@@ -795,18 +824,18 @@ Public Class SecurityEnvironment
 
 
 
-
     ''' <summary>
-    ''' Permite salvar en el archivo indicado toda la definición de seguridad establecida a nivel de entorno (actualizando la seguridad que hubiera 
-    ''' definida en el archivo), junto con la correspondiente a un determinado componente de seguridad. El guardar el componente indicado es opcional,
-    ''' como lo es hacerlo junto con toda la seguridad a nivel de entorno. Es posible forzar los roles y estados comunes que se quiere enviar al
-    ''' archivo.
+    ''' It lets you save in the specified file all the security definition established at the environment level (<see cref=" SecurityEnvironment" />)
+    ''' (updating the security previously contained in that file), together with the corresponding to a security component.
+    ''' Saving a specific component is optional, as it is to do along with all security at environment level.
+    ''' You can force common roles and common states that you want to send to the file.
     ''' </summary>
     ''' <remarks>
-    ''' La configuración de seguridad de aquellos componentes que estuvieran en el archivo y no aparezcan en el entorno de seguridad ni sea el
-    ''' explicitado con <paramref name=" IDControlRestrictedUI  "/> no se verá afectada. Permanecerá tal como estaba en el archivo (aunque se perderán los comentarios
-    ''' que pudieran haberse incorporado)
-    ''' La ruta del fichero estará ya adaptada según se invoque a este método en tpo. de diseño o de ejecución
+    ''' <para>
+    ''' Security settings for those components that were in the file and do not appear in the security environment nor correspond to the explicit <paramref name=" IDControlRestrictedUI "/>, will not be affected.
+    ''' It will remain as it was in the file (although you will lose the comments that may have been incorporated)
+    ''' </para>
+    ''' <para>Note: the file path must already be adapted according to this method is invoked at design time or runtime</para>
     ''' </remarks> 
     Public Shared Sub SaveConfiguration(ByVal file As String, _
                                           ByVal includeAllKnownSecurity As Boolean, _
@@ -826,10 +855,10 @@ Public Class SecurityEnvironment
         LoadConfiguration(ReadFile(file), opt, _
                           FactoriesAux, CommonRolesAux, CommonStatesAux, ComponentsSecurityAux)
 
-        ' Ahora modificamos lo leído con lo pasado por parámetro, a salvar.
-        ' Las factorías incluidas en el archivo no se modificarán
-        ' Como roles y estados comunes se utilizarán los facilitados
-        ' Según se restrinja a un ControlRestriccionesUI o no, se reemplazarán
+        ' Now we modify what we have read with the data provided as parameter, to be saved.
+        ' The factories included in the file will not change
+        ' Will use as common roles and common states the provided ones
+        ' As restricted to ControlRestriccionesUI or not, will be replaced
         If includeAllKnownSecurity Then
             For Each s As String In SecurityEnvironment.ComponentsSecurity.Keys
                 ComponentsSecurityAux.Remove(s)
@@ -851,8 +880,8 @@ Public Class SecurityEnvironment
     End Sub
 
     ''' <summary>
-    ''' Serializa la definición de seguridad establecida a nivel de entorno (incluyendo la relación de factorías adicionales) en una
-    ''' cadena con el formato que se emplea en el archivo de configuración (legible como tal por tanto)
+    ''' Serializes the security definition established at environment level (including the relation of additional factories) to 
+    ''' a string with the format used in the configuration file.
     ''' </summary>
     Public Shared Function SecurityToString(ByVal Factories As List(Of String), _
                                              ByVal CommonRoles As List(Of Rol), _
@@ -864,9 +893,9 @@ Public Class SecurityEnvironment
         Dim result As String = ""
         Try
             sw.WriteLine("[Factories]")
-            sw.WriteLine("; Las rutas relativas se expresarán de manera relativa a la carpeta de la solución (.sln). Esta ruta se utilizará para localizar las DLL en tiempo de diseño")
-            sw.WriteLine("; Se supondrá que la DLL se encuentra en la misma carpeta que el ejecutable, por lo que en tpo. de ejecución se ignorará la ruta y se utilizará únicamente el nombre del fichero")
-            sw.WriteLine("; Nota: es posible utilizar también rutas absolutas.")
+            sw.WriteLine("; Relative paths will be expressed in relation to the folder containing the solution (. sln). This path will be used to locate the DLL in design time.")
+            sw.WriteLine("; We will assume that the DLL is in the same folder as the executable, so in runtime the path will be ignored and used only the name of the file")
+            sw.WriteLine("; Note: You may also use absolute paths.")
             If Factories IsNot Nothing Then
                 For Each factoria As String In Factories
                     sw.WriteLine(factoria)
@@ -936,21 +965,21 @@ Public Class SecurityEnvironment
 
 
     ''' <summary>
-    ''' Modifica la ruta facilitada en <paramref name="fichero"/> de manera que el archivo correspondiente pueda ser localizado
-    ''' en tiempo de diseño o de ejecución, según se indique en <paramref name="designTime"/>.
+    ''' It changes the path given in <paramref name="file"/> so that the corresponding file can be located at design time or 
+    ''' runtime, as indicated in <paramref name="designTime"/>.
     ''' </summary>
-    ''' <param name="file ">Ruta hacia el archivo</param>
-    ''' <param name="designTime">Indica si se quiere adaptar la ruta para ser utilizada en tiempo de diseño</param>
-    ''' <returns>Devuelve True si el archivo existe</returns>
+    ''' <param name="file ">Path to the file</param>
+    ''' <param name="designTime">Indicates if you want to adapt the path to be used at design time</param>
+    ''' <returns>Returns True if file exists</returns>
     ''' <remarks>
-    ''' El fichero de configuración, el fichero de controles y las DLL de las factorías estarán expresadas mediante rutas 
-    ''' relativas a la carpeta de la solución (.sln)
-    ''' Esta ruta se utilizará para localizar las DLL en tiempo de diseño. Se supondrá que la DLL se encuentra en la misma carpeta que 
-    ''' el ejecutable, por lo que en tpo. de ejecución se ignorará la ruta y se utilizará únicamente el nombre del fichero
-    ''' Nota: es posible utilizar también rutas absolutas.
+    ''' The configuration file, the controls file and the DLL of factories are expressed with paths relative to the folder 
+    ''' containing the solution (. sln). This path will be used to locate the DLL in design time.
+    ''' We will assume that the DLL is in the same folder as the executable, so in runtime the path will be 
+    ''' ignored and used only the name of the file
+    ''' Note: You may also use absolute paths.
     ''' </remarks>
     Public Shared Function AdaptFilePath(ByRef file As String, ByVal designTime As Boolean) As Boolean
-        ' Si la ruta expresada lleva al archivo (es absoluta o no requiere ningún tipo de adaptación) la devolvemos sin más
+        ' If the path leads to the file (it's absolute or doesn't require any adaptation) we return it, without more ado
         If String.IsNullOrEmpty(file) Then Return False
 
         Try
@@ -981,15 +1010,15 @@ Public Class SecurityEnvironment
 
 #End Region
 
-#Region "Tratamiento de teclas HotKey"
+#Region "HotKey Management"
 
     ''' <summary>
-    ''' Obtiene o establece la combinación de teclas que permirá abrir el formulario de mantenimiento de la política de restricciones UI
-    ''' para este componente 
-    ''' (Inicialmente ofrece como combinación: CTR-?, aunque deshabilitada)
+    ''' Gets or sets the keys combination that allows to open the security maintenance form (<see cref="FrmRestrictionsUIDefinition "/>)
+    ''' (Initially offered as combination: CTR+Alt+End, but disabled)
     ''' </summary>
-    ''' <remarks>El uso de HotKey está pensado para facilitar la configuración de la seguridad desde el tiempo de ejecución, pero
-    ''' en las fases de desarrollo y prueba de las aplicaciones
+    ''' <remarks>
+    ''' Using HotKey is designed for easy configuration of security at runtime, but in phases of development and testing of applications
+    ''' <seealso cref="AllowedHotKey "/>
     ''' </remarks>
     Public Shared Property HotKey() As HotKey
         Get
@@ -1003,9 +1032,10 @@ Public Class SecurityEnvironment
     Private Shared _hotKey As New HotKey(Keys.End, Keys.Control Or Keys.Alt, False)
 
     ''' <summary>
-    ''' Permite consultar y establecer si la combinación de teclas que permirá abrir el formulario de mantenimiento de la seguridad para este componente está o no habilitada
+    ''' Boolean value that enables or disables the keys combination to open the security maintenance form (<see cref="FrmRestrictionsUIDefinition "/>)
+    ''' <seealso cref="HotKey "/>
     ''' </summary>
-    ''' <remarks>Inicialmente estará deshabilitada</remarks>
+    ''' <remarks>Initially will be disabled</remarks>
     Public Shared Property AllowedHotKey() As Boolean
         Get
             Return HotKey.Enabled
@@ -1021,20 +1051,49 @@ Public Class SecurityEnvironment
 #End Region
 
 
-#Region "Utilidades para tratamiento de roles"
+#Region "Utilities for processing roles"
 
     Protected Friend Shared CommonRolesAUX As List(Of Rol)
     Protected Friend Shared ParticularRolesAUX As Rol()
 
+
     ''' <summary>
-    ''' Devuelve una cadena con la representación de los roles facilitada en el array <paramref name="roles"/>. Cada rol de entrada se mostrará
-    ''' con su alias si está disponible y si no con su ID. Estos roles estarán separados en la cadena de salida por comas.
-    ''' Para obtener un alias a partir de su ID se utilizarán los diccionarios de roles comunes y particulares existentes en el entorno a no ser
-    ''' que se hayan cargado unos roles auxiliares en <see cref="CommonRolesAUX"/> y <see cref="ParticularRolesAUX"/>, en cuyo caso se utilizarán
-    ''' estos últimos.
+    ''' Returns a string representation of the roles provided in the array <paramref name="roles"/>.
+    ''' Each role of entry will be displayed with its alias if available and if not with its ID. 
+    ''' These roles will be separated in the output string by commas.
     ''' </summary>
-    ''' <param name="IDControlRestrictedUI ">Identificador del componente de seguridad sobre el se analizan los roles (necesario pues cada componente
-    ''' puede tener roles particulares, propios)</param>
+    ''' <param name="IDControlRestrictedUI ">Identifier of the security component for which roles are analyzed 
+    ''' (necessary since each component can have particular roles, own)</param>
+    ''' <remarks>
+    ''' To obtain an alias from its ID it will be used the dictionaries of common and specific roles in the environment, 
+    ''' unless you have loaded some auxiliary roles in <see cref="CommonRolesAUX"/> and <see cref="ParticularRolesAUX"/>,
+    ''' in which case the latter will be used.
+    ''' </remarks>
+    Public Shared Function RolesToStrUsingAlias(ByVal roles As Integer(), ByVal IDControlRestrictedUI As String, _
+                                                          ByVal particularRoles As Rol(), ByVal commonRoles As List(Of Rol) _
+                                                          ) As String
+        Try
+            SecurityEnvironment.CommonRolesAUX = commonRoles
+            SecurityEnvironment.ParticularRolesAUX = particularRoles
+            Return RolesToStrUsingAlias(roles, IDControlRestrictedUI)
+        Finally
+            SecurityEnvironment.CommonRolesAUX = Nothing
+            SecurityEnvironment.ParticularRolesAUX = Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Returns a string representation of the roles provided in the array <paramref name="roles"/>.
+    ''' Each role of entry will be displayed with its alias if available and if not with its ID. 
+    ''' These roles will be separated in the output string by commas.
+    ''' </summary>
+    ''' <param name="IDControlRestrictedUI ">Identifier of the security component for which roles are analyzed 
+    ''' (necessary since each component can have particular roles, own)</param>
+    ''' <remarks>
+    ''' To obtain an alias from its ID it will be used the dictionaries of common and specific roles in the environment, 
+    ''' unless you have loaded some auxiliary roles in <see cref="CommonRolesAUX"/> and <see cref="ParticularRolesAUX"/>,
+    ''' in which case the latter will be used.
+    ''' </remarks>
     Protected Friend Shared Function RolesToStrUsingAlias(ByVal roles As Integer(), ByVal IDControlRestrictedUI As String _
                            ) As String
         Dim sec As ComponentSecurity = Nothing
@@ -1058,7 +1117,7 @@ Public Class SecurityEnvironment
             If roles IsNot Nothing Then
                 For Each r As Integer In roles
                     cadRoles += sep + RolToStrTryingAlias(r, particularRoles, commonRoles)
-                    sep = ","
+                    sep = ", "
                 Next
             End If
             Return cadRoles
@@ -1067,9 +1126,9 @@ Public Class SecurityEnvironment
 
 
     ''' <summary>
-    ''' Devuelve una cadena con la representación del rol facilitado a través de su ID en <paramref name="rolID"/>. Este rol se mostrará
-    ''' con su alias si está disponible y si no con su ID.
-    ''' Para obtener el alias a partir de su ID se utilizarán los diccionarios de roles comunes y particulares que se aporten como parámetro.
+    ''' Returns a string representation of the role provided through its ID in <paramref name="rolID"/>. 
+    ''' This role will be displayed with its alias if available and if not with its ID. 
+    ''' To obtain the alias from its ID it will be used the dictionaries of common and specific roles provided as parameter.
     ''' </summary>
     Public Shared Function RolToStrTryingAlias(ByVal rolID As Integer, ByVal particularRoles As Rol(), ByVal commonRoles As IList(Of Rol)) As String
         If particularRoles IsNot Nothing Then
@@ -1088,10 +1147,10 @@ Public Class SecurityEnvironment
     End Function
 
     ''' <summary>
-    ''' Devuelve el ID asociado al alias de rol facilitado en <paramref name="aliasRol"/>. Para realizar la traducción se utilizarán 
-    ''' como diccionarios la definición de roles comunes y roles particulares que se aporten como parámetro.
+    ''' Returns the ID associated with the alias of role given in <paramref name="aliasRol"/>.
+    ''' To make the translation it will be used as dictionaries the definition of common and specific roles provided as parameter.
     ''' </summary>
-    ''' <remarks>Si el alias no es reconocido devolverá 999999</remarks>
+    ''' <remarks>If the alias is not recognized returns 999 999</remarks>
     Public Shared Function AliasToRolID(ByVal aliasRol As String, ByVal particularRoles As Rol(), ByVal commonRoles As IList(Of Rol)) As Integer
         If particularRoles IsNot Nothing Then
             For Each Rol As Rol In particularRoles
@@ -1109,13 +1168,42 @@ Public Class SecurityEnvironment
         Return 999999
     End Function
 
+
     ''' <summary>
-    ''' Devuelve un array de enteros con los ID asociados a los roles incluidos en la cadena facilitada en <paramref name=" rolesConAlias "/> 
-    ''' en la que pueden aparecer tanto directamente IDs como alias. Para traducir un alias a su ID se utilizarán los diccionarios de roles comunes
-    ''' y particulares existentes en el entorno a no ser que se aporten como parámetro, en cuyo caso se utilizarán estos últimos.
+    ''' Returns an array of integers with the ID associated with the roles included in the string supplied in <paramref name=" rolesWithAlias "/>,
+    ''' string in which can appear both IDs and alias.
     ''' </summary>
-    ''' <param name="IDControlRestrictedUI ">Identificador del componente de seguridad sobre el se analizan los roles (necesario pues cada componente
-    ''' puede tener roles particulares, propios)</param>
+    ''' <param name="IDControlRestrictedUI ">Identifier of the security component for which roles are analyzed 
+    ''' (necessary since each component can have particular roles, own)</param>
+    ''' <remarks>
+    ''' To translate an alias to its ID it will be used the dictionaries of common and specific roles in the environment, 
+    ''' unless you have loaded some auxiliary roles in <see cref="CommonRolesAUX"/> and <see cref="ParticularRolesAUX"/>,
+    ''' in which case the latter will be used.
+    ''' </remarks>
+    Public Shared Function GetRolesID(ByVal rolesWithAlias As String, ByVal IDControlRestrictedUI As String, ByVal particularRoles As Rol(), ByVal commonRoles As List(Of Rol)) As Integer()
+        Dim sec As ComponentSecurity = Nothing
+        Try
+            SecurityEnvironment.CommonRolesAUX = commonRoles
+            SecurityEnvironment.ParticularRolesAUX = particularRoles
+            Return GetRolesID(rolesWithAlias, IDControlRestrictedUI)
+        Finally
+            SecurityEnvironment.CommonRolesAUX = Nothing
+            SecurityEnvironment.ParticularRolesAUX = Nothing
+        End Try
+    End Function
+
+
+    ''' <summary>
+    ''' Returns an array of integers with the ID associated with the roles included in the string supplied in <paramref name=" rolesWithAlias "/>,
+    ''' string in which can appear both IDs and alias.
+    ''' </summary>
+    ''' <param name="IDControlRestrictedUI ">Identifier of the security component for which roles are analyzed 
+    ''' (necessary since each component can have particular roles, own)</param>
+    ''' <remarks>
+    ''' To translate an alias to its ID it will be used the dictionaries of common and specific roles in the environment, 
+    ''' unless you have loaded some auxiliary roles in <see cref="CommonRolesAUX"/> and <see cref="ParticularRolesAUX"/>,
+    ''' in which case the latter will be used.
+    ''' </remarks>
     Public Shared Function GetRolesID(ByVal rolesWithAlias As String, ByVal IDControlRestrictedUI As String) As Integer()
         Dim sec As ComponentSecurity = Nothing
         Dim particularRoles As Rol() = ParticularRolesAUX
@@ -1145,24 +1233,24 @@ Public Class SecurityEnvironment
 
 #End Region
 
-#Region "Utilidades para tratamiento de permisos y grupos"
+#Region "Utilities for processing restrictions and groups"
 
     ''' <summary>
-    ''' Descompone la definición de permisos facilitada en permisos propiamente dichos y grupos
+    ''' Separates the restrictions definition provided in proper restrictions and groups
     ''' </summary>
-    Public Shared Sub GetAuthorizationsAndGroups(ByVal AuthorizationsDefinition As String(), ByRef Authorizations As String(), ByRef Groups As Group())
+    Public Shared Sub GetRestrictionsAndGroups(ByVal RestrictionsDefinition As String(), ByRef Restrictions As String(), ByRef Groups As Group())
         Dim cad As String
 
-        If AuthorizationsDefinition Is Nothing Then
-            Authorizations = Nothing
+        If RestrictionsDefinition Is Nothing Then
+            Restrictions = Nothing
             Groups = Nothing
             Exit Sub
         End If
 
-        Dim AuthorizationsList As New List(Of String)
+        Dim RestrictionsList As New List(Of String)
         Dim lGroups As New List(Of Group)
 
-        For Each cad In AuthorizationsDefinition
+        For Each cad In RestrictionsDefinition
             If cad = "" Then Continue For
             Select Case cad(0)
                 Case "$"c
@@ -1178,44 +1266,44 @@ Public Class SecurityEnvironment
                     End Try
 
                 Case Else  'Case "+"c, "-"c
-                    AuthorizationsList.Add(cad)
+                    RestrictionsList.Add(cad)
             End Select
         Next
-        Authorizations = AuthorizationsList.ToArray
+        Restrictions = RestrictionsList.ToArray
         Groups = lGroups.ToArray
     End Sub
 
     ''' <summary>
-    ''' Devuelve la relación de permisos contenida en definición de seguridad facilitada como parámetro
+    ''' Returns the list of restrictions contained in the security definition provided as a parameter
     ''' </summary>
-    Public Shared Function GetRestrictions(ByVal authorizationsDefinition As String()) As String()
-        Dim _authorizations As String() = Nothing
+    Public Shared Function GetRestrictions(ByVal RestrictionsDefinition As String()) As String()
+        Dim _restrictions As String() = Nothing
         Dim _groups As Group() = Nothing
-        If authorizationsDefinition Is Nothing Then
+        If RestrictionsDefinition Is Nothing Then
             Return New String(0) {""}
         Else
-            GetAuthorizationsAndGroups(authorizationsDefinition, _authorizations, _groups)
-            Return _authorizations
+            GetRestrictionsAndGroups(RestrictionsDefinition, _restrictions, _groups)
+            Return _restrictions
         End If
     End Function
 
     ''' <summary>
-    ''' Devuelve la relación de grupos contenida en definición de seguridad facilitada como parámetro
+    ''' Returns the list of groups contained in the security definition provided as a parameter
     ''' </summary>
-    Public Shared Function GetGroups(ByVal authorizationsDefinition As String()) As Group()
-        Dim authorizations As String() = Nothing
+    Public Shared Function GetGroups(ByVal RestrictionsDefinition As String()) As Group()
+        Dim restrictions As String() = Nothing
         Dim groups As Group() = Nothing
-        If authorizationsDefinition Is Nothing Then
+        If RestrictionsDefinition Is Nothing Then
             Return Nothing
         Else
-            GetAuthorizationsAndGroups(authorizationsDefinition, authorizations, groups)
+            GetRestrictionsAndGroups(RestrictionsDefinition, restrictions, groups)
             Return groups
         End If
     End Function
 
     ''' <summary>
-    ''' Devuelve los grupos y permisos establecidos a nivel de entorno de seguridad para el control de seguridad indicado, serializados
-    ''' como aparecen en la propiedad PermisosDefinicion del componente
+    ''' Returns the groups and restrictions set at the level of security environment for the security component indicated,
+    ''' serialized as they appear in the <see cref="ControlRestrictedUI.RestrictionsDefinition  "/> property
     ''' </summary>
     ''' <param name="IDControlRestrictedUI "></param>
     ''' <returns></returns>
@@ -1248,22 +1336,24 @@ Public Class SecurityEnvironment
 
 #End Region
 
-#Region "Varios"
+#Region "Various"
 
     ''' <summary>
-    ''' Ruta hacia un archivo de configuración, con definición de seguridad. Se utiliza como valor por defecto
-    ''' a ofrecer si el componente no fuerza ninguna ruta propia. Este ruta se actualiza con la última asignación
-    ''' de la propiedad FicheroConfiguración de cualquier componente de seguridad (de restricciones UI).
+    ''' Path to a configuration file, with definition of security.
+    ''' It is used as default value to provide if the component itself does not force any own path.
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>This path is updated with the last assignment of the property <see cref="ControlRestrictedUI.ConfigFile "/> of any security component (of <see cref="RestrictedUI "/>)</remarks>
     Public Shared ConfigFile As String
 
     ''' <summary>
-    ''' Controla la llamada automática al método RegistrarControlesDeFormulario de cada componente de seguridad, lo que fuerza el registro 
-    ''' o actualización de los controles existentes en el formulario o contenedor en donde está incrustado ese componente ControlSeguridad.
+    ''' Controls the automatic call to the method <see cref="ControlRestrictedUI.RegisterControls "/> of each security component,
+    ''' which forces the registration or update of existing controls on the form or user control where this security 
+    ''' component (<see cref="ControlRestrictedUI"/>) is embedded.
     ''' </summary>
-    ''' <remarks>La llamada automática (si esta propiedad es True) se producirá al inicializarse el control y tras la incorporación o eliminación
-    ''' en el EntornoSeguridad de alguna factoría de adaptadores (lo que permitirá descubrir más o menos controles)</remarks>
+    ''' <remarks>
+    ''' The automatic call (if this property is True) will occur when control initializes and after the addition or removal
+    ''' on <see cref="SecurityEnvironment"/> of any adapters factory (allowing to discover a different number of controls)
+    ''' </remarks>
     Public Shared Property AutomaticUpdateOfControlsFile() As Boolean
         Get
             Return _automaticUpdateOfControlsFile
@@ -1271,7 +1361,7 @@ Public Class SecurityEnvironment
         Set(ByVal value As Boolean)
             If _automaticUpdateOfControlsFile <> value Then
                 _automaticUpdateOfControlsFile = value
-                If value Then RaiseEvent ControlAdapterFactoriesChanged() ' Así forzaremos a que se actualicen los archivos de los formularios abiertos
+                If value Then RaiseEvent ControlAdapterFactoriesChanged() ' Thus forcing the upgrade of the open forms files
             End If
         End Set
     End Property
@@ -1281,24 +1371,25 @@ Public Class SecurityEnvironment
 
 
 
-#Region "Escucha eventos IHost"
+#Region "Listen IHost events"
     ''' <summary>
-    ''' Atiende el evento CambioEstado del objeto que implemente la interface IHost
+    ''' Attends the <see cref="IHost.StateChanged"/> event of the object implementing the IHost interface
     ''' </summary>
-    ''' <param name="_ID"></param>
-    ''' <param name="_instanceID"></param>
-    ''' <param name="nuevoEstado"></param>
-    ''' <remarks>Sólo se deberá atender este evento si el ID del control al que va dirigido, así como la instancia es Nothing o coincide con la del control que lo escucha</remarks>
+    ''' <remarks>
+    ''' Only must attend this event if the ID of the control that is addressed, and the instance is Nothing 
+    ''' or coincides with that of the control that listens
+    ''' </remarks>
     Private Shared Sub OnStateChanged(ByVal _ID As String, ByVal _instanceID As String, ByVal nuevoEstado As Integer)
         RaiseEvent StateChanged(_ID, _instanceID, nuevoEstado)
     End Sub
 
     ''' <summary>
-    ''' Atiende el evento CambioRoles del objeto que implemente la interface IHost
+    ''' Attends the <see cref="IHost.RolesChanged"/> event of the object implementing the IHost interface
     ''' </summary>
-    ''' <param name="_ID"></param>
-    ''' <param name="_instanceID"></param>
-    ''' <remarks>Sólo se deberá atender este evento si el ID del control al que va dirigido, así como la instancia es Nothing o coincide con la del control que lo escucha</remarks>
+    ''' <remarks>
+    ''' Only must attend this event if the ID of the control that is addressed, and the instance is Nothing 
+    ''' or coincides with that of the control that listens
+    ''' </remarks>
     Private Shared Sub OnRolesChanged(ByVal _ID As String, ByVal _instanceID As String)
         RaiseEvent RolesChanged(_ID, _instanceID)
     End Sub

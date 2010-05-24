@@ -32,10 +32,10 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Clase Singleton que ofrece una factoría de adaptadores (<see cref="IControlAdapterFactory"/>) para
-''' controles WinForms de NetAdventage (Infragistics): <see cref="Infragistics.Win.UltraWinTree.UltraTree"/> y <see cref="Infragistics.Win.UltraWinGrid.UltraGrid"/> 
+''' Singleton class that provides a factory of adapters (<see cref="IControlAdapterFactory "/>) for WinForm controls of 
+''' NetAdventage (Infragistics): <see cref="Infragistics.Win.UltraWinTree.UltraTree"/> and <see cref="Infragistics.Win.UltraWinGrid.UltraGrid"/> 
 ''' </summary>
-''' <remarks>Otros controles WinForms de Infragistics: http://www.infragistics.com/dotnet/netadvantage/winforms.aspx#Overview</remarks>
+''' <remarks>Other WinForms controls of Infragistics: http://www.infragistics.com/dotnet/netadvantage/winforms.aspx#Overview</remarks>
 Public Class AdapterInfragisticsWinForms_Factory
     Implements IControlAdapterFactory
 

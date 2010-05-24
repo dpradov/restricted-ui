@@ -33,12 +33,14 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para controles <see cref="Web.UI.WebControls.DataControlField"/>, para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI"/>)
+''' Adapter for <see cref="Web.UI.WebControls.DataControlField"/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
-''' <remarks>Por el momento sólo se permite controlar la propiedad Enabled (a través de ReadOnly) para los subtipos
-''' <see cref="Web.UI.WebControls.CheckBoxField "/> y <see cref="Web.UI.WebControls.BoundField"/>. 
-''' El resto (<see cref="Web.UI.WebControls.ButtonField"/>, <see cref="Web.UI.WebControls.TemplateField"/> y <see cref="Web.UI.WebControls.CommandField"/>) no ofrecen ReadOnly ni ningún otro
-''' campo que haga posible ese control, al menos de manera directa</remarks>
+''' <remarks>
+''' At the moment it is only allowed to monitor the Enabled property (through ReadOnly) for the subclasses
+''' <see cref="Web.UI.WebControls.CheckBoxField "/> and <see cref="Web.UI.WebControls.BoundField"/>. 
+''' The rest (<see cref="Web.UI.WebControls.ButtonField"/>, <see cref="Web.UI.WebControls.TemplateField"/> and <see cref="Web.UI.WebControls.CommandField"/>) 
+''' do not offer ReadOnly or any other property that make possible that supervision, at least directly
+''' </remarks>
 Public Class AdapterWeb_DataControlField
     Implements IControlAdapter
 

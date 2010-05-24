@@ -96,13 +96,17 @@
     <Content Include="bin\Release\RestrictedWinFormsUI_Infragistics.xml" />
     <Content Include="Help\Art\frmrestrictionsuidefinition.gif" />
     <Content Include="Help\Art\frmrestrictionsuidefinition_reduced.gif" />
-    <Content Include="Help\Art\frmrestrictionsuidefinition_test.gif" />
+    <Content Include="Help\Art\frmrestrictionsuidefinition_reduced_spa.gif" />
+    <Content Include="Help\Art\frmrestrictionsuidefinition_spa.gif" />
     <Content Include="Help\Art\frmRestrictionsUIDefinition_text.gif" />
+    <Content Include="Help\Art\frmRestrictionsUIDefinition_text_spa.gif" />
     <Content Include="Help\Art\IconRestrictedUI.gif" />
     <Content Include="Help\Art\modelo1.gif" />
     <Content Include="Help\Art\modelo2.gif" />
     <Content Include="Help\Art\testform1.gif" />
+    <Content Include="Help\Art\testform1_spa.gif" />
     <Content Include="Help\Art\testform2.gif" />
+    <Content Include="Help\Art\testform2_spa.gif" />
     <Content Include="Help\Comments\project.xml" />
     <Content Include="Help\Icons\adm.gif" />
     <Content Include="Help\Icons\adm_arch.gif" />
@@ -249,25 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Release\DocProject.chm" />
-    <None Include="Help\Art\.svn\all-wcprops" />
-    <None Include="Help\Art\.svn\entries" />
-    <None Include="Help\Art\.svn\prop-base\frmrestrictionsuidefinition.gif.svn-base" />
-    <None Include="Help\Art\.svn\prop-base\frmrestrictionsuidefinition_reduced.gif.svn-base" />
-    <None Include="Help\Art\.svn\prop-base\frmRestrictionsUIDefinition_text.gif.svn-base" />
-    <None Include="Help\Art\.svn\prop-base\IconRestrictedUI.gif.svn-base" />
-    <None Include="Help\Art\.svn\prop-base\modelo1.gif.svn-base" />
-    <None Include="Help\Art\.svn\prop-base\modelo2.gif.svn-base" />
-    <None Include="Help\Art\.svn\prop-base\testform1.gif.svn-base" />
-    <None Include="Help\Art\.svn\prop-base\testform2.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\frmrestrictionsuidefinition.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\frmrestrictionsuidefinition_reduced.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\frmrestrictionsuidefinition_test.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\frmRestrictionsUIDefinition_text.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\IconRestrictedUI.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\modelo1.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\modelo2.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\testform1.gif.svn-base" />
-    <None Include="Help\Art\.svn\text-base\testform2.gif.svn-base" />
     <None Include="Help\Presentation\Shared\configuration\xamlSyntax.config" />
     <None Include="Help\Presentation\Shared\copyHavana.bat" />
     <None Include="Help\Presentation\Shared\HxsTemplate\template.HxF" />
@@ -330,10 +315,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug\" />
-    <Folder Include="Help\Art\.svn\props\" />
-    <Folder Include="Help\Art\.svn\tmp\prop-base\" />
-    <Folder Include="Help\Art\.svn\tmp\props\" />
-    <Folder Include="Help\Art\.svn\tmp\text-base\" />
     <Folder Include="Help\Topics\" />
   </ItemGroup>
 </Project>

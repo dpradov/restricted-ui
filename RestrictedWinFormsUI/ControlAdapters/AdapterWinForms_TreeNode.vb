@@ -33,7 +33,7 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador que maneja los nodos los los controles (<see cref=" Windows.Forms.TreeView"/>), para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI "/>)
+''' Adapter for the nodes of <see cref="Windows.Forms.TreeView"/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWinForms_TreeNode
@@ -46,7 +46,7 @@ Public Class AdapterWinForms_TreeNode
     Private _position As Integer
     Private _identification As String
 
-#Region "Métodos de clase"
+#Region "Shared methods"
 
     Protected Shared _hiddenControlsAdapter As New List(Of AdapterWinForms_TreeNode)
 
@@ -64,8 +64,8 @@ Public Class AdapterWinForms_TreeNode
 
     Sub New(ByVal control As TreeNode)
         _control = control
-        _visible = True   ' Por construcción, sólo se creará un adaptador para un nodo de un TreeView si éste está visible (existe..)
-        ' Si se hizo invisible, no se crará uno nuevo sino que se devolverá el existente. Ver comentario en propiedad Visible
+        _visible = True   ' By construction, only create an adapter for a node in a TreeView if it is visible (it exists..)
+        ' If it was invisible, not create a new one but return the existing one. See comment to Visible property
         _position = -1
     End Sub
 
@@ -82,7 +82,7 @@ Public Class AdapterWinForms_TreeNode
     End Property
 
     Public Sub SuperviseEnabled(ByVal seguridad As ControlRestrictedUI) Implements IControlAdapter.SuperviseEnabled
-        ' Esta propiedad no será controlada en este control
+        ' This property will not be monitored in this control
     End Sub
 
     Public Sub SuperviseVisible(ByVal seguridad As ControlRestrictedUI) Implements IControlAdapter.SuperviseVisible
@@ -92,9 +92,10 @@ Public Class AdapterWinForms_TreeNode
     Sub FinalizeSupervision() Implements IControlAdapter.FinalizeSupervision
     End Sub
 
-    ' El control TreeView no permite mostrar u ocultar sus nodos. Aquí lo permitimos a base de eliminar o añadir los nodos
-    ' Es por ello que no se necesita capturar ningún evento tipo VisibleChanged. Si se quiere hacer visible o no deberá ser a través
-    ' de este método
+    ''' <remarks>The TreeView control does not allow to show or hide its nodes.
+    ''' Here we allow it by removing or adding nodes. That is why we do not need to capture any event like VisibleChanged.
+    ''' If it is wanted to make a node visible or invisible, must be done through this method
+    ''' </remarks>
     Public Property Visible() As Boolean Implements IControlAdapter.Visible
         Get
             Return _visible
@@ -140,7 +141,7 @@ Public Class AdapterWinForms_TreeNode
             Return True
         End Get
         Set(ByVal value As Boolean)
-            ' No hay nada que hacer
+            ' Nothing to be done
         End Set
     End Property
 
@@ -165,8 +166,8 @@ Public Class AdapterWinForms_TreeNode
             If _control.TreeView IsNot Nothing Then
                 cad = SecurityEnvironment.GetAdapter(_control.TreeView).Identification(, seguridad) + "." + cad
             Else
-                ' Este control ha sido eliminado del TreeView por su adaptador, para hacerlo invisible
-                ' Vamos a localizar el adaptador del nodo padre
+                ' This control has been removed from TreeView by its adapter, to make it invisible
+                ' We will locate the parent node adapter
                 For Each adapt As AdapterWinForms_TreeNode In AdapterWinForms_TreeNode.hiddenNodesAdapter(Nothing)
                     If adapt._control Is control Then
                         cad = adapt.Identification + "." + cad.Substring(cad.IndexOf("."c) + 1)
@@ -190,8 +191,8 @@ Public Class AdapterWinForms_TreeNode
             children.Add(adapt)
         Next
 
-        ' Tenemos que añadir también los adaptadores de aquellos nodos que puedan estar ocultos.
-        ' Como hemos tenido que eliminarlos del TreeView no se encontrarán con el bucle anterior
+        ' We must also add the adapters of nodes that may be hidden.
+        ' As we had to remove them from the TreeView will not be found with the previous loop
         For Each adapt In AdapterWinForms_TreeNode.hiddenNodesAdapter(_control)
             children.Add(adapt)
         Next
@@ -216,14 +217,14 @@ Public Class AdapterWinForms_TreeNode
                     End If
                 Next
                 If control Is Nothing Then
-                    ' Comprobamos si ese control buscado es uno que se encuentra oculto
-                    ' Si es así devolvemos directamente el adaptador ya existente
+                    ' We check whether that searched control is one that is hidden
+                    ' If so we return directly the existing adapter
                     For Each adapt As AdapterWinForms_TreeNode In AdapterWinForms_TreeNode.hiddenNodesAdapter(parent)
                         If AbsoluteIdentifier.StartsWith(adapt.Identification.ToUpper) Then
                             If AbsoluteIdentifier = adapt.Identification.ToUpper Then
-                                Return adapt    ' Es directamente el elemento buscado
+                                Return adapt    ' It is directly the searched element
                             Else
-                                ' El elemento buscado es un hijo de éste -> seguimos con el bucle
+                                ' The searched element is a child of this one -> continue with the loop
                                 control = DirectCast(adapt.Control, TreeNode)
                                 parent = control
                             End If

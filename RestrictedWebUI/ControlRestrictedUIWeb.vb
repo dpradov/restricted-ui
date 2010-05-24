@@ -34,11 +34,13 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptación del componente <see cref="ControlRestrictedUI "/> para aplicaciones Web
+''' Adaptation of <see cref="ControlRestrictedUI "/> component for Web applications
 ''' </summary>
-''' <remarks>Arrastre este componente hacia el formulario o control de usuario sobre el que quiera
-''' controlar la visibilidad y el estado de habilitación de sus controles en base a una definición
-''' de seguridad. Puede configurar esa seguridad en tiempo de diseño o de ejecución</remarks>
+''' <remarks>
+''' Drag this component onto the form or user control for which you require to supervise 
+''' the visibility and enabled state of its controls based on a security definition. You can 
+''' configure that security policy at design time or runtime.
+''' </remarks>
 Public Class ControlRestrictedUIWeb
     Inherits ControlRestrictedUI
 
@@ -50,8 +52,13 @@ Public Class ControlRestrictedUIWeb
     End Sub
 
     ''' <summary>
-    ''' Obtiene o establece el control padre del componente. 
+    ''' Gets or sets the parent control of the component
     ''' </summary>
+    ''' <remarks>
+    ''' When you set it at runtime (will be done from the designer of the container) it will make the form or user control attach itself to 
+    ''' the event <see cref="System.Web.UI.Control.PreRender "/>.
+    ''' Thus when the event takes place it will perform the monitoring of children controls selected.
+    ''' </remarks>
     <Browsable(False)> _
     Public Overrides Property ParentControl() As Object
         Get
@@ -77,13 +84,12 @@ Public Class ControlRestrictedUIWeb
                 End If
 
             Else
-                ' TIEMPO DE DISEÑO
-                ' Si estamos desarrollando (hemos entrado en modo diseño) nos aseguramos de que 
-                ' exista el archivo de controles, aunque vacío, que se rellenará al estar
-                ' en ejecución.
+                ' DESIGN TIME
+                ' If we are developing (we have entered in design mode) we ensure that the controls file exists, even empty,
+                ' which shall be completed at runtime.
                 If Not String.IsNullOrEmpty(ControlsFile) AndAlso Not My.Computer.FileSystem.FileExists(ControlsFile) Then
                     Try
-                        My.Computer.FileSystem.WriteAllText(ControlsFile, " ", True)   ' Por si no existe la carpeta a la que se hace referencia
+                        My.Computer.FileSystem.WriteAllText(ControlsFile, " ", True)   ' In case that the referenced folder does not exists
                     Catch ex As Exception
                     End Try
                 End If
@@ -93,7 +99,7 @@ Public Class ControlRestrictedUIWeb
     End Property
 
     ''' <summary>
-    ''' Indica que el componente es utilizable en aplicaciones Web y no aplicaciones WinForms
+    ''' Indicates that the component is usable in Web applications but no in WinForms applications
     ''' </summary>
     Public Overrides ReadOnly Property WebComponent() As Boolean
         Get

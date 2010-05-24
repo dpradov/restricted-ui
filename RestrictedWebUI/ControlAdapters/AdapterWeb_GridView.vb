@@ -33,7 +33,7 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para controles <see cref="Web.UI.WebControls.GridView "/>, para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI"/>)
+''' Adapter for <see cref="Web.UI.WebControls.GridView "/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWeb_GridView
@@ -59,7 +59,7 @@ Public Class AdapterWeb_GridView
     End Function
 
     Protected Overrides Function FindControl(ByVal identifier As String) As IControlAdapter
-        Dim cad As String = identifier.ToUpper   '<tituloColumna>
+        Dim cad As String = identifier.ToUpper   '<ColumnHeader>
         Dim control As Object = Nothing
 
         Dim parent As GridView

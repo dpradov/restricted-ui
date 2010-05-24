@@ -23,6 +23,7 @@ Partial Class Form2
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form2))
         Me.Button1 = New System.Windows.Forms.Button
         Me.TabControl1 = New System.Windows.Forms.TabControl
         Me.TabPage1 = New System.Windows.Forms.TabPage
@@ -35,6 +36,7 @@ Partial Class Form2
         Me.UserControl22 = New TestWinForms.UserControl2
         Me.ControlSeguridadWinForms1 = New RestrictedWinFormsUI.ControlRestrictedUIWinForms(Me.components)
         Me.UserControl31 = New TestWinForms.UserControl3
+        Me.cConfigFile = New System.Windows.Forms.TextBox
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -45,7 +47,7 @@ Partial Class Form2
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(251, 22)
+        Me.Button1.Location = New System.Drawing.Point(355, 15)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 0
@@ -58,10 +60,10 @@ Partial Class Form2
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Controls.Add(Me.TabPage4)
-        Me.TabControl1.Location = New System.Drawing.Point(12, 108)
+        Me.TabControl1.Location = New System.Drawing.Point(12, 72)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(318, 212)
+        Me.TabControl1.Size = New System.Drawing.Size(424, 200)
         Me.TabControl1.TabIndex = 1
         '
         'TabPage1
@@ -70,7 +72,7 @@ Partial Class Form2
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(310, 186)
+        Me.TabPage1.Size = New System.Drawing.Size(416, 174)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "TabPage1"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -88,14 +90,14 @@ Partial Class Form2
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(310, 186)
+        Me.TabPage2.Size = New System.Drawing.Size(416, 174)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "TabPage2"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'UserControl12
         '
-        Me.UserControl12.Location = New System.Drawing.Point(71, 6)
+        Me.UserControl12.Location = New System.Drawing.Point(15, 6)
         Me.UserControl12.Name = "UserControl12"
         Me.UserControl12.Size = New System.Drawing.Size(224, 165)
         Me.UserControl12.TabIndex = 0
@@ -106,16 +108,16 @@ Partial Class Form2
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(310, 186)
+        Me.TabPage3.Size = New System.Drawing.Size(416, 174)
         Me.TabPage3.TabIndex = 2
         Me.TabPage3.Text = "TabPage3"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
         'UserControl21
         '
-        Me.UserControl21.Location = New System.Drawing.Point(24, 9)
+        Me.UserControl21.Location = New System.Drawing.Point(10, 9)
         Me.UserControl21.Name = "UserControl21"
-        Me.UserControl21.Size = New System.Drawing.Size(262, 168)
+        Me.UserControl21.Size = New System.Drawing.Size(262, 163)
         Me.UserControl21.TabIndex = 2
         '
         'TabPage4
@@ -124,40 +126,51 @@ Partial Class Form2
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(310, 186)
+        Me.TabPage4.Size = New System.Drawing.Size(416, 174)
         Me.TabPage4.TabIndex = 3
         Me.TabPage4.Text = "TabPage4"
         Me.TabPage4.UseVisualStyleBackColor = True
         '
         'UserControl22
         '
-        Me.UserControl22.Location = New System.Drawing.Point(16, 6)
+        Me.UserControl22.Location = New System.Drawing.Point(11, 6)
         Me.UserControl22.Name = "UserControl22"
-        Me.UserControl22.Size = New System.Drawing.Size(262, 168)
+        Me.UserControl22.Size = New System.Drawing.Size(262, 167)
         Me.UserControl22.TabIndex = 0
         '
         'ControlSeguridadWinForms1
         '
-        Me.ControlSeguridadWinForms1.ParentControl = Me
         Me.ControlSeguridadWinForms1.ConfigFile = "PruebaWinForms\Seguridad.txt"
         Me.ControlSeguridadWinForms1.ControlsFile = "PruebaWinForms\Controles.txt"
         Me.ControlSeguridadWinForms1.ID = "Form2"
         Me.ControlSeguridadWinForms1.InstanceID = "00"
+        Me.ControlSeguridadWinForms1.ParentControl = Me
         Me.ControlSeguridadWinForms1.Paused = False
         Me.ControlSeguridadWinForms1.RestrictionsDefinition = New String() {"-0/TabControl1.TabPage4.UserControl22.GroupBox1.RadioButton2,E"}
         '
         'UserControl31
         '
-        Me.UserControl31.Location = New System.Drawing.Point(16, 22)
+        Me.UserControl31.Location = New System.Drawing.Point(16, 9)
         Me.UserControl31.Name = "UserControl31"
         Me.UserControl31.Size = New System.Drawing.Size(132, 62)
         Me.UserControl31.TabIndex = 2
+        '
+        'cConfigFile
+        '
+        Me.cConfigFile.Location = New System.Drawing.Point(19, 278)
+        Me.cConfigFile.Multiline = True
+        Me.cConfigFile.Name = "cConfigFile"
+        Me.cConfigFile.ReadOnly = True
+        Me.cConfigFile.Size = New System.Drawing.Size(417, 120)
+        Me.cConfigFile.TabIndex = 85
+        Me.cConfigFile.Text = resources.GetString("cConfigFile.Text")
         '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(362, 332)
+        Me.ClientSize = New System.Drawing.Size(448, 406)
+        Me.Controls.Add(Me.cConfigFile)
         Me.Controls.Add(Me.UserControl31)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.Button1)
@@ -170,6 +183,7 @@ Partial Class Form2
         Me.TabPage4.ResumeLayout(False)
         CType(Me.ControlSeguridadWinForms1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents ControlSeguridadWinForms1 As RestrictedWinFormsUI.ControlRestrictedUIWinForms
@@ -184,4 +198,5 @@ Partial Class Form2
     Friend WithEvents TabPage4 As System.Windows.Forms.TabPage
     Friend WithEvents UserControl22 As TestWinForms.UserControl2
     Friend WithEvents UserControl31 As TestWinForms.UserControl3
+    Friend WithEvents cConfigFile As System.Windows.Forms.TextBox
 End Class

@@ -33,7 +33,7 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para controles (<see cref=" Windows.Forms.ToolStripMenuItem"/>), para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI "/>)
+''' Adapter for <see cref="Windows.Forms.ToolStripMenuItem"/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWinForms_ToolStripMenuItem

@@ -33,23 +33,22 @@ Option Strict On
 '        UIRestrictions
 '=========================================================
 
+
 ''' <summary>
-''' Contiene todas las restricciones de interface (UI) (permisos y prohibiciones) que definen la seguridad
-''' para un componente <see cref=" ControlRestrictedUI"/>, y que afectan normalmente por tanto a un 
-''' formulario o control de usuario.
+''' It contains all the interface restrictions (UI) (permissions and prohibitions) that define security for 
+''' a <see cref=" ControlRestrictedUI"/> component, and that therefore they usually involve a form or user control.
 ''' </summary>
 ''' <remarks>
-''' <para>Todas las restricciones se aplican a nivel de controles individuales, teniendo presente que las 
-''' prohibiciones tendrán prioridad sobre los permisos, esto es, primero se aplicarán los permisos y luego 
-''' se restringirán en base a las prohibiciones:</para>
+''' <para>All restrictions apply to individual controls, bearing in mind that the prohibitions will take precedence 
+''' over permissions, that is, permissions will be aplied first and then restricted on the basis of the prohibitions:</para>
 ''' 
-''' <para>Prohibiciones: sólo se impedirán las modificaciones de las propiedades Visible / Enabled en las 
-''' situaciones aquí señaladas.</para>
+''' <para>Prohibitions: only will be prevented changes to the property Visible / Enabled in the situations outlined here.</para>
+''' <para>Permissions: only will be authorized changes to the property Visible / Enabled in the situations outlined here</para>
 ''' 
-''' <para>Permisos: sólo se autorizarán las modificaciones de las propiedades Visible / Enabled en las situaciones
-''' aquí señaladas</para>
-''' 
-''' <para>Ver detalle de la interpretación de restricciones en <see cref="RestrictionOnControl "/></para>
+''' <para>This class saves individual restrictions (see <see cref="RestrictionOnControl "/>) and determines if they 
+''' should be considered in positive logic (permissions) or negative logic (prohibitions). 
+''' It is responsible for serializing and deserializing these permissions.
+''' </para>
 ''' <seealso cref="RestrictionOnControl "/>
 ''' </remarks>
 Public Class UIRestrictions
@@ -63,11 +62,11 @@ Public Class UIRestrictions
     End Sub
 
     ''' <summary>
-    ''' Devuelve la lista de prohibiciones asociadas a este componente de seguridad (<see cref=" ControlRestrictedUI"/>),
-    ''' y por tanto relacionadas con un formulario o control de usuario.
+    ''' Returns the list of prohibitions associated to this security component (<see cref=" ControlRestrictedUI"/>) and so 
+    ''' related with a form or user control.
     ''' </summary>
     ''' <remarks>
-    ''' Más información sobre el tratamiento de las restricciones en <see cref="UIRestrictions "/> y en <see cref="RestrictionOnControl "/>.
+    ''' More information on the treatment of restrictions in <see cref="UIRestrictions "/> and <see cref="RestrictionOnControl "/>.
     ''' </remarks>
     Public Property Prohibitions() As IList(Of RestrictionOnControl)
         Get
@@ -79,11 +78,11 @@ Public Class UIRestrictions
     End Property
 
     ''' <summary>
-    ''' Devuelve la lista de permisos asociados a este componente de seguridad (<see cref=" ControlRestrictedUI"/>),
-    ''' y por tanto relacionadas con un formulario o control de usuario.
+    ''' Returns the list of authorizations associated to this security component (<see cref=" ControlRestrictedUI"/>) and so 
+    ''' related with a form or user control.
     ''' </summary>
     ''' <remarks>
-    ''' Más información sobre el tratamiento de las restricciones en <see cref="UIRestrictions "/> y en <see cref="RestrictionOnControl "/>.
+    ''' More information on the treatment of restrictions in <see cref="UIRestrictions "/> and <see cref="RestrictionOnControl "/>.
     ''' </remarks>
     Public Property Authorizations() As IList(Of RestrictionOnControl)
         Get
@@ -96,8 +95,8 @@ Public Class UIRestrictions
 
 
     ''' <summary>
-    ''' Elimina el control indicado de la lista de controles supervisados que contempla esta definición
-    ''' de seguridad (Ver también <see cref="ControlRestrictedUI.ExcludeControl "/>)
+    ''' Removes the control from the list of supervised controls, considered in this security definition 
+    ''' (See also <see cref="ControlRestrictedUI.ExcludeControl "/>)
     ''' </summary>
     Friend Function ExcludeControl(ByVal control As Object) As Boolean
         Dim found As Boolean = False
@@ -118,30 +117,30 @@ Public Class UIRestrictions
     End Function
 
     ''' <summary>
-    ''' Serializa las prohibiciones establecidas en un array de cadenas de la forma: -roles/bloqueo/../bloqueo
+    ''' Serializes the prohibitions defined in an array of strings of the form: -roles/prohibition/../prohibition
     ''' </summary>
-    ''' <remarks>Internamente las listas de restricciones están ordenadas por roles</remarks>
-    Public Function NegativeAuthorizationsToArrayString(Optional ByVal useAlias As Boolean = False) As String()
-        Return AuthorizationsListToArrayString(Prohibitions, "-"c, useAlias)
+    ''' <remarks>Internally the lists of restrictions are ordered by role</remarks>
+    Public Function ProhibitionsToArrayString(Optional ByVal useAlias As Boolean = False) As String()
+        Return RestrictionsListToArrayString(Prohibitions, "-"c, useAlias)
     End Function
 
     ''' <summary>
-    ''' Serializa los permisos establecidos en un array de cadenas de la forma: +roles/permiso/../permiso
+    ''' Serializes the authorizations defined in an array of strings of the form: +roles/authorization/../authorization
     ''' </summary>
-    ''' <remarks>Internamente las listas de restricciones están ordenadas por roles</remarks>
-    Public Function PositiveAuthorizationsToArrayString(Optional ByVal useAlias As Boolean = False) As String()
-        Return AuthorizationsListToArrayString(Authorizations, "+"c, useAlias)
-    End Function
-
-    ''' <summary>
-    ''' Serializa las restricciones (permisos y prohibiciones) establecidas en un array de cadenas de la forma: +-roles/bloqueo/../bloqueo
-    ''' </summary>
-    ''' <remarks>Internamente las listas de restricciones están ordenadas por roles</remarks>
+    ''' <remarks>Internally the lists of restrictions are ordered by role</remarks>
     Public Function AuthorizationsToArrayString(Optional ByVal useAlias As Boolean = False) As String()
+        Return RestrictionsListToArrayString(Authorizations, "+"c, useAlias)
+    End Function
+
+    ''' <summary>
+    ''' Serializes the restrictions (authorizations and prohibitions) defined in an array of strings of the form: +-roles/restriction/../restriction
+    ''' </summary>
+    ''' <remarks>Internally the lists of restrictions are ordered by role</remarks>
+    Public Function RestrictionsToArrayString(Optional ByVal useAlias As Boolean = False) As String()
         Dim positivos, negativos As String()
         Dim n As Integer
-        positivos = AuthorizationsListToArrayString(Authorizations, "+"c, useAlias)
-        negativos = AuthorizationsListToArrayString(Prohibitions, "-"c, useAlias)
+        positivos = RestrictionsListToArrayString(Authorizations, "+"c, useAlias)
+        negativos = RestrictionsListToArrayString(Prohibitions, "-"c, useAlias)
         n = positivos.Length
         ReDim Preserve positivos(n + negativos.Length - 1)
         negativos.CopyTo(positivos, n)
@@ -150,10 +149,10 @@ Public Class UIRestrictions
 
 
     ''' <summary>
-    ''' Serializa las restricciones (permisos y prohibiciones) establecidas en un array de cadenas de la forma: listaRoles/bloqueo/../bloqueo
+    ''' Serializes the restrictions (authorizations and prohibitions) defined in an array of strings of the form: +-roles/restriction/../restriction
     ''' </summary>
-    ''' <remarks>Se supone que las restricciones de la lista ya vienen ordenados por rol</remarks>
-    Private Function AuthorizationsListToArrayString(ByVal lista As IList(Of RestrictionOnControl), ByVal typeAuthorizations As Char, Optional ByVal useAlias As Boolean = False) As String()
+    ''' <remarks>List of restrictions is supposed to be ordered by user role</remarks>
+    Private Function RestrictionsListToArrayString(ByVal lista As IList(Of RestrictionOnControl), ByVal typeAuthorizations As Char, Optional ByVal useAlias As Boolean = False) As String()
         Dim l As New ArrayList
 
         Dim authorizationsList As String = ""
@@ -184,16 +183,16 @@ Public Class UIRestrictions
 
 
     ''' <summary>
-    ''' Constructor a partir de una cadena de restricciones (tanto positivas --permisos-- como negativas --prohibiciones) serializada
+    ''' Constructor from a string of serialized restrictions (positive --authorizations-- and negative --prohibitions).
     ''' </summary>
-    ''' <param name="restrictions">Cadena con el contenido (restricciones) serializado</param>
-    ''' <param name="parentControl">Control de usuario al que está vinculada esta seguridad (normalmente será un formulario)</param>
-    ''' <param name="groups">Grupos de controles, en base a los cuales han podido establecerse algunas restricciones</param>
-    ''' <param name="IDControlRestrictedUI">Identificador del componente de seguridad <see cref="ControlRestrictedUI "/>para el que se
-    ''' definen estas restricciones. Se necesitará si en las restricciones se hace uso de alias, ya que éstos pueden ser comunes a todos
-    ''' los componentes de seguridad o particulares a uno concreto.
+    ''' <param name="restrictions">String with the serialized content (restrictions)</param>
+    ''' <param name="parentControl">Control UI to which this security is linked (usually it will be a form)</param>
+    ''' <param name="groups">Control groups, based on which restrictions have been established</param>
+    ''' <param name="IDControlRestrictedUI">Security component identifier (<see cref="ControlRestrictedUI "/>) for which these 
+    ''' restrictions are defined. It will be necessary if the restrictions use alias, as these may be common to all security
+    ''' components or particular to one.
     ''' </param>
-    ''' <remarks>El control padre <paramref name=" parentControl "/>permite localizar los controles incluidos en la cadena de restricciones serializada</remarks>
+    ''' <remarks>The parent control <paramref name=" parentControl "/> allows to locate the controls included in the serialized restrictions string</remarks>
     Sub New(ByVal restrictions() As String, ByVal IDControlRestrictedUI As String, ByVal parentControl As Object, Optional ByVal groups As Group() = Nothing)
         Dim cad As String
 
@@ -203,8 +202,8 @@ Public Class UIRestrictions
         _IDControlRestrictedUI = IDControlRestrictedUI
 
 
-        ' Preparar un diccionario con los posibles grupos definidos, ya listando los adaptadores de los controles a los que referencian
-        ' para su posible uso en la deserialización de las restricciones
+        ' We prepare a dictionary with the possible defined groups, including the adapters of the controls they reference, for
+        ' use in deserialization of the restrictions
 
         Dim lGroupsControls As New Dictionary(Of String, List(Of IControlAdapter))
         Dim controlAdapt As IControlAdapter
@@ -227,8 +226,7 @@ Public Class UIRestrictions
 
         End If
 
-
-        ' Deserializar cada línea de restricciones de manera independiente
+        ' Deserialize each line of restrictions, separately
         For Each cad In restrictions
             If cad = "" Then Continue For
             Select Case cad(0)
@@ -245,12 +243,12 @@ Public Class UIRestrictions
 
 
     ''' <summary>
-    ''' Deserializa restricciones (permisos y prohibiciones) de un rol (o roles) en una cadena de la forma: listaRoles/permiso/../permiso
+    ''' Deserializes the restrictions (authorizations and prohibitions) of a rol (or roles) in a string of the form: RolesList/restriction/../restriction
     ''' </summary>
-    ''' <param name="line">Línea de texto con restricciones serializadas relativas a un rol o roles</param>
-    ''' <param name="list">Lista a donde ir añadiendo las restricciones individuales ya instanciadas (en objetos <see cref=" RestrictionOnControl"/></param>
-    ''' <param name="lGroupsControls">Diccionario con los grupos definidos, contemplando para cada uno la relación de los adaptadores de control
-    ''' que incluyen, para su posible uso en la deserialización de las restricciones</param> 
+    ''' <param name="line">Text line with serialized restrictions on a role or roles</param>
+    ''' <param name="list">List to go on adding individual restrictions, and instanced (on objects <see cref=" RestrictionOnControl"/>)</param>
+    ''' <param name="lGroupsControls">Dictionary with the defined groups, including the relation of control adapters, for its possible use
+    ''' in the deserialization of the restrictions</param> 
     ''' <remarks></remarks>
     Private Sub ReadRestrictionsLine(ByVal line As String, ByVal list As IList(Of RestrictionOnControl), ByVal lGroupsControls As Dictionary(Of String, List(Of IControlAdapter)))
         Dim cad() As String = line.Split("/"c)
@@ -261,7 +259,7 @@ Public Class UIRestrictions
             Exit Sub
         End If
 
-        ' Leer la lista de roles
+        ' Read the list of roles
         '---------------------
         Dim roles() As Integer = SecurityEnvironment.GetRolesID(cad(0), _IDControlRestrictedUI)
         If roles.Length = 0 Then
@@ -269,12 +267,12 @@ Public Class UIRestrictions
             Exit Sub
         End If
 
-        ' Leer las restricciones individuales
+        ' Read individual restrictions
         '---------------------
         For i As Integer = 1 To cad.Length - 1
 
-            ' Si contiene el carácter $ indicará que se está haciendo uso de un grupo de controles
-            ' Si _ControlPadre is Nothing no se descompondrá el posible grupo (p.ej para su uso desde frmDefinicionSeguridad)
+            ' If it contains a $ character indicates that it is using a group of controls
+            ' If _ControPadre is Nothing we will not break down the group (e.g. for its use from frmDefinicionSeguridad)
             pos = cad(i).IndexOf("$"c)
             If _ParentControl Is Nothing Or pos < 0 Then
                 v = New RestrictionOnControl(cad(i), roles, _ParentControl)
@@ -285,9 +283,8 @@ Public Class UIRestrictions
                 End If
 
             Else
-                ' Será algo de la forma: $grupo, V,E, listaEstados
-                ' Llamaremos al constructor de RestrictionOnControl por cada control del grupo, pero ya pasándole el IControlAdapter, e indicándole
-                ' que ignore el campo control.
+                ' It will be something like: $grupo, V,E, listaEstados
+                ' We will call the RestrictionOnControl's constructor for each group control, passing it the IControlAdapter
                 Dim groupName As String = cad(i).Split(","c)(0).Substring(1).Trim
                 Dim lAdaptControl As List(Of IControlAdapter) = Nothing
                 If lGroupsControls.TryGetValue(groupName.ToUpper, lAdaptControl) Then
@@ -307,7 +304,7 @@ Public Class UIRestrictions
     End Sub
 
     ''' <summary>
-    ''' Elmina los permisos y prohibiciones de la definición de seguridad
+    ''' Removes the permissions and prohibitions of the security definition
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub Clear()
@@ -318,54 +315,57 @@ Public Class UIRestrictions
 End Class
 
 
+
 '---------------------------------------------------------
 '        RestrictionOnControl
 '---------------------------------------------------------
 ''' <summary>
-''' Define los elementos que configuran una restricción concreta a supervisar. Esta restricción
-''' sólo tendrá pleno sentido interpretada conjuntamente con el resto de restricciones incluidas
-''' en una definición de seguridad definida en un objeto <see cref=" UIRestrictions "/> y gestionada 
-''' por un componente <see cref=" ControlRestrictedUI "/>
+''' It defines the elements that make up a particular restriction to monitor. This restriction 
+''' will only have its full meaning when read in conjunction with other restrictions included 
+''' in a security policy defined in a <see cref=" UIRestrictions "/> object and managed 
+''' by a <see cref=" ControlRestrictedUI "/> component.
 ''' </summary>
 ''' <remarks>
-''' Los elementos que configuran una restricción individual son:
+''' The elements which form an individual restriction are:
 ''' <list type="bullet">
-''' <item><description>Control a supervisar (a través de un adaptador)</description></item>
-''' <item><description>Propiedades a controlar (Visible y/o Enabled)</description></item>
-''' <item><description>Contexto de la aplicación para el que se define la restricción:</description></item>
+''' <item><description>The control to be monitored (via an adapter)</description></item>
+''' <item><description>The properties to be monitored (Visible and/or Enabled)</description></item>
+''' <item><description>The context of the application for which the restriction is defined:</description></item>
 ''' </list>
-'''    - Rol o roles del usuario de la aplicación
-'''    - Estado o estados de la aplicación
+'''    - Rol or roles of the application user
+'''    - State or states of the application
 ''' 
 ''' <para>
-''' Estos elementos podrán ser aplicados en lógica positiva (permisos) o negativa (prohibiciones).
-''' Esta interpretación no la ofrece esta estructura sino la clase <see cref="UIRestrictions "/> 
-''' dependiendo de que esta restricción haya sido incluida en una línea de permisos o prohibiciones.</para>
-'''
-''' <para>- Si la restricción consiste en un permiso indicará que las propiedades
-''' supervisadas del control sólo las podrán 'activar' (hacer visible o habilitar) los roles
-''' indicados y únicamente cuando la aplicación esté en los estados señalados.</para>
+''' These elements may be applied in positive logic (permissions) or negative (prohibitions). 
+''' This interpretation is not offered by this entity, but by <see cref="UIRestrictions "/> depending 
+''' on whether this restriction has been placed in a line of authorizations or prohibitions.
+''' </para>
 ''' 
-''' <para>- Si la restricción consiste en una prohibición indicará que las propiedades
-''' supervisadas del control no podrán ser 'activadas' por los roles indicados cuando la
-''' aplicación esté en los estados señalados. Para cualquier combinación de roles/estado 
-''' distinta sí será posible la activación.</para>
+''' <para>- If the restriction is a permission, it will indicate that the supervised properties 
+''' can only be 'activated' (make visible or enable) by the established roles and only when the 
+''' application is in the established states.</para>
 ''' 
-''' <para>- Si no se aporta ningún rol (por defecto se asume rol = 0) entonces aplicará a todos los
-''' roles: a todos se les permitirá o impedirá (según) en los estados señalados</para>
-''' <para>- Si no se aporta ningún estado entonces la restricción aplicará a los roles que correspondan
-''' con independencia del estado en que esté la aplicación.</para>
+''' <para>- If the restriction is a prohibition, it will indicate that the supervised properties 
+''' can only be 'activated' (make visible or enable) by the established roles when the application 
+''' is in the mentioned states. 
+''' For any other combination of roles / state the activation will be possible.</para>
 ''' 
-''' <para>- Si un control no tiene ningún elemento de restricción asociado (ni positivo ni negativo)
-''' entonces no será supervisado, y cualquier rol y en cualquier estado podrá activar sus 
-''' propiedades Visible y Enabled.</para>
+''' <para>- If no role is provided (by default, role is assumed = 0) then it will apply to all 
+''' roles: all of them will be allowed or prevented (depending) in the indicated states.</para>
 ''' 
-''' <para>Las propiedades realmente controladas en el control no tienen por qué ser exactamente 'Visible' 
-''' y 'Enabled'; es responsabilidad del adaptador del control ofrecer esa interface y actuar sobre 
-''' las propiedades que tenga el control (por ejemplo, algunos controles no ofrecen Enabled pero sí ReadOnly)
-''' Sólo se supervisa y tal vez se impida (según la política definida) la 'activación' de esas propiedades,
-''' esto es, el intento de hacer visible o habilitar el control. No se impide el hacer invisible o 
-''' deshabilitar un control.</para>
+''' <para>- If no state is provided, then the restriction will apply to all concerning roles, 
+''' regardless of the state in which the application is.</para>
+''' 
+''' <para>- If a control has no associated restriction element (neither positive nor negative) then 
+''' it will not be monitored, and any role and in any state could activate its Visible and Enabled 
+''' properties.</para>
+''' 
+''' <para>
+''' Actually monitored properties in the control need not be exactly 'Visible' and 'Enabled' (as shown in IControlAdapter). 
+''' It is only supervised and perhaps prevented (depending on the policy defined) the 'activation' of 
+''' these properties, namely the attempt to make visible or enable the control. It is not prevented to 
+''' make invisible or disabled a control.
+''' </para>
 ''' <seealso cref="UIRestrictions "/>
 ''' <seealso cref="ControlRestrictedUI"/>
 ''' </remarks>
@@ -415,19 +415,19 @@ Public Structure RestrictionOnControl
 
 
     ''' <summary>
-    ''' Deserializa la prohibición o permiso a partir de texto en la forma:
-    ''' nombrecontrol,V,E[,listaEstados]
-    ''' Puede aparecer V, E o los dos, y en ese caso el orden no es importante
+    ''' Deserializes the prohibition or authorization from a text of the form:
+    ''' controlName,V,E[,StatesList]
+    ''' It can appear V, E or both, and the order is not important
     ''' </summary>
-    ''' <param name="text">Cadena con el contenido serializado</param>
-    ''' <param name="_roles">Roles de usuario a los que aplica. Deben facilitarse pues no viene en la cadena serializada</param>
-    ''' <param name="parentControl">Control padre en base al cual está referenciado el control que aparece en la restricción 
-    ''' (La identificación del control se compondrá de la identificación de todos sus padres hasta llegar a este <paramref name=" parentControl "/></param>
-    ''' <param name="adaptCtrl">Si se aporta se estará ya dando localizado el control que aparece en la restricción</param>
+    ''' <param name="text">String with the serialized content</param>
+    ''' <param name="_roles">User roles to which it applies. This param is needed as this information is not contained in the serialized string</param>
+    ''' <param name="parentControl">Parent control for which the control in the restriction is referenced. 
+    ''' (The identification of control consists of the identification of all their parents up to this <paramref name=" parentControl "/></param>
+    ''' <param name="adaptCtrl">If you provide this adapter you are giving localized the control that appears in the restriction</param>
     ''' 
-    ''' <remarks>Si no se aporta el parámetro <paramref name="parentControl "/> no se intentará localizar el control a vigilar, 
-    ''' ni se utilizará tampoco el adaptador que se haya facilitado (lo que tampoco será normal) simplemente se guardará su identificador;
-    ''' se localizará en el momento en que se aporte el control padre.
+    ''' <remarks>If the parameter <paramref name="parentControl "/> is not provided, it will not attempt to locate the control to monitor, 
+    ''' neither will use the adapter provided (if any), it will only be saved its identifier;
+    ''' it will be localized when it is provided the parent control
     ''' </remarks>
     Sub New(ByVal text As String, ByVal _roles As Integer(), ByVal parentControl As Object, Optional ByVal adaptCtrl As IControlAdapter = Nothing)
         Dim cancel As Boolean
@@ -437,7 +437,7 @@ Public Structure RestrictionOnControl
 
         If cad.Length < 2 Then cancel = True
 
-        ' Primero: identificar el control
+        ' First: identify the control
         '----------------------
         If Not cancel AndAlso parentControl IsNot Nothing Then
             If adaptCtrl IsNot Nothing Then
@@ -454,7 +454,7 @@ Public Structure RestrictionOnControl
             _controlAdapt = New NullControlAdapter
         End If
 
-        ' Segundo: identificar las propiedades a supervisar
+        ' Second: identify the properties to monitor
         '----------------------
         If Not cancel Then
             numFields = cad.Length
@@ -476,9 +476,9 @@ Public Structure RestrictionOnControl
                 End If
             End If
 
-            ' Tercero: identificar los estados que controlan el permiso
+            ' Third: identify the states that control the permission
             '----------------------
-            If Not cancel AndAlso numFields > posStates - 1 Then      ' Carga de los estados, si los hay
+            If Not cancel AndAlso numFields > posStates - 1 Then      ' Load the states, if any
                 states = New Integer(numFields - posStates) {}
                 For i As Integer = posStates - 1 To numFields - 1
                     If Not Integer.TryParse(cad(i), states(i - (posStates - 1))) Then
@@ -496,8 +496,8 @@ Public Structure RestrictionOnControl
     End Sub
 
     ''' <summary>
-    ''' Serializa la definición del permiso/prohibición de la forma:
-    ''' nombrecontrol,visible,enabled[,listaEstados]
+    ''' Serialize the definition of the authorization/prohibition of the form:
+    ''' controlName,visible,enabled[,StatesList]
     ''' </summary>
     Overrides Function ToString() As String
         Dim cad As String

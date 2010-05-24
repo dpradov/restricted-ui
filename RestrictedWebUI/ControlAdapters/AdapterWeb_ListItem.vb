@@ -33,14 +33,19 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para controles (<see cref="Web.UI.WebControls.ListItem"/>), para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI"/>)
-''' (Un control <see cref="ListItem"/> representa un elemento de datos individual dentro de un control de lista enlazado a datos,
-''' por ejemplo un control <see cref="ListBox"/> o <see cref="RadioButtonList"/>)
+''' Adapter for <see cref="Web.UI.WebControls.ListItem"/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
-''' <remarks>De momento sólo se tratan los <see cref="ListItem"/> utilizados en <see cref="RadioButtonList"/> y <see cref="CheckBoxList"/>. Los que se utilizan desde 
-''' <see cref="ListBox"/> o <see cref="DropDownList"/> no permiten el uso de la propiedad Enabled. De querer que ofrezcan al menos Visible deberemos eliminar
-''' o añadir esos elementos de igual manera a como está implementado el adaptador de TreeNode (WinForms) -- Aquí sería más sencillo
-''' pues no hay una jerarquía de nodos
+''' <remarks>
+''' <para>
+''' A <see cref="ListItem"/> control represents an individual data item in a list control bound to data,
+''' for example a control <see cref="ListBox"/> or <see cref="RadioButtonList"/>
+''' </para>
+''' <para>
+''' Currently are only covered the <see cref="ListItem"/> used in <see cref="RadioButtonList"/> and <see cref="CheckBoxList"/>.
+''' Those used in <see cref="ListBox"/> or <see cref="DropDownList"/> do not allow the use of the Enabled property.
+''' If we want to offer at least Visible we must remove or add those elements similarly to how it is implemented the adapter 
+''' for TreeNode (WinForms) (this would be easier because there isn't a hierarchy of nodes)
+''' </para>
 ''' </remarks>
 Public Class AdapterWeb_ListItem
     Implements IControlAdapter

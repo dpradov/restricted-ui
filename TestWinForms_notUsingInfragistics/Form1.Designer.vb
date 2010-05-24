@@ -23,16 +23,16 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo1")
-        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo2")
-        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo0", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2})
-        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo5")
-        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo4", New System.Windows.Forms.TreeNode() {TreeNode4})
-        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo3", New System.Windows.Forms.TreeNode() {TreeNode5})
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node1")
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node2")
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node0", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2})
+        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node5")
+        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node4", New System.Windows.Forms.TreeNode() {TreeNode4})
+        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node3", New System.Windows.Forms.TreeNode() {TreeNode5})
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.TextBox = New System.Windows.Forms.TextBox
         Me.combo = New System.Windows.Forms.ComboBox
         Me.btnEnableVisible = New System.Windows.Forms.Button
@@ -64,7 +64,7 @@ Partial Class Form1
         Me.btnForceVisibility = New System.Windows.Forms.Button
         Me.cbPaused = New System.Windows.Forms.CheckBox
         Me.btnRestrictionsMngt = New System.Windows.Forms.Button
-        Me.cControles = New System.Windows.Forms.DataGridView
+        Me.cControls = New System.Windows.Forms.DataGridView
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
         Me.ToolStrip1 = New System.Windows.Forms.ToolStrip
         Me.ToolStripButton1 = New System.Windows.Forms.ToolStripButton
@@ -72,24 +72,24 @@ Partial Class Form1
         Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox
         Me.ToolStripTextBox1 = New System.Windows.Forms.ToolStripTextBox
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
-        Me.ArchivoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.NuevoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.CerrarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.NewToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.CloseToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.Opcion1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.Opcion2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.EditarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.CortarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.CopiarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.PegarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.Option1ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.Option2ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.ExitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.CutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripComboBox2 = New System.Windows.Forms.ToolStripComboBox
         Me.ControlRestrictedUIWinForms1 = New RestrictedWinFormsUI.ControlRestrictedUIWinForms(Me.components)
         Me.GroupBox1.SuspendLayout()
         CType(Me.EntidadBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbCommands.SuspendLayout()
-        CType(Me.cControles, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.cControls, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         CType(Me.ControlRestrictedUIWinForms1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -119,7 +119,7 @@ Partial Class Form1
         Me.btnEnableVisible.Name = "btnEnableVisible"
         Me.btnEnableVisible.Size = New System.Drawing.Size(124, 23)
         Me.btnEnableVisible.TabIndex = 3
-        Me.btnEnableVisible.Text = "Habilitar Visibilidad"
+        Me.btnEnableVisible.Text = "Make Visible"
         Me.btnEnableVisible.UseVisualStyleBackColor = True
         '
         'GroupBox1
@@ -161,7 +161,7 @@ Partial Class Form1
         Me.btnEnableEnabled.Name = "btnEnableEnabled"
         Me.btnEnableEnabled.Size = New System.Drawing.Size(116, 23)
         Me.btnEnableEnabled.TabIndex = 6
-        Me.btnEnableEnabled.Text = "Habilitar Enabled"
+        Me.btnEnableEnabled.Text = "Enable controls"
         Me.btnEnableEnabled.UseVisualStyleBackColor = True
         '
         'btnDisableVisible
@@ -170,7 +170,7 @@ Partial Class Form1
         Me.btnDisableVisible.Name = "btnDisableVisible"
         Me.btnDisableVisible.Size = New System.Drawing.Size(124, 23)
         Me.btnDisableVisible.TabIndex = 11
-        Me.btnDisableVisible.Text = "Deshabilitar Visibilidad"
+        Me.btnDisableVisible.Text = "Make Invisible"
         Me.btnDisableVisible.UseVisualStyleBackColor = True
         '
         'btnEnableVisible_N
@@ -179,7 +179,7 @@ Partial Class Form1
         Me.btnEnableVisible_N.Name = "btnEnableVisible_N"
         Me.btnEnableVisible_N.Size = New System.Drawing.Size(58, 23)
         Me.btnEnableVisible_N.TabIndex = 12
-        Me.btnEnableVisible_N.Text = "N veces Habilitar Visibilidad"
+        Me.btnEnableVisible_N.Text = "N times Enable Visibility"
         Me.btnEnableVisible_N.UseVisualStyleBackColor = True
         '
         'btnTest
@@ -188,7 +188,7 @@ Partial Class Form1
         Me.btnTest.Name = "btnTest"
         Me.btnTest.Size = New System.Drawing.Size(82, 35)
         Me.btnTest.TabIndex = 13
-        Me.btnTest.Text = "Pruebas Adaptadores"
+        Me.btnTest.Text = "Test Adapters"
         Me.btnTest.UseVisualStyleBackColor = True
         Me.btnTest.Visible = False
         '
@@ -205,18 +205,18 @@ Partial Class Form1
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(45, 30)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(40, 13)
+        Me.Label1.Size = New System.Drawing.Size(32, 13)
         Me.Label1.TabIndex = 15
-        Me.Label1.Text = "Estado"
+        Me.Label1.Text = "State"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(194, 30)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(73, 13)
+        Me.Label2.Size = New System.Drawing.Size(54, 13)
         Me.Label2.TabIndex = 17
-        Me.Label2.Text = "Roles Usuario"
+        Me.Label2.Text = "User roles"
         '
         'txtRoles
         '
@@ -232,7 +232,7 @@ Partial Class Form1
         Me.btnDisableEnabled.Name = "btnDisableEnabled"
         Me.btnDisableEnabled.Size = New System.Drawing.Size(116, 23)
         Me.btnDisableEnabled.TabIndex = 18
-        Me.btnDisableEnabled.Text = "Deshabilitar Enabled"
+        Me.btnDisableEnabled.Text = "Disable controls"
         Me.btnDisableEnabled.UseVisualStyleBackColor = True
         '
         'Label4
@@ -240,9 +240,9 @@ Partial Class Form1
         Me.Label4.AutoSize = True
         Me.Label4.Location = New System.Drawing.Point(16, 68)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(71, 13)
+        Me.Label4.Size = New System.Drawing.Size(62, 13)
         Me.Label4.TabIndex = 23
-        Me.Label4.Text = "Restricciones"
+        Me.Label4.Text = "Restrictions"
         '
         'txtRestrictions
         '
@@ -258,18 +258,18 @@ Partial Class Form1
         '
         Me.TreeView1.Location = New System.Drawing.Point(256, 370)
         Me.TreeView1.Name = "TreeView1"
-        TreeNode1.Name = "Nodo1"
-        TreeNode1.Text = "Nodo1"
-        TreeNode2.Name = "Nodo2"
-        TreeNode2.Text = "Nodo2"
-        TreeNode3.Name = "Nodo0"
-        TreeNode3.Text = "Nodo0"
-        TreeNode4.Name = "Nodo5"
-        TreeNode4.Text = "Nodo5"
-        TreeNode5.Name = "Nodo4"
-        TreeNode5.Text = "Nodo4"
-        TreeNode6.Name = "Nodo3"
-        TreeNode6.Text = "Nodo3"
+        TreeNode1.Name = "Node1"
+        TreeNode1.Text = "Node1"
+        TreeNode2.Name = "Node2"
+        TreeNode2.Text = "Node2"
+        TreeNode3.Name = "Node0"
+        TreeNode3.Text = "Node0"
+        TreeNode4.Name = "Node5"
+        TreeNode4.Text = "Node5"
+        TreeNode5.Name = "Node4"
+        TreeNode5.Text = "Node4"
+        TreeNode6.Name = "Node3"
+        TreeNode6.Text = "Node3"
         Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode6})
         Me.TreeView1.Size = New System.Drawing.Size(125, 176)
         Me.TreeView1.TabIndex = 25
@@ -320,7 +320,7 @@ Partial Class Form1
         Me.btnReinitialize.Name = "btnReinitialize"
         Me.btnReinitialize.Size = New System.Drawing.Size(124, 23)
         Me.btnReinitialize.TabIndex = 35
-        Me.btnReinitialize.Text = "Reinicializar Seguridad"
+        Me.btnReinitialize.Text = "Reinitialize Security"
         Me.btnReinitialize.UseVisualStyleBackColor = True
         '
         'cbUseReadOnly
@@ -330,10 +330,10 @@ Partial Class Form1
         Me.cbUseReadOnly.CheckState = System.Windows.Forms.CheckState.Checked
         Me.cbUseReadOnly.Location = New System.Drawing.Point(97, 240)
         Me.cbUseReadOnly.Name = "cbUseReadOnly"
-        Me.cbUseReadOnly.Size = New System.Drawing.Size(98, 17)
+        Me.cbUseReadOnly.Size = New System.Drawing.Size(95, 17)
         Me.cbUseReadOnly.TabIndex = 34
-        Me.cbUseReadOnly.Text = "Usar ReadOnly"
-        Me.ToolTip1.SetToolTip(Me.cbUseReadOnly, "Utilizar ReadOnly y no Enabled cuando sea posible (DataGridView, UltraGrid)")
+        Me.cbUseReadOnly.Text = "Use ReadOnly"
+        Me.ToolTip1.SetToolTip(Me.cbUseReadOnly, "Use ReadOnly instead of Enabled when it is possible (DataGridView)")
         Me.cbUseReadOnly.UseVisualStyleBackColor = True
         '
         'Label3
@@ -341,20 +341,19 @@ Partial Class Form1
         Me.Label3.AutoSize = True
         Me.Label3.Location = New System.Drawing.Point(617, 15)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(53, 13)
+        Me.Label3.Size = New System.Drawing.Size(51, 13)
         Me.Label3.TabIndex = 33
-        Me.Label3.Text = "Instancia:"
+        Me.Label3.Text = "Instance:"
         '
         'cbAditionalLogicOfRestriction
         '
         Me.cbAditionalLogicOfRestriction.AutoSize = True
         Me.cbAditionalLogicOfRestriction.Location = New System.Drawing.Point(601, 266)
         Me.cbAditionalLogicOfRestriction.Name = "cbAditionalLogicOfRestriction"
-        Me.cbAditionalLogicOfRestriction.Size = New System.Drawing.Size(124, 17)
+        Me.cbAditionalLogicOfRestriction.Size = New System.Drawing.Size(125, 17)
         Me.cbAditionalLogicOfRestriction.TabIndex = 32
-        Me.cbAditionalLogicOfRestriction.Text = "Restricción adicional"
-        Me.ToolTip1.SetToolTip(Me.cbAditionalLogicOfRestriction, "Si marcado: además de las restricciones que pueda haber definidas, sólo se mostra" & _
-                "rá el control CheckBox1 si el contenido de TextBox es igual al de TextBox2")
+        Me.cbAditionalLogicOfRestriction.Text = "Additional Restriction"
+        Me.ToolTip1.SetToolTip(Me.cbAditionalLogicOfRestriction, resources.GetString("cbAditionalLogicOfRestriction.ToolTip"))
         Me.cbAditionalLogicOfRestriction.UseVisualStyleBackColor = True
         '
         'lblInstance
@@ -371,7 +370,7 @@ Partial Class Form1
         Me.btnExcludeControl.Name = "btnExcludeControl"
         Me.btnExcludeControl.Size = New System.Drawing.Size(130, 23)
         Me.btnExcludeControl.TabIndex = 30
-        Me.btnExcludeControl.Text = "Excluir TextBox"
+        Me.btnExcludeControl.Text = "Exclude TextBox"
         Me.btnExcludeControl.UseVisualStyleBackColor = True
         '
         'btnForceEnabled
@@ -380,7 +379,7 @@ Partial Class Form1
         Me.btnForceEnabled.Name = "btnForceEnabled"
         Me.btnForceEnabled.Size = New System.Drawing.Size(130, 23)
         Me.btnForceEnabled.TabIndex = 29
-        Me.btnForceEnabled.Text = "Forzar Enabled TextBox"
+        Me.btnForceEnabled.Text = "Force TextBox Enabled"
         Me.btnForceEnabled.UseVisualStyleBackColor = True
         '
         'btnForceVisibility
@@ -389,7 +388,7 @@ Partial Class Form1
         Me.btnForceVisibility.Name = "btnForceVisibility"
         Me.btnForceVisibility.Size = New System.Drawing.Size(130, 23)
         Me.btnForceVisibility.TabIndex = 28
-        Me.btnForceVisibility.Text = "Forzar Visibilid TextBox"
+        Me.btnForceVisibility.Text = "Force TextBox Visible"
         Me.btnForceVisibility.UseVisualStyleBackColor = True
         '
         'cbPaused
@@ -397,9 +396,9 @@ Partial Class Form1
         Me.cbPaused.AutoSize = True
         Me.cbPaused.Location = New System.Drawing.Point(606, 42)
         Me.cbPaused.Name = "cbPaused"
-        Me.cbPaused.Size = New System.Drawing.Size(125, 17)
+        Me.cbPaused.Size = New System.Drawing.Size(119, 17)
         Me.cbPaused.TabIndex = 27
-        Me.cbPaused.Text = "Supervisión pausada"
+        Me.cbPaused.Text = "Supervision paused"
         Me.cbPaused.UseVisualStyleBackColor = True
         '
         'btnRestrictionsMngt
@@ -409,13 +408,13 @@ Partial Class Form1
         Me.btnRestrictionsMngt.Name = "btnRestrictionsMngt"
         Me.btnRestrictionsMngt.Size = New System.Drawing.Size(99, 37)
         Me.btnRestrictionsMngt.TabIndex = 25
-        Me.btnRestrictionsMngt.Text = "Mto. Restricciones"
+        Me.btnRestrictionsMngt.Text = "Restrictions Mngt."
         Me.btnRestrictionsMngt.UseVisualStyleBackColor = True
         '
-        'cControles
+        'cControls
         '
-        Me.cControles.AllowUserToAddRows = False
-        Me.cControles.AllowUserToDeleteRows = False
+        Me.cControls.AllowUserToAddRows = False
+        Me.cControls.AllowUserToDeleteRows = False
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -423,8 +422,8 @@ Partial Class Form1
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cControles.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.cControles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.cControls.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.cControls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -432,9 +431,9 @@ Partial Class Form1
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.cControles.DefaultCellStyle = DataGridViewCellStyle2
-        Me.cControles.Location = New System.Drawing.Point(527, 418)
-        Me.cControles.Name = "cControles"
+        Me.cControls.DefaultCellStyle = DataGridViewCellStyle2
+        Me.cControls.Location = New System.Drawing.Point(527, 418)
+        Me.cControls.Name = "cControls"
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -442,10 +441,10 @@ Partial Class Form1
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.cControles.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.cControles.RowHeadersVisible = False
-        Me.cControles.Size = New System.Drawing.Size(348, 128)
-        Me.cControles.TabIndex = 51
+        Me.cControls.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.cControls.RowHeadersVisible = False
+        Me.cControls.Size = New System.Drawing.Size(348, 128)
+        Me.cControls.TabIndex = 51
         '
         'ToolStrip1
         '
@@ -486,86 +485,86 @@ Partial Class Form1
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ArchivoToolStripMenuItem, Me.EditarToolStripMenuItem})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(887, 24)
         Me.MenuStrip1.TabIndex = 53
         Me.MenuStrip1.Text = "MenuStrip1"
         '
-        'ArchivoToolStripMenuItem
+        'FileToolStripMenuItem
         '
-        Me.ArchivoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevoToolStripMenuItem, Me.CerrarToolStripMenuItem, Me.ToolStripSeparator1, Me.ToolStripMenuItem1, Me.SalirToolStripMenuItem})
-        Me.ArchivoToolStripMenuItem.Name = "ArchivoToolStripMenuItem"
-        Me.ArchivoToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
-        Me.ArchivoToolStripMenuItem.Text = "Archivo"
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NewToolStripMenuItem, Me.CloseToolStripMenuItem, Me.ToolStripSeparator1, Me.ToolStripMenuItem1, Me.ExitToolStripMenuItem})
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(35, 20)
+        Me.FileToolStripMenuItem.Text = "File"
         '
-        'NuevoToolStripMenuItem
+        'NewToolStripMenuItem
         '
-        Me.NuevoToolStripMenuItem.Name = "NuevoToolStripMenuItem"
-        Me.NuevoToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
-        Me.NuevoToolStripMenuItem.Text = "Nuevo"
+        Me.NewToolStripMenuItem.Name = "NewToolStripMenuItem"
+        Me.NewToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.NewToolStripMenuItem.Text = "New"
         '
-        'CerrarToolStripMenuItem
+        'CloseToolStripMenuItem
         '
-        Me.CerrarToolStripMenuItem.Name = "CerrarToolStripMenuItem"
-        Me.CerrarToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
-        Me.CerrarToolStripMenuItem.Text = "Cerrar"
+        Me.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem"
+        Me.CloseToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.CloseToolStripMenuItem.Text = "Close"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(121, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(108, 6)
         '
         'ToolStripMenuItem1
         '
-        Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Opcion1ToolStripMenuItem, Me.Opcion2ToolStripMenuItem})
+        Me.ToolStripMenuItem1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Option1ToolStripMenuItem, Me.Option2ToolStripMenuItem})
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(124, 22)
-        Me.ToolStripMenuItem1.Text = "Agregar"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(111, 22)
+        Me.ToolStripMenuItem1.Text = "Add"
         '
-        'Opcion1ToolStripMenuItem
+        'Option1ToolStripMenuItem
         '
-        Me.Opcion1ToolStripMenuItem.Name = "Opcion1ToolStripMenuItem"
-        Me.Opcion1ToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
-        Me.Opcion1ToolStripMenuItem.Text = "Opcion1"
+        Me.Option1ToolStripMenuItem.Name = "Option1ToolStripMenuItem"
+        Me.Option1ToolStripMenuItem.Size = New System.Drawing.Size(123, 22)
+        Me.Option1ToolStripMenuItem.Text = "Option1"
         '
-        'Opcion2ToolStripMenuItem
+        'Option2ToolStripMenuItem
         '
-        Me.Opcion2ToolStripMenuItem.Name = "Opcion2ToolStripMenuItem"
-        Me.Opcion2ToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
-        Me.Opcion2ToolStripMenuItem.Text = "Opcion2"
+        Me.Option2ToolStripMenuItem.Name = "Option2ToolStripMenuItem"
+        Me.Option2ToolStripMenuItem.Size = New System.Drawing.Size(123, 22)
+        Me.Option2ToolStripMenuItem.Text = "Option2"
         '
-        'SalirToolStripMenuItem
+        'ExitToolStripMenuItem
         '
-        Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
-        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
-        Me.SalirToolStripMenuItem.Text = "Salir"
+        Me.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem"
+        Me.ExitToolStripMenuItem.Size = New System.Drawing.Size(111, 22)
+        Me.ExitToolStripMenuItem.Text = "Exit"
         '
-        'EditarToolStripMenuItem
+        'EditToolStripMenuItem
         '
-        Me.EditarToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CortarToolStripMenuItem, Me.CopiarToolStripMenuItem, Me.PegarToolStripMenuItem, Me.ToolStripComboBox2})
-        Me.EditarToolStripMenuItem.Name = "EditarToolStripMenuItem"
-        Me.EditarToolStripMenuItem.Size = New System.Drawing.Size(47, 20)
-        Me.EditarToolStripMenuItem.Text = "Editar"
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CutToolStripMenuItem, Me.CopyToolStripMenuItem, Me.PasteToolStripMenuItem, Me.ToolStripComboBox2})
+        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+        Me.EditToolStripMenuItem.Text = "Edit"
         '
-        'CortarToolStripMenuItem
+        'CutToolStripMenuItem
         '
-        Me.CortarToolStripMenuItem.Name = "CortarToolStripMenuItem"
-        Me.CortarToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
-        Me.CortarToolStripMenuItem.Text = "Cortar"
+        Me.CutToolStripMenuItem.Name = "CutToolStripMenuItem"
+        Me.CutToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.CutToolStripMenuItem.Text = "Cut"
         '
-        'CopiarToolStripMenuItem
+        'CopyToolStripMenuItem
         '
-        Me.CopiarToolStripMenuItem.Name = "CopiarToolStripMenuItem"
-        Me.CopiarToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
-        Me.CopiarToolStripMenuItem.Text = "Copiar"
+        Me.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem"
+        Me.CopyToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.CopyToolStripMenuItem.Text = "Copy"
         '
-        'PegarToolStripMenuItem
+        'PasteToolStripMenuItem
         '
-        Me.PegarToolStripMenuItem.Name = "PegarToolStripMenuItem"
-        Me.PegarToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
-        Me.PegarToolStripMenuItem.Text = "Pegar"
+        Me.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem"
+        Me.PasteToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
+        Me.PasteToolStripMenuItem.Text = "Paste"
         '
         'ToolStripComboBox2
         '
@@ -574,14 +573,13 @@ Partial Class Form1
         '
         'ControlRestrictedUIWinForms1
         '
-        Me.ControlRestrictedUIWinForms1.ConfigFile = "TestWinForms_notUsingInfragistics\Security.txt"
-        Me.ControlRestrictedUIWinForms1.ControlsFile = "TestWinForms_notUsingInfragistics\Controls.txt"
+        Me.ControlRestrictedUIWinForms1.ConfigFile = "TestWinForms\Security.txt"
+        Me.ControlRestrictedUIWinForms1.ControlsFile = "TestWinForms\Controls.txt"
         Me.ControlRestrictedUIWinForms1.ID = "Form1"
         Me.ControlRestrictedUIWinForms1.InstanceID = "00"
         Me.ControlRestrictedUIWinForms1.ParentControl = Me
         Me.ControlRestrictedUIWinForms1.Paused = False
-        Me.ControlRestrictedUIWinForms1.RestrictionsDefinition = New String() {"$Grupo 0= GroupBox1.CheckBox1, GroupBox1.TextBox2", "$Grupo 2= TextBox", "+0/GroupBox1.CheckBox1,E,0", "+99/Combo,E"}
-
+        Me.ControlRestrictedUIWinForms1.RestrictionsDefinition = New String() {"$Group 0= GroupBox1.CheckBox1, GroupBox1.TextBox2", "$Group 1= TextBox", "+0/GroupBox1.CheckBox1,E,0", "+99/Combo,V"}
         '
         'Form1
         '
@@ -590,7 +588,7 @@ Partial Class Form1
         Me.ClientSize = New System.Drawing.Size(887, 564)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.MenuStrip1)
-        Me.Controls.Add(Me.cControles)
+        Me.Controls.Add(Me.cControls)
         Me.Controls.Add(Me.gbCommands)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.TreeView1)
@@ -605,7 +603,7 @@ Partial Class Form1
         CType(Me.EntidadBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbCommands.ResumeLayout(False)
         Me.gbCommands.PerformLayout()
-        CType(Me.cControles, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.cControls, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ToolStrip1.ResumeLayout(False)
         Me.ToolStrip1.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
@@ -645,7 +643,7 @@ Partial Class Form1
     Friend WithEvents btnForceVisibility As System.Windows.Forms.Button
     Friend WithEvents btnExcludeControl As System.Windows.Forms.Button
     Friend WithEvents ControlRestrictedUIWinForms1 As RestrictedWinFormsUI.ControlRestrictedUIWinForms
-    Friend WithEvents cControles As System.Windows.Forms.DataGridView
+    Friend WithEvents cControls As System.Windows.Forms.DataGridView
     Friend WithEvents lblInstance As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents cbAditionalLogicOfRestriction As System.Windows.Forms.CheckBox
@@ -658,18 +656,18 @@ Partial Class Form1
     Friend WithEvents ToolStripComboBox1 As System.Windows.Forms.ToolStripComboBox
     Friend WithEvents ToolStripTextBox1 As System.Windows.Forms.ToolStripTextBox
     Friend WithEvents MenuStrip1 As System.Windows.Forms.MenuStrip
-    Friend WithEvents ArchivoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents NuevoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents CerrarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents FileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents NewToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CloseToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
     Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Opcion1ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents Opcion2ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents SalirToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents EditarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents CortarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents CopiarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents PegarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Option1ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Option2ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ExitToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CutToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripComboBox2 As System.Windows.Forms.ToolStripComboBox
 
 End Class
