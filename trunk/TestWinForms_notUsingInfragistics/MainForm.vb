@@ -71,7 +71,8 @@ Public Class MainForm
         ' Apart from that we have defined some security policy embedded in a component, we will use the one defined in a file
         ' (We could also have read the security from a stream providing a System.IO.StreamReader, or directly from a string 
         ' with EntornoSeguridad.LoadFromString)
-        SecurityEnvironment.LoadFrom("TestWinForms_notUsingInfragistics\Security.txt")
+        'SecurityEnvironment.LoadFrom("TestWinForms_notUsingInfragistics\Security.txt")
+        SecurityEnvironment.LoadFrom("SecurityNotInfrag.txt")
 
         ' We may change the combination of keys that activate the security maintenance form.
         ' For example, if we want to set CTR+Shift+F5 we can do:
