@@ -16,8 +16,8 @@
     <AssociationLine Name="_defSecurity" Type="RestrictedUI.UIRestrictions" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
       <Path>
         <Point X="3" Y="0.812" />
-        <Point X="4.438" Y="0.812" />
-        <Point X="4.438" Y="1" />
+        <Point X="4.569" Y="0.812" />
+        <Point X="4.569" Y="1" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
         <Position X="0.072" Y="0.272" />
@@ -33,12 +33,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="RestrictedUI.UIRestrictions">
-    <Position X="3.25" Y="1" Width="2.5" />
-    <AssociationLine Name="Authorizations" Type="RestrictedUI.RestrictionOnControl">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.013" Y="0.289" />
-      </MemberNameLabel>
-    </AssociationLine>
+    <Position X="3.5" Y="1" Width="2.25" />
     <AssociationLine Name="Prohibitions" Type="RestrictedUI.RestrictionOnControl" FixedToPoint="true">
       <Path>
         <Point X="4.438" Y="4.224" />
@@ -48,13 +43,22 @@
         <Position X="-0.941" Y="0.29" />
       </MemberNameLabel>
     </AssociationLine>
+    <AssociationLine Name="Authorizations" Type="RestrictedUI.RestrictionOnControl" FixedToPoint="true">
+      <Path>
+        <Point X="4.125" Y="4.224" />
+        <Point X="4.125" Y="4.75" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.013" Y="0.289" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>ABACAgAACABAAAAAAAAAAAAQAACAAAAAICAAAABAEAI=</HashCode>
+      <HashCode>ABACAhAACABAAAAAAAABAAAQAACAAAAAAQAAAABAEAA=</HashCode>
       <FileName>RestrictionsDefinition.vb</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
-      <Property Name="Authorizations" />
       <Property Name="Prohibitions" />
+      <Property Name="Authorizations" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="RestrictedUI.ComponentSecurity">
@@ -98,13 +102,18 @@
         <Position X="0.048" Y="0.006" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="HotKey" Type="RestrictedUI.HotKey">
+    <AssociationLine Name="HotKey" Type="RestrictedUI.HotKey" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.562" Y="6.513" />
+        <Point X="8.562" Y="7.062" />
+        <Point X="9.5" Y="7.062" />
+      </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.222" Y="0.098" />
+        <Position X="0.098" Y="0.222" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>wACAAIAIBBQRQAEkCAx4gA4IAgJATEAEBAgCNICZAmA=</HashCode>
+      <HashCode>wACAAIAIBBQRQAEkCAx4gA4IAgJATEAEBAgCNICZAiA=</HashCode>
       <FileName>SecurityEnvironment.vb</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -113,10 +122,10 @@
       <Property Name="HotKey" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
-      <Property Name="ComponentsSecurity" />
       <Property Name="AditionalFactories" />
       <Property Name="CommonRoles" />
       <Property Name="CommonStates" />
+      <Property Name="ComponentsSecurity" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="RestrictedUI.NullControlAdapter" Collapsed="true">
@@ -130,13 +139,13 @@
   <Class Name="RestrictedUI.FrmRestrictionsUIDefinition" Collapsed="true">
     <Position X="0.5" Y="7.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>GwEdyt90Xm6PKJsS+iSrG3qH9/at8VucPC+ypDYhSPA=</HashCode>
+      <HashCode>GwEdyt90Xm6vKJsS+iSrG3qH9/at8VucPC+ypDYhSPA=</HashCode>
       <FileName>FrmRestrictionsUIDefinition.vb</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Struct Name="RestrictedUI.HotKey" Collapsed="true">
-    <Position X="9.5" Y="6.5" Width="1.5" />
+    <Position X="9.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
       <FileName>SecurityEnvironment.vb</FileName>
@@ -161,7 +170,7 @@
         <Point X="5.938" Y="5.25" />
       </Path>
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.07" Y="0.294" />
+        <Position X="-0.208" Y="0.294" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>

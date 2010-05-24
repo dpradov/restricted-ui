@@ -23,12 +23,12 @@ Partial Class UserControl2
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
-        Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo1")
-        Dim TreeNode8 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo2")
-        Dim TreeNode9 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo0", New System.Windows.Forms.TreeNode() {TreeNode7, TreeNode8})
-        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo5")
-        Dim TreeNode11 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo4", New System.Windows.Forms.TreeNode() {TreeNode10})
-        Dim TreeNode12 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Nodo3", New System.Windows.Forms.TreeNode() {TreeNode11})
+        Dim TreeNode1 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node1")
+        Dim TreeNode2 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node2")
+        Dim TreeNode3 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node0", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode2})
+        Dim TreeNode4 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node5")
+        Dim TreeNode5 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node4", New System.Windows.Forms.TreeNode() {TreeNode4})
+        Dim TreeNode6 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Node3", New System.Windows.Forms.TreeNode() {TreeNode5})
         Me.GroupBox1 = New System.Windows.Forms.GroupBox
         Me.RadioButton2 = New System.Windows.Forms.RadioButton
         Me.RadioButton1 = New System.Windows.Forms.RadioButton
@@ -75,19 +75,19 @@ Partial Class UserControl2
         '
         Me.TreeView1.Location = New System.Drawing.Point(29, 80)
         Me.TreeView1.Name = "TreeView1"
-        TreeNode7.Name = "Nodo1"
-        TreeNode7.Text = "Nodo1"
-        TreeNode8.Name = "Nodo2"
-        TreeNode8.Text = "Nodo2"
-        TreeNode9.Name = "Nodo0"
-        TreeNode9.Text = "Nodo0"
-        TreeNode10.Name = "Nodo5"
-        TreeNode10.Text = "Nodo5"
-        TreeNode11.Name = "Nodo4"
-        TreeNode11.Text = "Nodo4"
-        TreeNode12.Name = "Nodo3"
-        TreeNode12.Text = "Nodo3"
-        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode9, TreeNode12})
+        TreeNode1.Name = "Node1"
+        TreeNode1.Text = "Node1"
+        TreeNode2.Name = "Node2"
+        TreeNode2.Text = "Node2"
+        TreeNode3.Name = "Node0"
+        TreeNode3.Text = "Node0"
+        TreeNode4.Name = "Node5"
+        TreeNode4.Text = "Node5"
+        TreeNode5.Name = "Node4"
+        TreeNode5.Text = "Node4"
+        TreeNode6.Name = "Node3"
+        TreeNode6.Text = "Node3"
+        Me.TreeView1.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode6})
         Me.TreeView1.Size = New System.Drawing.Size(125, 72)
         Me.TreeView1.TabIndex = 26
         '
@@ -99,7 +99,7 @@ Partial Class UserControl2
         Me.ControlSeguridadWinForms1.InstanceID = "00"
         Me.ControlSeguridadWinForms1.ParentControl = Me
         Me.ControlSeguridadWinForms1.Paused = False
-        Me.ControlSeguridadWinForms1.RestrictionsDefinition = New String() {"-0/TreeView1.Nodo0.Nodo1,E/TreeView1.Nodo3.Nodo4.Nodo5,V"}
+        Me.ControlSeguridadWinForms1.RestrictionsDefinition = New String() {"-0/TreeView1.Node0.Node1,E/TreeView1.Node3.Node4.Node5,V"}
         '
         'UserControl2
         '
@@ -108,7 +108,7 @@ Partial Class UserControl2
         Me.Controls.Add(Me.TreeView1)
         Me.Controls.Add(Me.GroupBox1)
         Me.Name = "UserControl2"
-        Me.Size = New System.Drawing.Size(262, 168)
+        Me.Size = New System.Drawing.Size(267, 167)
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.ControlSeguridadWinForms1, System.ComponentModel.ISupportInitialize).EndInit()

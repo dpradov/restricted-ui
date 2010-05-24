@@ -36,7 +36,7 @@ Imports RestrictedWinFormsUI
 
 
 ''' <summary>
-''' Adaptador para controles UltraGrid de NetAdventage (Infragistics), para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI"/>)
+''' Adapter for UltraGrid controls (NetAdventage, Infragistics), for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterInfragisticsWinForms_UltraGrid
@@ -50,14 +50,15 @@ Public Class AdapterInfragisticsWinForms_UltraGrid
     End Sub
 
 
-#Region "Personalización de Enabled: Enabled o ReadOnly"
+#Region "Customizing Enabled: Enabled or ReadOnly"
+
     ''' <summary>
-    ''' El adaptador controla la habilitación del control de usuario que envuelve, mediante la propiedad ReadOnly, en lugar de Enabled
+    ''' The adapter manages the enabling of the wrapped control through the ReadOnly property, rather than Enabled property.
     ''' </summary>
     ''' <remarks>
-    ''' <para>Si se establece a <b>true</b> será posible moverse por el Grid, aunque no se podrá modificar el contenido de sus celdas.</para>
-    ''' <para>Estando a <b>false</b> (valor por defecto) el Grid estará completamente deshabilitado y no se podrá desplazar por él.</para>
-    ''' <para>Esta propiedad no es común a todos los <see cref="IControlAdapter"/></para>
+    ''' <para>If set to <b>true</b> it is possible to move around the UltraGrid control, but you can not modify the contents of their cells.</para>
+    ''' <para>If set to <b>false</b> (default) the UltraGrid control is completely disabled and you can not be moved around it.</para>
+    ''' <para>This property is not common to all <see cref="IControlAdapter"/></para>
     ''' </remarks>
     Public Shared Property UseReadOnly() As Boolean
         Get
@@ -136,7 +137,7 @@ Public Class AdapterInfragisticsWinForms_UltraGrid
     End Function
 
     Protected Overrides Function FindControl(ByVal identificador As String) As IControlAdapter
-        Dim cad As String() = identificador.Split("·"c)   '<nºbanda>·<tituloColumna>
+        Dim cad As String() = identificador.Split("·"c)   '<band nº>·<columnHeader>
         Dim control As Object = Nothing
 
         Dim padre As UltraGrid

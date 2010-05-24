@@ -33,13 +33,13 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para los controles <see cref="Web.UI.WebControls.ListControl"/>: <see cref="Web.UI.WebControls.CheckBoxList "/> y <see cref="Web.UI.WebControls.RadioButtonList"/>, para su uso desde la 
-''' librería de Interface Restringida (<see cref="RestrictedUI"/>)
+''' Adapter for <see cref="Web.UI.WebControls.ListControl"/> controls: <see cref="Web.UI.WebControls.CheckBoxList "/> and <see cref="Web.UI.WebControls.RadioButtonList"/>,
+''' for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
-''' <remarks><see cref="ListBox"/> y <see cref="DropDownList "/> no admiten la modificación de la propiedad Enabled. Por ello de momento no se ofrecerá
-''' un tratamiento especial para estos controles (tampoco ofrecen Visible). Pero sí sería posible ofrecer la funcionalidad
-''' Visible a base de eliminar o añadir ese elemento en el control (algo análogo a lo que está hecho en TreeView
-''' Se gestionarán por tanto con el adaptador genérico <see cref="AdapterWeb_WebControl"/>
+''' <remarks><see cref="ListBox"/> and <see cref="DropDownList "/> do not support changing the Enabled property.
+''' So far it is not provided special treatment for these controls (neither it is offered Visible property).
+''' But it would be possible to offer Visible functionality by removing or adding that element in the control (something analogous to what is done in TreeView)
+''' Therefore, they will be managed with the generic adapter <see cref="AdapterWeb_WebControl"/>
 ''' </remarks>
 Public Class AdapterWeb_ListControl
     Inherits AdapterWeb_WebControl
@@ -58,7 +58,7 @@ Public Class AdapterWeb_ListControl
         Dim adapt As IControlAdapter
 
         For Each ctrl As ListItem In DirectCast(_control, ListControl).Items
-            'adapt = New AdapterWeb_ListItem(ctrl, _control)   'Llamar a SecurityEnvironment.GetAdapter y no instanciar directamente el adaptador, para permitir implementaciones distintas
+            'adapt = New AdapterWeb_ListItem(ctrl, _control)   'Call SecurityEnvironment.GetAdapter and not directly instantiate the adapter, to allow different implementations
             adapt = SecurityEnvironment.GetAdapter(ctrl, _control)
             If Not TypeOf adapt Is NullControlAdapter Then
                 children.Add(adapt)

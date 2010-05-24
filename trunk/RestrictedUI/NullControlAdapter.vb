@@ -28,11 +28,11 @@
 ' URLs:
 '  http://code.google.com/p/restricted-ui/
 
-''' <summary>Objeto <see cref="IControlAdapter "/> especial: nulo o vacío, no ligado a ningún control.</summary>
+''' <summary>Special object <see cref="IControlAdapter "/>: null or empty, that wraps no control.</summary>
 ''' <remarks>
-''' Permite a otros objetos que deban devolver objetos <see cref="IControlAdapter "/> retornen
-''' siempre una instancia válida y no Nothing, con lo que no exige al código que los invoca verificar si es no Nothing.
-''' (Según el patrón 'Special Case' descrito por Martin Fowler: http://martinfowler.com/eaaCatalog/specialCase.html)
+''' It allows to return a valid instance of <see cref="IControlAdapter "/>, not Nothing, thus no requiring the invoking code to 
+''' check if the value returned is nothing or not.
+''' (According to the patron 'Special Case' as described by Martin Fowler: http://martinfowler.com/eaaCatalog/specialCase.html)
 ''' </remarks>
 Public Class NullControlAdapter
     Implements IControlAdapter

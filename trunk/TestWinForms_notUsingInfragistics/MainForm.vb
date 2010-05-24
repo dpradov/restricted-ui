@@ -38,9 +38,9 @@ Public Class MainForm
     Private Sub btnForm1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnForm1.Click
         Dim f As New Form1
 
-        ' La seguridad a aplicar puede variar no sólo del tipo de formulario o control (donde esté incrustado el componente
-        ' de seguridad, sino de la instancia concreta de ese formulario o control. Vamos a distinguir cada instancia en 
-        ' el formulario Form1
+        ' Security to apply may vary not only on the type of form or control (where the security component is embedded),
+        ' but on the concrete instance of that form or control.
+        ' We will distinguish each instance in the form Form1:
         f._InstanceID = nextInstanceForm1.ToString("00")
         f.Show()
         nextInstanceForm1 += 1
@@ -51,32 +51,33 @@ Public Class MainForm
         f.Show()
     End Sub
 
+
     Private Sub FormPpal_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
-        ' Configuración inicial de la librería de seguridad:
+        ' Initial setup of the security library:
+        '-----------------------------------------
 
-        ' Establecer el objeto IHost que permitirá conocer el estado y roles de la aplicación
+        ' We set the object IHost that will reveal the status and roles of the application
         SecurityEnvironment.Host = _host
 
-        ' No queremos que se actualicen los ficheros de controles automáticamente al inicializarse los
-        ' componentes de seguridad. Lo actualizaremos cuando tengamos todos los controles creados (algunos
-        ' los construiremos dinámicamente: columnas de un datagrid)
+        ' We don't want config files to be automatically updated on the initialization of the security components.
+        ' We will update them when we have created all the controls (some of them will be build dynamically: datagrid columns)
         SecurityEnvironment.AutomaticUpdateOfControlsFile = False
 
-        ' Algunos adaptadores, como éste, pueden permitir controlar el estado de habilitado o no con la propiedad ReadOnly
-        ' en lugar de Enabled (esta última sería la por defecto)
+        ' Some adapters like these can allow to control the enabled state with the ReadOnly property instead of Enabled
+        ' (the latter would be the default)
         AdapterWinForms_DataGridView.UseReadOnly = True
 
-        ' Al margen de que tengamos definida alguna seguridad de manera embebida en algún componente, 
-        ' utilizaremos la definida en un archivo. (También podríamos haber leído la seguridad desde un
-        ' Stream facilitando un System.IO.StreamReader, o directamente desde una cadena con EntornoSeguridad.LoadFromString
+        ' Apart from that we have defined some security policy embedded in a component, we will use the one defined in a file
+        ' (We could also have read the security from a stream providing a System.IO.StreamReader, or directly from a string 
+        ' with EntornoSeguridad.LoadFromString)
         SecurityEnvironment.LoadFrom("TestWinForms_notUsingInfragistics\Security.txt")
 
-        ' Podríamos modificar la combinación de teclas con las que activaremos el formulario de mantenimiento
-        ' de la seguridad. Por ejemplo, sin quisiéramos establecer CTR-Shift-F5 utilizaríamos:
-        ' EntornoSeguridad.HotKey = New HotKey(Keys.F5, Keys.Control Or Keys.Shift, True)    ' Nota: el último parámetro es opcional y por defecto a False, esto es, la combinación se crea deshabilitada 
-        ' Dejaremos de momento la establecida por defecto: CTR-?  (CTR más Shift más tecla de ?)
-        ' Como inicialmente la combinación está deshabilitada la habilitaremos:
+        ' We may change the combination of keys that activate the security maintenance form.
+        ' For example, if we want to set CTR+Shift+F5 we can do:
+        '   SecurityEnvironment.HotKey = New HotKey(Keys.F5, Keys.Control Or Keys.Shift, True)    ' Note: The last parameter is optional and defaults to False, that is, the key combination is created disabled
+        ' We will maintain for now the default key combination: CTR+Alt+End
+        ' As initially the key combination is disabled we will enable it:
         SecurityEnvironment.AllowedHotKey = True
 
     End Sub

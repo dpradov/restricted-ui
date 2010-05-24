@@ -33,7 +33,7 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador que maneja las columnas de los controles <see cref=" DataGridView"/>, para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI "/>)
+''' Adapter for the columns of <see cref=" DataGridView"/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWinForms_DataGridViewColumn

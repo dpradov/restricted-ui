@@ -33,7 +33,7 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador genérico para controles que hereden de <see cref="Web.UI.Control"/>, para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI"/>)
+''' Generic adapter for controls that inherit from <see cref="Web.UI.Control"/>, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWeb_UIControl

@@ -33,9 +33,11 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para controles (<see cref=" ToolStripItem"/>) no (<see cref=" ToolStripMenuItem"/>) (se asume que este último tendrá un adaptador propio), para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI "/>)
+''' Adapter for <see cref=" ToolStripItem"/> controls, not <see cref="ToolStripMenuItem"/> (it is assumed that the latter will have its own adapter),
+''' for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
-''' <remarks>Se asume que la factoría verificará primero si el objeto es <see cref=" ToolStripMenuItem"/> antes que <see cref=" ToolStripItem"/></remarks>
+''' <remarks>It is assumed that the factory will check first if the object is <see cref="ToolStripMenuItem"/> before <see cref=" ToolStripItem"/>
+''' </remarks>
 Public Class AdapterWinForms_ToolStripItem
     Implements IControlAdapter
 
@@ -58,7 +60,7 @@ Public Class AdapterWinForms_ToolStripItem
         End Get
     End Property
 
-#Region "Control de Visible y Enabled"
+#Region "Visible and Enabled Management"
 
     Public Overridable Property Enabled() As Boolean Implements IControlAdapter.Enabled
         Get

@@ -33,11 +33,13 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptación del componente <see cref="ControlRestrictedUI"/> para aplicaciones WinForms
+''' Adaptation of <see cref="ControlRestrictedUI "/> component for WinForms applications
 ''' </summary>
-''' <remarks>Arrastre este componente hacia el formulario o control de usuario sobre el que quiera
-''' controlar la visibilidad y el estado de habilitación de sus controles en base a una definición
-''' de seguridad. Puede configurar esa seguridad en tiempo de diseño o de ejecución</remarks>
+''' <remarks>
+''' Drag this component onto the form or user control for which you require to supervise 
+''' the visibility and enabled state of its controls based on a security definition. You can 
+''' configure that security policy at design time or runtime.
+''' </remarks>
 <System.Drawing.ToolboxBitmap(GetType(ControlRestrictedUIWinForms))> _
 Public Class ControlRestrictedUIWinForms
     Inherits ControlRestrictedUI
@@ -48,17 +50,18 @@ Public Class ControlRestrictedUIWinForms
 
         SecurityEnvironment.BaseFactory = AdapterWinForms_Factory.getInstance
 
-        'El Diseñador de componentes requiere esta llamada.
+        ' The Component Designer requires this call.
         InitializeComponent()
     End Sub
 
-
     ''' <summary>
-    ''' Obtiene o establece el control padre del componente. 
-    ''' Al establecerlo en ejecución (se hará desde el diseñador del contenedor) se subscribirá
-    ''' el evento <see cref="Windows.Forms.Control.HandleCreated "/> con la función <see cref="ControlRestrictedUI.AddEventHandlers"/>. De esta manera cuando tenga 
-    ''' lugar el evento (para entonces ya tendrá asociados sus controles hijos) se realizará la supervisión de los controles hijos seleccionados
+    ''' Gets or sets the parent control of the component
     ''' </summary>
+    ''' <remarks>
+    ''' When you set it at runtime (will be done from the designer of the container) it will make the form or user control attach itself to 
+    ''' the event <see cref="Windows.Forms.Control.HandleCreated "/>.
+    ''' Thus when the event takes place (by then its children controls will be associated) it will perform the monitoring of children controls selected.
+    ''' </remarks>
     <Browsable(False)> _
     Public Overrides Property ParentControl() As Object
         Get
@@ -76,14 +79,13 @@ Public Class ControlRestrictedUIWinForms
                 End If
 
             Else
-                ' TIEMPO DE DISEÑO
-                ' Si estamos desarrollando (hemos entrado en modo diseño) nos aseguramos de que 
-                ' exista el archivo de controles, aunque vacío, que se rellenará al estar
-                ' en ejecución.
+                ' DESIGN TIME
+                ' If we are developing (we have entered in design mode) we ensure that the controls file exists, even empty,
+                ' which shall be completed at runtime.
                 If Not String.IsNullOrEmpty(ControlsFile) AndAlso Not My.Computer.FileSystem.FileExists(ControlsFile) Then
                     Try
                         My.Computer.FileSystem.WriteAllText(ControlsFile, " ", True)
-                    Catch ex As Exception   ' Por si no existe la carpeta a la que se hace referencia
+                    Catch ex As Exception   ' In case that the referenced folder does not exists
                     End Try
                 End If
             End If
@@ -92,7 +94,7 @@ Public Class ControlRestrictedUIWinForms
     End Property
 
     ''' <summary>
-    ''' Indica que el componente no es utilizable en aplicaciones Web, sino sólo en aplicaciones WinForms
+    ''' Indicates that the component is usable in WinForms applications but no in Web applications
     ''' </summary>
     Public Overrides ReadOnly Property WebComponent() As Boolean
         Get

@@ -34,13 +34,46 @@ Imports System.Reflection
 
 
 ''' <summary>
-''' Formulario de mantenimiento de la política de restricciones asociada a un componente de seguridad <see cref="ControlRestrictedUI "/>. 
+''' Maintenance form for the restrictions policy related to a security component, <see cref="ControlRestrictedUI "/>
 ''' </summary>
+''' 
 ''' <remarks>
-''' <para>Permite tanto la consulta como la modificación de restricciones (permisos y prohibiciones), de grupos de controles,
-''' estados y roles (tanto comunes a todos los compontes como particulares a uno sólo).</para>
-''' <para>Utilizable tanto en tiempo de diseño como de ejecución (esto último se ofrece sólo para aplicaciones WinForms).</para>
-''' <para>Ofrece la posibilidad de recuperar o guardar la seguridad desde y hacia un archivo</para>
+''' <para>Settings directly embedded in the component or through configuration files can be generated with this maintenance 
+''' form, and easily modified by hand if necessary.</para>
+''' 
+''' <para>Basically what we can do is to select (checkbox) one or more controls, the property or properties 
+''' to be monitored (Visible, Enabled) and optionally one or more roles together with one or more states. 
+''' Pressing the button 'Allow' a new restriction (positive) will be added, related to that selection. 
+''' Clicking on 'Disallow' a negative restriction will be added.</para>
+''' 
+''' <para>We can define groups of controls, with an associated name, and place restrictions directly to the group. 
+''' <br/>
+''' By selecting one or another group will be selecting in the controls's grid the elements in the group. 
+''' When you checked the box 'Show only selected Group' then clicking on Allow or Disallow, the restriction is 
+''' directly associated to the corresponding group.
+''' <br/>
+''' To add or update an existing group we will mark a series of controls and click Add. It will ask us for a name for the group. 
+''' If it already exists it will be replaced by the new selection, otherwise it will be added.
+''' </para>
+''' 
+''' <para>We have for convenience two ways of displaying the permissions: tabular or text, both editable.</para>
+''' 
+''' <para>This form is accessible both at design time and runtime. (the latter is provided only for WinForms applications).<br/>
+''' At design time you can access it by clicking on the button '...' in the property 
+''' <see cref="ControlRestrictedUI.RestrictionsDefinition">RestrictionsDefinition</see> of a component 
+''' <see cref="ControlRestrictedUI "/>; at runtime using the method <see cref="ControlRestrictedUI.ShowConfigurationSecurityForm"/>
+''' and also directly by pressing a key combination ready for it by means of <see cref="SecurityEnvironment.AllowedHotKey"/> (disabled by default)
+''' </para>
+''' 
+''' <para>
+''' We have the option of saving the restrictions in a configuration file, being added to the restrictions that may 
+''' already exist for other components. This file will be initially the one established (if any) for the component. 
+''' We can read the security settings of the component from which we have launched this form, or all that may be included in the file.</para>
+''' <para>
+''' If we use this form at runtime we can also double click a control to highlight it (it will blink several times). 
+''' We will also have the possibility to modify (if the object implementing IHost interface permits it) the state and the 
+''' role or roles associated to this component and instance, so that we can test security. For convenience we can reduce 
+''' this form to offer only these controls</para>
 ''' </remarks>
 Friend Class FrmRestrictionsUIDefinition
     Implements INotifyPropertyChanged
@@ -76,14 +109,14 @@ Friend Class FrmRestrictionsUIDefinition
     Private _selecRestrictionsMng As GridSelectionMng
 #End Region
 
-    Const REDUCE_WINDOW As String = "Reducir la ventana al mínimo para poder jugar con el estado y roles actuales"
-    Const RESTORE_WINDOW As String = "Restaurar la ventana a su tamaño original"
-    Const SOURCE_FILE As String = " Permisos definidos (desde Archivo de configuración) "
-    Const SOURCE_PARAM As String = " Permisos definidos (desde Parámetro facilitado) "
-    Const SOURCE_EMBEDED As String = " Permisos definidos (desde valor Embebido en control) "
-    Const SOURCE_ACTUAL As String = " Permisos definidos (desde seguridad actualmente Aplicada) "
+    Const REDUCE_WINDOW As String = "Reduce the window to a minimum to play with the state and current roles"
+    Const RESTORE_WINDOW As String = "Restore the window to its original size"
+    Const SOURCE_FILE As String = " Restrictions defined (from configuration file) "
+    Const SOURCE_PARAM As String = " Restrictions defined (from supplied parameter) "
+    Const SOURCE_EMBEDED As String = " Restrictions defined (from embedded value in control) "
+    Const SOURCE_ACTUAL As String = " Restrictions defined (from currently applied security) "
 
-    ' Guardan las últimas opciones marcadas por el usuario, de modo que se ofrezca la siguiente vez que se abra el formulario de mantenimiento
+    ' They save the last options set by the user, so as to offer the next time you open the form of maintenance
     Private Shared OPTSaveOnApplying As Boolean = False
     Private Shared OPTOnlyActualComponent As Boolean = False
 
@@ -140,7 +173,7 @@ Friend Class FrmRestrictionsUIDefinition
     Private Sub Form_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         cControls.DataSource = ds
         cControls.DataMember = "Controls"
-        ' Sel, IDControl, Nombre, Tipo, Grupos
+        ' Sel, IDControl, Name, Type, Groups
         cControls.Columns(0).Width = 28
         cControls.Columns(1).Width = 227
         cControls.Columns(2).Width = 107
@@ -152,7 +185,7 @@ Friend Class FrmRestrictionsUIDefinition
 
         cRestrictions.DataSource = ds
         cRestrictions.DataMember = "Restrictions"
-        ' Sel, Roles, Estados, Permiso, Visible, Enabled, IDControl, Tipo
+        ' Sel, Roles, States, Restriction, Visible, Enabled, IDControl, Type
         cRestrictions.Columns(0).Width = 28
         cRestrictions.Columns(1).Width = 134
         cRestrictions.Columns(2).Width = 114
@@ -166,7 +199,7 @@ Friend Class FrmRestrictionsUIDefinition
 
         cRoles.DataSource = ds
         cRoles.DataMember = "Roles"
-        ' Sel, ID, Alias, Nombre, Tipo
+        ' Sel, ID, Alias, Name, Type
         cRoles.Columns(0).Width = 28
         cRoles.Columns(1).Width = 43
         cRoles.Columns(2).Width = 29
@@ -175,7 +208,7 @@ Friend Class FrmRestrictionsUIDefinition
 
         cStates.DataSource = ds
         cStates.DataMember = "States"
-        ' Sel, ID, Nombre, Tipo
+        ' Sel, ID, Name, Type
         cStates.Columns(0).Width = 28
         cStates.Columns(1).Width = 26
         cStates.Columns(2).Width = 176
@@ -183,7 +216,7 @@ Friend Class FrmRestrictionsUIDefinition
 
         cGroups.DataSource = ds
         cGroups.DataMember = "Groups"
-        ' ID, Nombre
+        ' ID, Name
         cGroups.Columns(0).Width = 26
         cGroups.Columns(1).Width = 225
         cGroups.Columns(0).ReadOnly = True
@@ -203,7 +236,7 @@ Friend Class FrmRestrictionsUIDefinition
             AddHandler _host.StateChanged, AddressOf OnStateChanged
             AddHandler _host.RolesChanged, AddressOf OnRolesChanged
 
-            ' Si host no es Nothing será también indicador de que se está llamando a ese formulario en tpo.de ejecución
+            ' If host is not Nothing will be also indicator that this form is being called at runtime
             AddHandler _securityComponent.BeforeApplyingRestriction, AddressOf OnBeforeApplyingRestriction
         End If
         cbSaveOnApplying.Checked = OPTSaveOnApplying
@@ -231,24 +264,24 @@ Friend Class FrmRestrictionsUIDefinition
         Dim commonRoles As List(Of Rol) = GetCommonRoles()
         Dim particularRoles As List(Of Rol) = GetParticularRoles()
 
-        ' En tpo. de ejecución el formulario recibirá a la entrada opcionalmente un String() con líneas de permisos (y grupos incluidos) a utilizar 
-        ' como valores por defecto
-        ' Si ese String() no se aporta se utilizarán como permisos y grupos los siguientes:
-        '  * Si estamos en tiempo de diseño
-        '    - Se utilizará la definición de permisos embebida en la propiedad del control
-        '      (Si se quiere trabajar sobre la seguridad del archivo de configuración bastará con cargarlo. Por defecto ya se apuntará a ese 
-        '       archivo) 
-        '  * Si estamos en tiempo de ejecución
-        '    - Se utilizará la seguridad que esté en ese momento siendo aplicada
-        '   (En ambos casos si se quiere trabajar sobre la seguridad del archivo de configuración bastará con cargarlo. Por defecto ya se apuntará a ese 
-        '    archivo) 
+        ' At runtime the form will receive optionally a String() with restriction lines (and groups included) to use as defaults
+
+        ' If that String() is not provided then it will be used as restrictions and groups the following:
+        '  * If at design time
+        '    - It will be used the restrictions definition embedded in the property of the control
+        '
+        '  * If at runtime
+        '    - It will be used the security applied at that moment
+        '
+        ' (In both cases, if you want to work on the security in the configuration file, simply load it. 
+        '  By default it will be used that file)
 
 
         Dim defSecurity As UIRestrictions
         If _InitialRestrictionsDefinition IsNot Nothing Then
             Dim Restrictions As String() = Nothing
             Dim Groups As Group() = Nothing
-            SecurityEnvironment.GetAuthorizationsAndGroups(_InitialRestrictionsDefinition, Restrictions, Groups)
+            SecurityEnvironment.GetRestrictionsAndGroups(_InitialRestrictionsDefinition, Restrictions, Groups)
             defSecurity = New UIRestrictions(Restrictions, _securityComponent.ID, Nothing, Nothing)  ' ControlPadre a Nothing porque no queremos buscar los IAdaptdoresControles ni traducir los Grupos
 
             If Groups.Length > 0 Then
@@ -309,7 +342,7 @@ Friend Class FrmRestrictionsUIDefinition
     End Sub
 
 
-#Region "Creación de objetos DataTable"
+#Region "DataTable objects creation"
 
     Private Sub CreateDataTableControls()
         Dim c As DataColumn
@@ -376,7 +409,7 @@ Friend Class FrmRestrictionsUIDefinition
 #End Region
 
 
-#Region "Componentes"
+#Region "Components"
     Private Sub cComponents_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cComponents.SelectedIndexChanged
         Dim c As ControlRestrictedUI = DirectCast(cComponents.Items(cComponents.SelectedIndex), ControlRestrictedUI)
 
@@ -385,7 +418,7 @@ Friend Class FrmRestrictionsUIDefinition
         RestoreBackupSecurity()
 
         If _host IsNot Nothing Then
-            ' Si host no es Nothing será también indicador de que se está llamando a ese formulario en tpo.de ejecución
+            ' If host is not Nothing will be also indicator that this form is being called at runtime
             RemoveHandler _securityComponent.BeforeApplyingRestriction, AddressOf OnBeforeApplyingRestriction
             AddHandler c.BeforeApplyingRestriction, AddressOf OnBeforeApplyingRestriction
         End If
@@ -409,7 +442,7 @@ Friend Class FrmRestrictionsUIDefinition
     End Sub
 
     Private Sub cComponents_DropDown(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cComponents.DropDown
-        Me.ToolTip1.SetToolTip(Me.cComponents, "AVISO: Los cambios no salvados sobre el componente de seguridad actual se perderán al seleccionar otro")
+        Me.ToolTip1.SetToolTip(Me.cComponents, "WARNING: Unsaved changes on the current security component will be lost when you select another one")
     End Sub
 
     Private Sub cComponents_DropDownClosed(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cComponents.DropDownClosed
@@ -418,43 +451,43 @@ Friend Class FrmRestrictionsUIDefinition
 
 #End Region
 
-#Region "Controles supervisables"
+#Region "Controls to monitor"
 
     ''' <summary>
-    ''' Cargar los controles que pueden ser supervisados o 'vigilados'
+    ''' Load the controls that can be supervised or monitored
     ''' </summary>
-    ''' <remarks>En tiempo de diseño se da prioridad al fichero de controles en el caso de que exista</remarks>
+    ''' <remarks>At design time priority is given to the control file if it exists</remarks>
     Private Sub LoadControlsToSupervise()
-        Dim cargarDesdeArchivo As Boolean = False
+        Dim loadFromFile As Boolean = False
 
         dtControls.Clear()
 
-        Dim fichero As String = _securityComponent.ControlsFile
-        If Not _DesignTime Then  ' Tpo Ejecución -> no usar archivo de controles
-            cargarDesdeArchivo = False
-        ElseIf SecurityEnvironment.AdaptFilePath(fichero, _DesignTime) Then
-            cargarDesdeArchivo = True
+        Dim file As String = _securityComponent.ControlsFile
+        If Not _DesignTime Then  ' Runtime -> not to use controls file
+            loadFromFile = False
+        ElseIf SecurityEnvironment.AdaptFilePath(file, _DesignTime) Then
+            loadFromFile = True
         ElseIf _parentControlAdapter IsNot Nothing AndAlso TypeOf _parentControlAdapter.Control Is System.Windows.Forms.Control Then
-            cargarDesdeArchivo = False
+            loadFromFile = False
         Else
-            MessageBox.Show("No es posible mostrar los controles del formulario" + vbCrLf + _
-                            "(Para formularios Web en tiempo de diseño se precisa leer los controles desde un archivo. Utilice la propiedad " + _
-                            "'FicheroControles' del componente de seguridad. Este fichero se puede cargar en tiempo de ejecución tanto de " + _
-                            "forma automática como llamando a RegistrarControlesDeFormulario() en el componente)")
+            MessageBox.Show("It isn't possible to show the form controls" + vbCrLf + _
+                            "(For Web forms, at design time, it is required reading controls from a file. Use the property " + _
+                            "'ControlsFile' of the security component. This file can be updated at runtime, both automatically or " + _
+                            "by calling RegisterControls() on the component)")
             Me.Close()
         End If
 
-        ' En este combo incluiremos todos los componentes de seguridad (ControlRestriccionesUI) accesibles desde aquí
+        ' In this combo will include all security components (ControlRestriccionesUI) accessible from here
         If cComponents.SelectedIndex = -1 Then
             cComponents.Items.Add(_securityComponent)
         End If
 
-        If cargarDesdeArchivo Then
+        If loadFromFile Then
             If TypeOf _parentControlAdapter.Control Is System.Windows.Forms.Control Then
                 LoadControlsFrom(_parentControlAdapter)
             End If
-            LoadControlsAvailableIn(fichero)
-            lblAviso.Text = "Se incluyen controles leídos desde: " + fichero
+            LoadControlsAvailableIn(file)
+            lblAviso.Text = "Included controls read from:" + file
         Else
             LoadControlsFrom(_parentControlAdapter)
         End If
@@ -476,9 +509,9 @@ Friend Class FrmRestrictionsUIDefinition
     End Sub
 
     Private Sub LoadControlsAvailableIn(ByVal file As String)
-        ' La identificación del control padre podemos hacerla sin problemas en WinForms, pero en Web no es posible (al menos no lo consigo)
-        ' Por ello, en lugar de apoyarnos en el control padre para identificar el formulario, utilizaremos el identificador del componente
-        ' de seguridad que está en él embebido
+        ' Identification of parent control can do it without problems in WinForms, but in Web it's not possible (at least I don't get it)
+        ' Therefore, rather than rely on the parent control to identify the form, we will use the security component ID that is embedded in it
+
         'Dim idParent As String = Util.GetControlPadreID(_controlSeguridad.ParentControl)
         Dim idParent As String = _securityComponent.ID
 
@@ -532,8 +565,8 @@ Friend Class FrmRestrictionsUIDefinition
         Dim type As String = ""
         Dim pos As Integer
 
-        ' Si hay un archivo de controles éste se procesará después de recorrer los hijos del control padre (salvo que sea un control Web)
-        ' Por eso tenemos que comprobar que no se haya añadido ya
+        ' If there is a controls file this one it will be processed after traversing the children of the parent control (unless it is a Web control)
+        ' So we have to check that it has not been added already
         If dtControls.Select("IDControl='" & IDControl & "'").Length > 0 Then Exit Sub
 
         pos = IDControl.LastIndexOf("."c)
@@ -543,7 +576,7 @@ Friend Class FrmRestrictionsUIDefinition
             name = IDControl
         End If
 
-        ' Para poder mostrar el tipo tenemos que intentar localizar el control
+        ' To show the type we have to try to locate the control
         Try
             Dim controlAdapt As IControlAdapter
             controlAdapt = SecurityEnvironment.GetAdapter(_securityComponent.ParentControl).FindControl(IDControl)
@@ -650,12 +683,12 @@ Friend Class FrmRestrictionsUIDefinition
         End If
 
         If String.IsNullOrEmpty(nameGroup) Then
-            nameGroup = InputBox("Introduzca un nombre para el nuevo grupo", "Creación de grupos", "Grupo " + IDgroup.ToString)
+            nameGroup = InputBox("Enter a name for the new group", "Groups creation", "Group " + IDgroup.ToString)
 
-            'Verificar si el nombre ya existe. Si es así advertir de que esta operación actualizará el grupo con la nueva selección de controles
+            'Check if the name already exists. If so note that this operation will update the group with the new selection of controls
             For Each r In dtGroups.Rows
                 If CType(r("Name"), String) = nameGroup Then
-                    If MsgBox("Esta operación actualizará el grupo con la nueva selección de controles.", MsgBoxStyle.OkCancel Or MsgBoxStyle.Exclamation, "Creación de grupos") = MsgBoxResult.Cancel Then
+                    If MsgBox("This operation will update the group with the new selection of controls.", MsgBoxStyle.OkCancel Or MsgBoxStyle.Exclamation, "Creación de grupos") = MsgBoxResult.Cancel Then
                         Exit Sub
                     End If
                     updateGroup = True
@@ -684,7 +717,7 @@ Friend Class FrmRestrictionsUIDefinition
                         ctrl("Groups") = ctrl("Groups").ToString + ", " + IDgroup.ToString
                     End If
 
-                Else  ' Si el grupo existía y el control ha sido ahora deseleccionado eliminar la referencia al grupo para este control
+                Else  ' If the group existed and control has now been deselected delete the reference to this control group
                     If updateGroup And index >= 0 Then
                         groups(index) = ""
                         ctrl("Groups") = Util.ConvertToString(groups)
@@ -916,7 +949,7 @@ Friend Class FrmRestrictionsUIDefinition
 
         Dim id As Object = row("ID")
         If id Is System.DBNull.Value Then
-            MsgBox("Debe especificarse un ID de rol", MsgBoxStyle.Exclamation)
+            MsgBox("You must specify a role ID", MsgBoxStyle.Exclamation)
             e.Cancel = True
         Else
 
@@ -993,7 +1026,7 @@ Friend Class FrmRestrictionsUIDefinition
     End Function
 
     Private Sub cRoles_DataError(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles cRoles.DataError
-        MsgBox("Dato introducido incorrecto: " + e.Exception.Message)
+        MsgBox("Incorrect entered data:" + e.Exception.Message)
     End Sub
 
 #End Region
@@ -1047,7 +1080,7 @@ Friend Class FrmRestrictionsUIDefinition
         End Try
 
         If row("ID") Is System.DBNull.Value Then
-            MsgBox("Debe especificarse un ID de estado", MsgBoxStyle.Exclamation)
+            MsgBox("You must specify a state ID", MsgBoxStyle.Exclamation)
             e.Cancel = True
         Else
 
@@ -1088,7 +1121,7 @@ Friend Class FrmRestrictionsUIDefinition
     End Sub
 
     Private Sub cStates_DataError(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewDataErrorEventArgs) Handles cStates.DataError
-        MsgBox("Dato introducido incorrecto: " + e.Exception.Message)
+        MsgBox("Incorrect entered data: " + e.Exception.Message)
     End Sub
 
 
@@ -1169,11 +1202,11 @@ Friend Class FrmRestrictionsUIDefinition
 
             Dim tipoControl As String
             If v.IDControl(0) = "$"c Then
-                tipoControl = "<GRUPO CONTROLES>"
+                tipoControl = "<CONTROLS GROUP>"
             Else
                 Dim ctrlAdapt As IControlAdapter = _parentControlAdapter.FindControl(v.IDControl)
                 If ctrlAdapt.IsNull Then
-                    tipoControl = "<Desconocido>"
+                    tipoControl = "<Unknown>"
                 Else
                     tipoControl = ctrlAdapt.Control.GetType.ToString
                 End If
@@ -1229,13 +1262,13 @@ Friend Class FrmRestrictionsUIDefinition
             SecurityEnvironment.CommonRolesAUX = commonRoles
             SecurityEnvironment.ParticularRolesAUX = particularRoles
 
-            ' 1- Guardamos la definición de los grupos, si los hay
+            ' 1- We keep the definition of the groups, if any
             For Each row As DataRow In dtGroups.Rows
                 lGroups.Add("$" + CType(row("Name"), String) + "= " + Util.ConvertToString(GetControlsGroup(CType(row("ID"), String))))
             Next
 
 
-            ' 2- Guardamos las líneas de permisos, ya sea positivos (permitir) o negativos (impedir)
+            ' 2- We keep the lines of authorizations, either positive (allow) or negative (preventing)
             For Each p As DataRow In dtRestrictions.Select("", "Restriction, Roles")
                 visible = DirectCast(p("Visible"), Boolean)
                 enabled = DirectCast(p("Enabled"), Boolean)
@@ -1271,7 +1304,7 @@ Friend Class FrmRestrictionsUIDefinition
             defSecurity.Authorizations = lAuthorizationsRC
             defSecurity.Prohibitions = lProhibitionRC
 
-            Dim aux As String() = defSecurity.AuthorizationsToArrayString(useAliasRoles)
+            Dim aux As String() = defSecurity.RestrictionsToArrayString(useAliasRoles)
 
             restrictionsDefined = lGroups.ToArray
             ReDim Preserve restrictionsDefined(restrictionsDefined.Length + aux.Length - 1)
@@ -1287,7 +1320,7 @@ Friend Class FrmRestrictionsUIDefinition
     End Function
 
 
-    ' Nuevos permisos
+    ' New restrictions
 
     Private Sub btnAuthorize_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAuthorize.Click
         AddNewRestriction(False)
@@ -1344,9 +1377,8 @@ Friend Class FrmRestrictionsUIDefinition
             End If
         End If
 
-        ' Al cargar cPermisos detectaremos si está seleccionado un grupo y en ese caso añadiremos no la lista de controles sino el propio grupo
-        ' Un grupo estará seleccionado si el check "Mostrar todos los controles" está desmarcado y todas las filas están con el check seleccionado, esto es, no se está queriendo seleccionar un subconjunto de los elementos del grupo 
-
+        ' Loading cPermisos we will identify if a group is selected and if not we will add the list of controls, but the group itself
+        ' A group is selected if the check "Show all controls" is disabled and all of its rows are selected with the check, that is, not being willing to select a subset of group elements
         If cbShowOnlySelectedGroup.Checked AndAlso dtGroups.Rows.Count > 0 Then
             groupSelected = True
             For Each ctrl As DataGridViewRow In cControls.Rows
@@ -1362,8 +1394,7 @@ Friend Class FrmRestrictionsUIDefinition
         End If
 
         Dim lRows As New List(Of DataRow)
-        ' Aunque tratemos un grupo habrá al menos un control asociado. Nos apoyaremos en esta misma 
-        ' estructura, aunque saldremos de la misma tras añadir el registro del control
+        ' Although we manage a group there will be at least one associated control. We will rely in this same structure, but we'll leave the same after adding the register of the control
         For Each ctrl As DataRow In dtControls.Rows
             If CType(ctrl("Sel"), Boolean) OrElse groupSelected Then
                 states = convertToString(dtStates.Rows, "ID")
@@ -1401,7 +1432,7 @@ Friend Class FrmRestrictionsUIDefinition
         End If
     End Sub
 
-    ' Modo de presentación de los permisos
+    ' Format for restrictions
     Private Sub UpdateRestrictionsGrid(ByVal restrictions As String())
         Dim defSecurity As UIRestrictions
 
@@ -1442,7 +1473,7 @@ Friend Class FrmRestrictionsUIDefinition
         Dim groups As Group() = Nothing
         Dim restrictions As String() = Nothing
 
-        SecurityEnvironment.GetAuthorizationsAndGroups(GetDefinedRestrictions(True, GetParticularRoles.ToArray, GetCommonRoles), restrictions, groups)
+        SecurityEnvironment.GetRestrictionsAndGroups(GetDefinedRestrictions(True, GetParticularRoles.ToArray, GetCommonRoles), restrictions, groups)
         txtRestrictions.Lines = restrictions
         ShowRestrictionsGrid(False)
     End Sub
@@ -1457,6 +1488,27 @@ Friend Class FrmRestrictionsUIDefinition
             row.DefaultCellStyle.ForeColor = Color.Green
         Else
             row.DefaultCellStyle.ForeColor = Color.Red
+        End If
+    End Sub
+
+    Private Sub cRestrictions_CellEndEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles cRestrictions.CellEndEdit
+        If e.ColumnIndex = 1 Then
+
+            Dim row As DataGridViewRow = cRestrictions.Rows(e.RowIndex)
+            Dim roles As String = DirectCast(row.Cells("Roles").Value, String)
+            Try
+                SecurityEnvironment.CommonRolesAUX = GetCommonRoles()
+                SecurityEnvironment.ParticularRolesAUX = GetParticularRoles.ToArray
+
+                row.Cells("Roles").Value = _
+                        SecurityEnvironment.RolesToStrUsingAlias( _
+                                                    SecurityEnvironment.GetRolesID(roles, _securityComponent.ID), _
+                                                    _securityComponent.ID, GetParticularRoles.ToArray, GetCommonRoles _
+                                                    )
+            Finally
+                SecurityEnvironment.CommonRolesAUX = Nothing
+                SecurityEnvironment.ParticularRolesAUX = Nothing
+            End Try
         End If
     End Sub
 
@@ -1508,7 +1560,7 @@ Friend Class FrmRestrictionsUIDefinition
 #End Region
 
 
-#Region "Aceptar / Cancelar"
+#Region "Accept / Cancel"
 
     Private Sub ApplyChanges()
         Dim restrictionsDef As String()
@@ -1524,7 +1576,7 @@ Friend Class FrmRestrictionsUIDefinition
         End If
 
         restrictionsDef = GetDefinedRestrictions(False, particularRoles.ToArray)  ' En la definición de seguridad no utilizaremos alias para que no sea necesario disponer de las traducciones
-        SecurityEnvironment.GetAuthorizationsAndGroups(restrictionsDef, restrictions, groups)
+        SecurityEnvironment.GetRestrictionsAndGroups(restrictionsDef, restrictions, groups)
 
         Dim sec As New ComponentSecurity
         sec.Groups = groups
@@ -1557,7 +1609,7 @@ Friend Class FrmRestrictionsUIDefinition
 
 #End Region
 
-#Region "Gestión de archivo de configuración"
+#Region "Configuration File Management"
     Private Sub btnSelectFile_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSelectFile.Click
         Dim dlResult As DialogResult
         OpenFileDialog1.FileName = ConfigFile
@@ -1591,7 +1643,7 @@ Friend Class FrmRestrictionsUIDefinition
 
     Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
         SaveConfiguration()
-        MsgBox("Definición de seguridad grabada en el fichero seleccionado", MsgBoxStyle.Information)
+        MsgBox("Security definition saved on the selected file", MsgBoxStyle.Information)
     End Sub
 
     Private Sub BackupSecurity()
@@ -1634,7 +1686,7 @@ Friend Class FrmRestrictionsUIDefinition
         Dim restrictions As String() = Nothing
         Dim groups As Group() = Nothing
 
-        SecurityEnvironment.GetAuthorizationsAndGroups(GetDefinedRestrictions(True, particularRoles.ToArray, commonRoles), restrictions, groups)  ' Usaremos Alias para que el archivo sea más descriptivo. En el archivo lo normal será que también vengan los roles con sus ID y sus alias
+        SecurityEnvironment.GetRestrictionsAndGroups(GetDefinedRestrictions(True, particularRoles.ToArray, commonRoles), restrictions, groups)  ' Usaremos Alias para que el archivo sea más descriptivo. En el archivo lo normal será que también vengan los roles con sus ID y sus alias
         sec = New ComponentSecurity
         sec.Groups = groups
         sec.Restrictions = restrictions
@@ -1646,7 +1698,7 @@ Friend Class FrmRestrictionsUIDefinition
 
 #End Region
 
-#Region "Interacción con aplicación Host: escucha/modificación de Estado / Roles"
+#Region "Interaction with host application: listening/change of State/Roles"
 
     Public Property HostState() As Integer
         Get
@@ -1694,7 +1746,7 @@ Friend Class FrmRestrictionsUIDefinition
 
 #End Region
 
-#Region "Varios"
+#Region "Various"
 
     Private Sub btnResize_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnResize.Click
         Dim bmp As Bitmap
@@ -1748,13 +1800,15 @@ Friend Class FrmRestrictionsUIDefinition
 
 #End Region
 
-#Region "Implementación de INotifyPropertyChanged"
+#Region "Implementation of INotifyPropertyChanged"
     Private Sub NotifyPropertyChanged(ByVal info As String)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(info))
     End Sub
 
     Public Event PropertyChanged(ByVal sender As Object, ByVal e As System.ComponentModel.PropertyChangedEventArgs) Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
 #End Region
+
+
 
 End Class
 

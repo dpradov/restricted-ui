@@ -30,19 +30,19 @@
 
 
 ''' <summary>
-''' Clase Singleton (vía Shared) que ofrece funciones y utilidades varias
+''' Singleton class (via Shared) that provides various utilities and functions
 ''' </summary>
 Public Class Util
 
     ''' <summary>
-    ''' Reemplaza los puntos por · y las comas por ´
+    ''' Replaces points by · and commas by ´
     ''' </summary>
     Public Shared Function FormatIdentifier(ByVal id As String) As String
         Return id.Replace("."c, "·"c).Replace(","c, "´"c)
     End Function
 
     ''' <summary>
-    ''' Obtiene un array de enteros a partir de una cadena de texto con números separados por comas
+    ''' Gets an array of integers from a string with numbers separated by commas
     ''' </summary>
     Public Shared Function ConvertToArrayInt(ByVal valores As String) As Integer()
         If valores.Trim = "" Then
@@ -64,7 +64,7 @@ Public Class Util
     End Function
 
     ''' <summary>
-    ''' Obtiene un array de cadenas a partir de otra cadena de texto con elementos separados por comas
+    ''' Gets a string array from another string with items separated by commas
     ''' </summary>
     Public Shared Function ConvierteEnArrayStr(ByVal valores As String) As String()
         If valores.Trim = "" Then
@@ -87,7 +87,7 @@ Public Class Util
     End Function
 
     ''' <summary>
-    ''' Obtiene una cadena de texto con números separados por comas a partir de un array de enteros
+    ''' Gets a text string with comma-separated numbers from an array of integers
     ''' </summary>
     Public Shared Function ConvertToString(ByVal valores() As Integer) As String
         If valores Is Nothing OrElse valores.Length = 0 Then
@@ -105,7 +105,7 @@ Public Class Util
     End Function
 
     ''' <summary>
-    ''' Obtiene una cadena de texto con elementos separados por comas a partir de un array de cadenas
+    ''' Gets a text string with items separated by commas from a string array
     ''' </summary>
     Public Shared Function ConvertToString(ByVal valores() As String) As String
         If valores Is Nothing OrElse valores.Length = 0 Then
@@ -125,7 +125,8 @@ Public Class Util
     End Function
 
     ''' <summary>
-    ''' Obtiene usando reflexión el identificador del control facilitado, usando la propiedad Name si éste es un objeto WinForms o ID si es Web
+    ''' Gets the identifier of the control facilitated, via Reflection, by using the Name property if it is an WinForms object or the ID property 
+    ''' if it's a Web object.
     ''' </summary>
     Public Shared Function GetControlID(ByVal control As Object) As String
         If control Is Nothing Then Return ""
@@ -142,7 +143,8 @@ Public Class Util
     End Function
 
     ''' <summary>
-    ''' Obtiene dinámicamente el identificador del padre del control facilitado (si lo tiene), usando la propiedad Name si éste es un objeto WinForms o ID si es Web
+    ''' Gets, dinamically, the identifier of the parent of the control provided, by using the Name property if it is an WinForms object or the ID property 
+    ''' if it's a Web object.
     ''' </summary>
     Public Shared Function GetParentID(ByVal control As Object) As String
         If control Is Nothing Then Return ""

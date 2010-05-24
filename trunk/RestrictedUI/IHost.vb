@@ -28,84 +28,80 @@
 
 
 ''' <summary>
-''' Indica que el objeto puede actuar como intermediario en la comunicación necesaria entre la aplicación Host y
-''' la librería de Interface Restringida (<see cref="RestrictedUI"/>), permitiendo a ésta consultar en cualquier
-''' momento el estado de la aplicación y el rol o roles que pueda tener el usuario de la misma. Informa también 
-''' mediante eventos de cambios en estos valores.
+''' It indicates that the object can act as intermediary in the necessary communication between the Host and 
+''' the Restricted Interface library (<see cref="RestrictedUI"/>), enabling it to view at any time the application status and the role or 
+''' roles that may have the user. It also reports through events of changes to these values.
 ''' </summary>
 ''' <remarks> 
-''' <para>Ofrece además un método para recibir posibles mensajes de error detectados desde la librería de seguridad.</para>
-''' <para>Estos datos (estado y roles) podrán ser dependientes del formulario o control de usuario desde 
-''' el que se pregunte (tipo e instancia concreta).</para>
-''' <para>Este enfoque permite, por ejemplo, mantener abiertas diferentes instancias de una determinada
-''' ventana, cada una de ellas en un estado o fase de tramitación diferente y por tanto con requerimientos
-''' de seguridad distintos.</para>
-''' <para>Aunque es más común que el rol o roles del usuario sean uniformes por toda la aplicación se permite que puedan
-''' también depender de donde se ubique el componente de seguridad y de la instancia concreta. De esta manera se
-''' da más margen de maniobra a la hora de configurar la seguridad.</para>
+''' <para>It also offers a method to receive possible error messages detected in the security library.</para>
+''' <para>These data (state and roles) may be dependent on the form or user control from which we are asking (type and specific instance).
+''' </para>
+''' <para>This approach allows, for example, keep different instances of a particular window open, each one in a state or a different 
+''' processing stage and therefore with different security requirements.</para>
+''' <para>While it is more common that the user role or roles should be uniform throughout the application, they are also allowed 
+''' to depend on where you place the security component and the specific instance. This will give more leeway when configuring the
+''' security.</para>
 ''' </remarks>
 Public Interface IHost
 
-    ' NOTA:
-    ' Aunque tanto el estado actual como los roles de usuario no se han establecido como propiedades ReadOnly la lectura de estas propiedades
-    ' es lo realmente importante. La modificación del estado o roles se usará (si se permite) para testear la seguridad, desde el formulario de
-    ' definición.
-    ' Si no se desea, la implementación de la parte de modificación (Set) puede dejarse vacía, como se prefiera 
+    ' NOTE:
+    ' Although in the IHost interface the properties State and UserRoles have not been set as ReadOnly, the reading of these properties is 
+    ' the most important thing. The change in state or roles will be used (if allowed) to test security from the maintenance form. 
+    ' If it is not necessary, the implementation of the modification (set) can be left empty.
+
 
     ''' <summary>
-    ''' Devuelve el estado actual de la aplicación para el formulario o contenedor en el que está
-    ''' incrustado el componente de seguridad (<see cref="ControlRestrictedUI "/>) identificado con el parámetro
-    ''' <paramref name="ID"/> y la instancia concreta <paramref name="instanceID"/>
+    ''' Returns the current state of the application, on the form or container on wich the security component (<see cref="ControlRestrictedUI "/>)
+    ''' is embedded. The security component is identified with the parameter <paramref name="ID"/> and the particular instance: <paramref name="instanceID"/>
     ''' </summary>
     ''' <remarks>
-    ''' Este enfoque permite, por ejemplo, mantener abiertas diferentes instancias de una determinada ventana,
-    ''' cada una de ellas en un estado o fase de tramitación diferente y por tanto con requerimientos de
-    ''' seguridad distintos.
+    ''' This approach allows, for example, keep different instances of a particular window open, each one in a state or a different 
+    ''' processing stage and therefore with different security requirements.
     '''</remarks>
-    ''' <param name="ID">Identificador del componente de seguridad</param> 
-    ''' <param name="instanceID">Identificador de la instancia del componente de seguridad</param> 
+    ''' <param name="ID">Identifier of the security component</param> 
+    ''' <param name="instanceID">Identifier of the instance of the security component</param> 
     Property State(ByVal ID As String, ByVal instanceID As String) As Integer
 
     ''' <summary>
-    ''' Devuelve el rol o roles del usuario de la aplicación para el formulario o contenedor en el que está
-    ''' incrustado el componente de seguridad (<see cref="ControlRestrictedUI "/>) identificado con el parámetro
-    ''' <paramref name="ID"/> y la instancia concreta <paramref name="instanceID"/>
+    ''' Returns the roles of the application user, on the form or container where the security component (<see cref="ControlRestrictedUI "/>),
+    ''' identified with the parameter <paramref name="ID"/> and the particular instance <paramref name="instanceID"/>, is embedded.
     ''' </summary>
     ''' <remarks>
-    ''' Aunque es más común que el rol o roles del usuario sean uniformes por toda la aplicación se permite que puedan
-    ''' depender de donde se ubique el componente de seguridad y de la instancia concreta. De esta manera se
-    ''' da más margen de maniobra a la hora de configurar la seguridad.
+    ''' While it is more common that the user role or roles should be uniform throughout the application, they are also allowed to 
+    ''' depend on where you place the security component and the specific instance. 
+    ''' This will give more leeway when configuring the security.
     '''</remarks>
-    ''' <param name="ID">Identificador del componente de seguridad</param> 
-    ''' <param name="instanceID">Identificador de la instancia del componente de seguridad</param> 
+    ''' <param name="ID">Identifier of the security component</param> 
+    ''' <param name="instanceID">Identifier of the instance of the security component</param> 
     Property UserRoles(ByVal ID As String, ByVal instanceID As String) As Integer()
 
 
     ''' <summary>
-    ''' Señala un cambio en el estado actual de la aplicación, cambio que podría afectar a todos los componentes de seguridad, sólo
-    ''' a uno concreto e incluso sólo a una instancia concreta de uno.
+    ''' It signals a change in the current state of the application, a change that could affect all security components, 
+    ''' only to a specific component, even just a specific instance of one component.
     ''' </summary>
-    ''' <remarks>Si el ID del componente es Nothing deberá ser atendido por todos los componentes. Podrá también restringirse
-    ''' a determinadas instancias mediante <paramref name="instanceID"/></remarks> 
-    ''' <param name="ID">Identificador del componente de seguridad (que referencia a su vez a un determinado formulario o contenedor)</param> 
-    ''' <param name="instanceID">Identificador de la instancia del componente de seguridad</param> 
+    ''' <remarks>If the parameter <paramref name="ID"/> is Nothing then it should be adressed by all components. It may also be restricted to some
+    ''' instances using <paramref name="instanceID"/></remarks> 
+    ''' <param name="ID">Identifier of the security component (referring in turn to a certain form or container)</param> 
+    ''' <param name="instanceID">Identifier of the instance of the security component</param> 
     Event StateChanged(ByVal ID As String, ByVal instanceID As String, ByVal nuevoEstado As Integer)
 
     ''' <summary>
-    ''' Señala un cambio en el rol o roles que ostenta el usuario de la aplicación, cambio que podrá afectar a todos los 
-    ''' componentes de seguridad, sólo a uno concreto e incluso sólo a una instancia concreta de uno.
+    ''' It signals a change on the roles of the application user, a change that could affect all security components, 
+    ''' only to a specific component, even just a specific instance of one component.
     ''' </summary>
-    ''' <remarks>Si el ID del componente es Nothing deberá será atendido por todos los componentes. Podrá también restringirse 
-    ''' a determinadas instancias mediante <paramref name="instanceID"/></remarks> 
-    ''' <param name="ID">Identificador del componente de seguridad (que referencia a su vez a un determinado formulario o contenedor)</param> 
-    ''' <param name="instanceID">Identificador de la instancia del componente de seguridad</param> 
+    ''' <remarks>If the parameter <paramref name="ID"/> is Nothing then it should be adressed by all components. It may also be restricted to some
+    ''' instances using <paramref name="instanceID"/></remarks> 
+    ''' <param name="ID">Identifier of the security component (referring in turn to a certain form or container)</param> 
+    ''' <param name="instanceID">Identifier of the instance of the security component</param> 
     Event RolesChanged(ByVal ID As String, ByVal instanceID As String)
 
     ''' <summary>
-    ''' Recibe errores o incidencias generados por la librería de seguridad
+    ''' It receives error o incidence messages generated by the security library
     ''' </summary>
-    ''' <remarks>Algunas errores o incidencias podrán ser ignorados tranquilamente por la aplicación si señalan que no se ha
-    ''' encontrado un determinado control y se sabe que éste es creado dinámicamente</remarks>
+    ''' <remarks>Some of the errors or incidences may be safely ignored by the application if they are related to a not found control
+    ''' and we know that this control is created dinamically
+    ''' </remarks>
     Sub ShowError(ByVal [error] As String)
 End Interface
 

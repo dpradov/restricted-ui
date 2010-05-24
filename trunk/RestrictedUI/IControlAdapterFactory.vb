@@ -27,28 +27,27 @@
 '  http://code.google.com/p/restricted-ui/
 
 ''' <summary>
-''' Define una factoría externa de adaptadores de control (<see cref="IControlAdapter"/>). 
+''' Defines an external factory of control adapters (<see cref="IControlAdapter"/>). 
 ''' </summary>
 ''' <remarks>
-''' Éstas serán consultadas antes que la factoría base (interna) del componente (<see cref="SecurityEnvironment.BaseFactory"/> a la hora
-''' de localizar el adaptador a utilizar.
+''' These external factories will be consulted before the base factory (internal) of the security component 
+''' (<see cref="SecurityEnvironment.BaseFactory"/>) when it comes to locating the adapter to be used.
 ''' </remarks>
 Public Interface IControlAdapterFactory
 
     ''' <summary>
-    ''' Devuelve el adaptador más idóneo correspondiente al control que se le pasa, según la factoría.
-    ''' Si la factoría no tiene ningún adaptador adecuado para ese control devolverá el adaptador 
-    ''' especial (<see cref="NullControlAdapter "/>)
+    ''' Returns the most suitable adapter for the control that is being passed, according to the factory. 
+    ''' If the factory has no proper adapter for this control, it will return the special adapter <see cref="NullControlAdapter "/>.
     ''' </summary>
-    ''' <param name="control">Objeto para el que se desea buscar un adaptador</param>
-    ''' <param name="parent ">Objeto padre de aquel indicado en <paramref name="control"/>. 
-    ''' </param>
+    ''' <param name="control">The object for which you want to find an adapter</param>
+    ''' <param name="parent ">Parent object of that shown in <paramref name="control"/>.</param>
     ''' <returns></returns>
-    ''' <remarks>El parámetro <paramref name="padre"/> es requerido por algunos pocos adaptadores, 
-    ''' principalmente los correspondientes a aquellos controles que no disponen de ningún evento 
-    ''' que permita controlar la modificación de las propiedades a supervisar, y tiene por tanto que
-    ''' recurrirse a los eventos de su objeto padre. En estos casos, si el control tampoco permite 
-    ''' acceder a su objeto padre deberá facilitarse. Como ejemplo pueden verse los adaptadores 
-    ''' AdapterWeb_DataControlField o AdapterWinForms_DataGridViewColumn</remarks>
+    ''' <remarks>
+    ''' Parameter <paramref name="padre"/> is required for a few adapters, mainly those related to the controls with 
+    ''' no event that make possible to control the change in the properties to monitor, and therefore have to resort 
+    ''' to the events of its parent object.<br/>
+    ''' In these cases, if the control does not allow access to its parent object, you must provide this parent object.
+    ''' As an example you can see the adapters AdapterWinForms_DataGridViewColumn or AdapterWeb_DataControlField
+    ''' </remarks>
     Function GetAdapter(ByVal control As Object, Optional ByVal parent As Object = Nothing) As IControlAdapter
 End Interface

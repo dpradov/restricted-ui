@@ -34,20 +34,19 @@ Imports System.Drawing.Design
 
 
 ''' <summary>
-''' Componente base de la librería de Interface Restringida (<see cref="RestrictedUI"/>): permite restringir la visibilidad y estado de habilitación de 
-''' los controles incluidos en un formulario o control de usuario en base a una definición de seguridad
-''' establecida, en la que intervienen el estado actual de la aplicación en dicho formulario o contenedor así como el
-''' rol o roles que tenga el usuario de la aplicación.
+''' Base component of the Restricted Interface library (<see cref="RestrictedUI"/>): can restrict the visibility and enabling 
+''' state of the controls included in a form or user control based on a definition of established security, involved the current 
+''' state of the application in the form or container as well as the role or roles of the user of the application.
 ''' </summary>
-''' <remarks>Debe ser heredado</remarks>
+''' <remarks>Must be inherited</remarks>
 Public MustInherit Class ControlRestrictedUI
     Implements INotifyPropertyChanged, ISupportInitialize
 
-    Const ERROR_READING_CONTROLSFILE As String = "Se produjo un error al leer el archivo de controles: "
+    Const ERROR_READING_CONTROLSFILE As String = "There was an error reading the controls file: "
 
     ''' <summary>
-    ''' Ocurre justo antes de llegar a permitir o impedir el cambio de la propiedad Visible o Enabled, para dar la opción 
-    ''' de permitir o no el cambio en base a una lógica más compleja
+    ''' Occurs just before permitting or preventing the change of Visible or Enabled property, to give the option 
+    ''' to allow or not the change on the basis of a more complex logic.
     ''' </summary>
     ''' <param name="adaptControl">Adaptador del control que se está supervisando</param>
     ''' <param name="type ">Indica si la propiedad que está siendo modificada es Enabled o Visible</param>
@@ -60,15 +59,15 @@ Public MustInherit Class ControlRestrictedUI
 
     Private _initializing As Boolean
 
-#Region "Configuración de la Seguridad: Interface Pública"
+#Region "Security Configuration: Public Interface"
 
     ''' <summary>
-    ''' <para>Identificador de este componente <see cref=" ControlRestrictedUI "/>, controlador de restricciones. </para>
-    ''' <para>A través de este identificador podrá leerse/actualizarse la seguridad 
-    ''' asociada (definición de restricciones) desde un archivo.</para>
-    ''' <para>Será también la clave a partir de la cual se indexará en EntornoSeguridad.RestriccionesContenedor</para>
+    ''' <para>Identifier of this <see cref=" ControlRestrictedUI "/> component, restrictions monitor. </para>
+    ''' <para>From this identifier it can be read / updated the security definition from a file, to be established 
+    ''' at an environment level</para>
+    ''' <para>It will also be the key to index in <see cref="SecurityEnvironment.ComponentsSecurity" /></para>
     ''' </summary>
-    ''' <remarks>Se le debería asignar un valor. Por defecto se le asignará un GUID</remarks> 
+    ''' <remarks>You should assign a value. By default a GUID is assigned</remarks> 
     <Category("Configuration"), _
     Description("Identificador del componente ControlRestriccionesUI")> _
     Public Property ID() As String
@@ -83,14 +82,13 @@ Public MustInherit Class ControlRestrictedUI
     Private _ID As String = Guid.NewGuid().ToString("N")
 
     ''' <summary>
-    ''' Identificador de la instancia del componente
+    ''' Identifier of the component instance
     ''' </summary>
-    ''' 
     ''' <remarks>
-    ''' <para>El componente pasará este identificador (junto con la propiedad <see cref="ID"/>) al
-    ''' objeto <see cref="IHost"/>, para permitirle de este modo determinar entre otras cosas qué estado ofrecer 
-    ''' (Es posible tener múltiples pantallas tramitando diferentes entidades)</para>
-    ''' <para>Lo normal será que la aplicación le asigne un ID. Por defecto el ID será "00"</para>
+    ''' <para>With these attribute (together with the <see cref="ID"/> property) the <see cref="IHost"/> object will indicate the 
+    ''' current status and roles, distinguishing not only on type of form but on specific instance.
+    ''' (You can have multiple instances of a form, with different entities on probably different transaction state)</para>
+    ''' <para>Typically the application will assign an ID to it. By default the ID is "00"</para>
     ''' </remarks> 
     <Browsable(False)> _
     Public Property InstanceID() As String
@@ -110,17 +108,18 @@ Public MustInherit Class ControlRestrictedUI
 
 
     ''' <summary>
-    ''' Configuración de las restricciones (permisos y prohibiciones) que se establecerán. 
+    ''' Configuration of the restrictions (prohibitions and permissions) to be set.
     ''' </summary>
     ''' <remarks>
-    ''' Más información sobre el tratamiento de las restricciones en <see cref="UIRestrictions "/> y en <see cref="RestrictionOnControl "/>.
+    ''' More information on management of restrictions in <see cref="UIRestrictions "/> and <see cref="RestrictionOnControl "/>.
     ''' <seealso cref="UIRestrictions "/>
     ''' <seealso cref="RestrictionOnControl "/>
     ''' </remarks>
     <Category("Configuration"), _
-    Description("Configuración de las restricciones que se establecerán (permisos y prohibiciones). Se interpretan a nivel de control individual: " + _
-                "sólo se impedirán las modificaciones de las propiedades Visible / Enabled en las situaciones aquí señaladas " + _
-                "(Las prohibiciones tendrán prioridad sobre los permisos: primero se aplicarán los permisos y luego se restringirán en base a las prohibiciones)")> _
+    Description("Configuration of the restrictions (prohibitions and permissions) to be set." + _
+                "All restrictions apply to individual controls, bearing in mind that the prohibitions will take precedence over permissions, " + _
+                "that is, permissions will be aplied first and then restricted on the basis of the prohibitions" _
+                )> _
     <Editor(GetType(RestrictionsDefinitionEditor), GetType(UITypeEditor))> _
     Public Property RestrictionsDefinition() As String()
         Get
@@ -143,13 +142,13 @@ Public MustInherit Class ControlRestrictedUI
     Protected _restrictionsDefinition As String()
 
     ''' <summary>
-    ''' Devuelve las restricciones tal y como se han definido y asociado directamente al componente de seguridad (inicialmente en tiempo de diseño,
-    ''' aunque tal vez modificadas posteriormente).
+    ''' Returns the restrictions as defined and associated directly to the security component (probably at design time, 
+    ''' though perhaps modified later)
     ''' </summary>
     ''' <remarks>
-    ''' Si <see cref="PriorityEmbeddedSecurity "/> es True entonces ésta será la política que se aplicará en el componente, en caso
-    ''' contrario será la que se haya cargado en el objeto singleton <see cref="SecurityEnvironment"/>. ya sea leyendo desde un archivo
-    ''' o una cadena de texto.
+    ''' If <see cref="PriorityEmbeddedSecurity "/> is True then this restrictions will set the policy that will be applied in the component, 
+    ''' otherwise it will be the one that has been loaded in the singleton object <see cref="SecurityEnvironment"/> either loading from
+    ''' a file or from a string.
     ''' </remarks>
     <Browsable(False)> _
     Public ReadOnly Property RestrictionsDefinitionEmbedded() As String()
@@ -160,9 +159,9 @@ Public MustInherit Class ControlRestrictedUI
 
 
     ''' <summary>
-    ''' Determina si la política que debe mandar en el componente es la que resulta de aplicar las restricciones tal y
-    ''' como se han definido y asociado directamente al componente (seguridad embebida) o por el contrario la que se haya cargado 
-    ''' en el EntornoSeguridad, ya sea leyendo desde un archivo o una cadena de texto.
+    ''' It determines if the restrictions to apply to the security component are those defined and directly associated to the
+    ''' component (embedded security) or else are those loaded in the <see cref="SecurityEnvironment"/> either loading from 
+    ''' a file or from a string.
     ''' </summary>
     Protected Friend Property PriorityEmbeddedSecurity() As Boolean
         Get
@@ -182,7 +181,7 @@ Public MustInherit Class ControlRestrictedUI
     Private _priorityEmbeddedSecurityBAK As Boolean = True
 
     ''' <summary>
-    ''' Devuelve la relación de grupos que pueda haber definida en <see cref="RestrictionsDefinition "/>.
+    ''' Returns the list of groups that may be defined in <see cref="RestrictionsDefinition "/>.
     ''' </summary>
     <Browsable(False)> _
     Public ReadOnly Property Groups() As Group()
@@ -193,8 +192,8 @@ Public MustInherit Class ControlRestrictedUI
 
 
     ''' <summary>
-    ''' Devuelve la relación de restricciones (permisos y prohibiciones) que pueda haber definida en <see cref="RestrictionsDefinition"/>, sin
-    ''' incluir la definición de grupos, en el caso de que la hubiera.
+    ''' Returns the list of restrictions (authorizations and prohibitions) that may be defined in <see cref="RestrictionsDefinition "/>,
+    ''' not including the definition of groups, if any.
     ''' </summary>
     <Browsable(False)> _
     Public ReadOnly Property Restrictions() As String()
@@ -205,32 +204,31 @@ Public MustInherit Class ControlRestrictedUI
 
 
     '''<summary>
-    '''Obtiene o establece la ruta hacia un fichero de configuración, a utilizar fundamentalmente en tiempo de diseño.
+    '''Gets or sets the path to a configuration file, to be used primarily at design time.
     '''</summary>
     '''<remarks>
-    '''<para>El fichero de configuración hace posible ofrecer en tiempo de diseño y durante la definición de la seguridad 
-    '''en el formulario <see cref=" FrmRestrictionsUIDefinition "/> la relación de roles y estados a utilizar, así como 
-    '''de factorías de adaptadores adicionales, para así 'descubrir' nuevos controles en tiempo de diseño.
-    '''de control adicionales.</para>
-    '''<para>Las propias definiciones de restricciones de seguridad, de todos o sólo algunos componentes pueden estar contenidas
-    '''en este archivo. Estas restricciones pueden cargarse en tiempo de ejecución mediante <see cref="SecurityEnvironment.LoadFrom"/> 
-    ''' así como cargarse y grabarse a voluntad desde el formulario <see cref=" FrmRestrictionsUIDefinition "/>, en tiempo de
-    ''' diseño o de ejecución.</para>
-    '''<para>Si el componente no fuerza ninguna ruta se ofrecerá la que pueda tener configurada el propio objeto
-    ''' <see cref="SecurityEnvironment"/>, la cual se actualiza con la última asignación de esta propiedad (de cualquier
-    '''  componente)</para>
-    ''' <para>Nota: La ruta deberá estar establecida de manera absoluta o relativa a la carpeta de la solución (.sln)</para> 
+    '''<para>The configuration file makes it possible to provide at design time and for the security definition 
+    ''' in the form <see cref=" FrmRestrictionsUIDefinition "/> the list of roles and states to use, as well as additional 
+    ''' control adapters factories, so to 'discover' new controls at design time.</para>
+    ''' 
+    '''<para>The own definitions of security restrictions, of all or only some components may be contained in this file.
+    ''' These restrictions can be loaded at runtime using the method <see cref="SecurityEnvironment.LoadFrom"/> and saved 
+    ''' and loaded at will from <see cref=" FrmRestrictionsUIDefinition "/> form, at design time or runtime.</para>
+    ''' 
+    '''<para>If the component does not force any path, then it will be offered the one which may have configured the object 
+    ''' <see cref="SecurityEnvironment"/>, which is updated with the last assignment of this property (of any component)</para>
+    ''' <para>Note: The path must be established in absolute way or relative to the folder of the solution (.sln)</para> 
     ''' <seealso cref=" FrmRestrictionsUIDefinition "/>
     ''' <seealso cref="SecurityEnvironment.LoadFrom"/>
     '''</remarks>
     <Category("Configuration"), _
-    Description("Ruta hacia un fichero de configuración, a utilizar por defecto desde el formulario de definición de restricciones " + _
-       "permitiendo ofrecer en tiempo de diseño la relación de roles y estados a utilizar, así como factorías de adaptadores de " + _
-       "control adicionales. Las propias definiciones de restricciones de seguridad, de todos o sólo algunos componentes pueden estar contenidas " + _
-       "en este archivo. " + vbCrLf + _
-       "Notas: - La ruta deberá estar establecida de manera absoluta o relativa a la carpeta de la solución (.sln)" + vbCrLf + _
-       "       - Si el componente no fuerza ninguna ruta se ofrecerá la que pueda tener configurada el propio objeto SecurityEnvironment " + _
-       "  que se actualiza con la última asignación de esta propiedad (de cualquier componente)")> _
+    Description("Path to a configuration file, that makes it possible to provide at design time and for the security definition " + _
+                "in the form FrmRestrictionsUIDefinition the list of roles and states to use, as well as additional " + _
+                "control adapters factories, so to 'discover' new controls at design time." + _
+                "The own definitions of security restrictions, of all or only some components may be contained in this file." + vbCrLf + _
+                "Notas: - The path must be established in absolute way or relative to the folder of the solution (.sln)" + vbCrLf + _
+                "       - If the component does not force any path, then it will be offered the one which may have configured the object " + _
+                "SecurityEnvironment, which is updated with the last assignment of this property (of any component)")> _
     Public Property ConfigFile() As String
         Get
             If _configFile Is Nothing Then
@@ -247,23 +245,23 @@ Public MustInherit Class ControlRestrictedUI
     End Property
     Private _configFile As String
 
+
     ''' <summary>
-    ''' Nombre del archivo sobre el que podrá escribirse la relación los controles contenidos en el formulario o 
-    ''' control de usuario controlado por este componente.
+    ''' Name of the file on wich can be written the list of the controls contained in the form or user control controlled by this component.
     ''' </summary>
     ''' <remarks>
-    ''' <para>Este archivo hace posible ofrecer en tiempo de diseño desde el formulario <see cref="FrmRestrictionsUIDefinition "/> 
-    ''' controles que se crearán dinámicamente. En aplicaciones WinForms los controles definidos en tiempo de diseño pueden conocerse
-    ''' directamene en ese formulario, también en tiempo de diseño, pero en aplicaciones Web no es posible (al menos no he sido capaz)
-    ''' y para solucionarlo se ofrece el uso de este archivo. Tras una primera ejecución de la aplicación es posible alimentar automáticamente
-    ''' este archivo, y así contar con los controles ya después, en tiempo de diseño.</para>
-    ''' <para>Nota: La ruta deberá estar establecida de manera absoluta o relativa a la carpeta de la solución (.sln)</para>
-    ''' <para>Véase también <see cref="SecurityEnvironment.AutomaticUpdateOfControlsFile "/> y <see cref="RegisterControls"/> </para>
+    ''' <para>This file makes it possible to offer at design time controls from the form <see cref="FrmRestrictionsUIDefinition "/> 
+    ''' to be created dynamically. For Web applications it necessarily must be used to configure security at design time with 
+    ''' the help of that form.</para>
+    ''' <para>After a first run of the application you can automatically update this file, and thus having the controls to use later, 
+    ''' at design time.</para>
+    ''' <para>Note: The path must be established in absolute way or relative to the folder of the solution (.sln)</para>
+    ''' <para>See also <see cref="SecurityEnvironment.AutomaticUpdateOfControlsFile "/> and <see cref="RegisterControls"/> </para>
     ''' <seealso cref="SecurityEnvironment.AutomaticUpdateOfControlsFile "/>
     ''' <seealso cref="RegisterControls"/>
     ''' </remarks>
-    <Category("Configuración"), _
-    Description("Nombre del archivo sobre el que podrá escribirse la relación los controles contenidos en el formulario o control de usuario controlado por este componente.")> _
+    <Category("Configuration"), _
+    Description("Name of the file on wich can be written the list of the controls contained in the form or user control controlled by this component.")> _
     Public Property ControlsFile() As String
         Get
             Return _controlsFile
@@ -277,14 +275,14 @@ Public MustInherit Class ControlRestrictedUI
 
 #End Region
 
-#Region "Controles Externos de Seguridad: Interface pública"
+#Region "Security External Controls: Public interface"
 
     ''' <summary>
-    ''' Deshabilita temporalmente (pausa) la seguridad impuesta por la política de restricciones del componente, de manera que 
-    ''' los posteriores cambios en las propiedades supervisadas (Visible y Enabled) sean permitidos.
+    ''' Temporarily disables (pauses) the security policy imposed by the constraints of the component, so that
+    ''' so that subsequent changes in monitored properties (Visible and Enabled) are permitted.
     ''' </summary>
-    ''' <remarks>Al restablecer a False (valor inicial) la definición de la seguridad se restablecerá: algunos controles se 
-    ''' deshabilitarán u ocultarán en consecuencia
+    ''' <remarks>
+    ''' Resetting to False (initial value) the definition of security is restored: some controls are disabled or hidden accordingly
     ''' </remarks>
     Property Paused() As Boolean
         Get
@@ -303,14 +301,14 @@ Public MustInherit Class ControlRestrictedUI
     Private _paused As Boolean = False
 
     ''' <summary>
-    ''' Fuerza la reinicialización de la configuración de la seguridad, procesando las restricciones establecidos, asignando manejadores de
-    ''' eventos y revisando sobre cada control supervisado las propiedades Visible y Enabled (o las correspondientes a cada control).
+    ''' Forces resetting the security settings, processing set restrictions, assigning event handlers and reviewing for 
+    ''' each monitored control the properties Visible and Enabled (or those for each control)
     ''' </summary>
     ''' <remarks>
-    ''' Este método es llamado internamente en respuesta a una modificación de la seguridad. Se ofrece como método público para contemplar la
-    ''' creación dinámica de controles: cuando se inicializa la seguridad al inicio no todos los controles tienen por qué haber sido creados (ej: 
-    ''' columnas de un DataGridView añadidas dinámicamente). Esos controles pueden estar contemplados en la definición de seguridad desde el
-    ''' principio, antes de haber sido creados.
+    ''' This method is called internally in response to a change in security. It is offered as a public method to handle 
+    ''' the dynamic creation of controls: when initializing the security at the beginning not all controls have been created, 
+    ''' probably (e.g. columns of a DataGridView dynamically added).
+    ''' Those controls can be covered by the security definition from the beginning, before they are created.
     ''' </remarks>
     Public Sub ReinitializeSecurity()
         Try
@@ -330,15 +328,18 @@ Public MustInherit Class ControlRestrictedUI
 
 
     ''' <summary>
-    ''' Fuerza la visibilidad del control o controles indicados, con independencia de que en base a las restricciones existentes 
-    ''' pueda o no mostrarse.
+    ''' Forces visibility of the control or controls supplied, regardless of whether based on the existing restrictions 
+    ''' may or may not be displayed.
     ''' </summary>
-    ''' <param name="control">Si es Nothing se forzará la vibilidad de todos los controles que estén siendo supervisados</param>
+    ''' <param name="control">If it is Nothing will be forced the visibility of all monitored controls</param>
     ''' <remarks>
-    ''' <para>Si el control cuya visibilidad ha sido forzada se hace invisible, su posible próxima visibilidad quedará supeditada 
-    ''' a las restricciones definidas</para>
-    ''' <para>La modificación de la definición de la seguridad o un cambio en la situación actual (definición de la seguridad,
-    ''' cambios de roles del usuario, de estado..) que obligue a revisar la seguridad aplicada podrá hacer invisible el control/es</para>
+    ''' <para>
+    ''' If the control whose visibility has been forced becomes invisible, its next possible visibility shall 
+    ''' be subject to restrictions set</para>
+    ''' <para>
+    ''' The amendment to the security definition or a change in the current situation (change on user roles, state, ..) 
+    ''' requiring review of applied security, may make invisible the control or controls
+    ''' </para>
     ''' </remarks>
     Public Sub ForceVisibility(Optional ByVal control As Object = Nothing)
         Dim list As IList(Of IControlAdapter) = Me.SupervisedControls(False, True)
@@ -355,15 +356,17 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Fuerza la habilitación del control o controles indicados, con independencia de que en base a las restricciones existentes 
-    ''' pueda o no estar habilitado
+    ''' Forces the control or controls supplied to be enabled, regardless of whether based on the existing restrictions 
+    ''' may or may not be enabled.
     ''' </summary>
-    ''' <param name="control">Si es Nothing se forzará el Enabled=true de todos los controles que estén siendo supervisados</param>
+    ''' <param name="control">If it is Nothing will be forced the enabled of all monitored controls</param>
     ''' <remarks>
-    ''' <para>Si el control cuyo Enabled ha sido forzado a True se deshabilita, sólo será habilitado nuevamente en base a las 
-    ''' restricciones definidas</para>
-    ''' <para>La modificación de la definición de la seguridad o un cambio en la situación actual (definición de la seguridad,
-    ''' cambios de roles del usuario, de estado..) que obligue a revisar la seguridad aplicada podrá deshabilitar el control/es</para>
+    ''' <para>If the control forced to be enabled is disabled later, only will be enabled again based on the defined restrictions
+    ''' </para>
+    ''' <para>
+    ''' The amendment to the security definition or a change in the current situation (change on user roles, state, ..) 
+    ''' requiring review of applied security, can disable the control or controls
+    ''' </para>
     ''' </remarks>
     Public Sub ForceEnabled(Optional ByVal control As Object = Nothing)
         Dim lista As IList(Of IControlAdapter) = Me.SupervisedControls(True, False)
@@ -380,13 +383,12 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Elimina el control de la lista de controles supervisados, de manera que los sucesivos cambios en las propiedades de visibilidad y Enabled
-    ''' no serán interceptadas
+    ''' Removes the control from the supervised control list so that successive changes in the properties of visibility and enabled will not be intercepted
     ''' </summary>
-    ''' <returns><b>True</b> si el control estaba supervisado y ha sido excluido correctamente, <b>False</b> en caso contrario</returns>
+    ''' <returns><b>True</b> if the control was monitored and was properly excluded, <b>False</b> otherwise</returns>
     ''' <param name="Control"></param>
-    ''' <remarks>La revisión de la seguridad aplicada debido a algún cambio en la situación actual (definición de la seguridad,
-    ''' cambios de roles del usuario, de estado..) no afectará a este control
+    ''' <remarks>The review of applied security because of some change in the current situation (security definition, 
+    ''' change in user roles, state, ..) will not affect this control
     ''' </remarks>
     Public Function ExcludeControl(ByVal Control As Object) As Boolean
         If _defSecurity Is Nothing Or Control Is Nothing Then Return False
@@ -407,31 +409,34 @@ Public MustInherit Class ControlRestrictedUI
     End Function
 
     ''' <summary>
-    ''' Fuerza el registro o actualización de los controles existentes en el formulario o contenedor en donde está
-    ''' incrustado este componente.
+    ''' Forces the record or update of the existing controls on the form or container where this component is embedded.
     ''' </summary>
     ''' <remarks>
-    ''' <para>El archivo en donde se escribe debe estar definido en la propiedad <see cref="ControlsFile "/> y debe
-    ''' además existir, aunque sea vacío. La creación en tiempo de diseño de un componente de seguridad asegurará que ese
-    ''' archivo exista (si está establecida la propiedad <see cref="ControlsFile "/>): se creará vacío si no se encuentra.</para>
-    ''' <para>El componente llamará automáticamente a este método al inicializarse y tras la incorporación o eliminación
-    ''' en en objeto <see cref="SecurityEnvironment"/> de alguna factoría de adaptadores (lo que permite descubrir más o menos controles), 
-    ''' pero sólo si la propiedad <see cref="SecurityEnvironment.AutomaticUpdateOfControlsFile "/> es True (lo es por defecto).</para>
-    ''' 
-    ''' <para>Podrá hacerse también de manera explícita, normalmente en el evento Load o cuando estén todos los controles dinámicos creados.
-    ''' En aplicaciones Web el uso de este archivo es la única forma de determinar en tiempo de diseño cuáles son los controles
-    ''' que contiene el formulario/contenedor (En tpo de diseño las propiedades Controls no contienen ningún elemento. Tampoco funciona
-    ''' el uso de Reflection para determinar las propiedades WebControl (funciona en tpo de ejecución, no de diseño)
-    ''' En aplicaciones WinForms este archivo permitirá definir la seguridad sobre controles que se crearán dinámicamente durante la
-    ''' vida del formulario o contenedor. </para>
+    ''' <para>
+    ''' The file in which it is written must be defined on the property <see cref="ControlsFile "/> and must exist, even empty.
+    ''' The design time creation of a security component will ensure that this file exists (if property <see cref="ControlsFile "/> is set):
+    ''' will be created empty if not found.
+    ''' </para>
+    ''' <para>
+    ''' The component will automatically call this method to initialize and after the addition or elimination in the object <see cref="SecurityEnvironment"/> 
+    ''' of some factory adapters (allowing you to discover more or less controls), but only if the property 
+    ''' <see cref="SecurityEnvironment.AutomaticUpdateOfControlsFile "/> is True (it is by default)
+    ''' </para>
+    ''' <para>
+    ''' May also be done explicitly, usually in the Load event or when dynamic controls are all created.
+    ''' In Web applications using this file is the only way to determine at design time what are the controls contained in the form or
+    ''' user control (At design time "Controls" properties don't contain any element. Nor does the use of Reflection to determine the properties WebControl
+    ''' --works at runtime, not design time)<br/>
+    ''' In WinForms applications this file makes it possible include in the security policy, at design time, controls to be created dynamically
+    ''' </para>
     ''' </remarks>
     Public Sub RegisterControls()
         Dim lista As String = ""
         Dim file As String = ControlsFile
         If SecurityEnvironment.AdaptFilePath(file, Me.DesignMode) Then
-            ' La identificación del control padre podemos hacerla sin problemas en WinForms, pero en Web no es posible (al menos no lo consigo)
-            ' Por ello, en lugar de apoyarnos en el control padre para identificar el formulario, utilizaremos el identificador del componente
-            ' de seguridad que está en él embebido
+            ' We can get the identification of the parent control without problems in WinForms, but it is not possible in Web
+            ' (at least I could not get it)
+            ' Therefore, rather than rely on the parent control to identify the form, will use the component identifier that is embedded in it
             'Dim idParent As String = Util.GetControlPadreID(_parentControl)
             Dim idParent As String = Me.ID
 
@@ -451,8 +456,7 @@ Public MustInherit Class ControlRestrictedUI
 
 
     ''' <summary>
-    ''' Cierra la gestión de la seguridad en este componente, eliminando los manejadores a los que se ha hecho subscribir a los distintos
-    ''' controles supervisados.
+    ''' Finalizes the security management in this component, removing the event handlers to which are subscribed the various controls monitored.
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub FinalizeSecurity()
@@ -520,7 +524,7 @@ Public MustInherit Class ControlRestrictedUI
 
 #End Region
 
-#Region "Recuperar Form padre"
+#Region "Get Parent Form"
     ''' <summary>
     ''' Gets or sets the System.ComponentModel.ISite" of the Component
     ''' used to update ParentControl so it will be serialized to code
@@ -554,26 +558,25 @@ Public MustInherit Class ControlRestrictedUI
     Protected _parentControl As Object
 
     ''' <summary>
-    ''' Obtiene o establece el control padre del componente. 
+    ''' Gets or sets the parent control of the component
     ''' </summary>
     ''' <remarks>
-    ''' Al establecerlo en ejecución (se hará desde el diseñador del contenedor) se subscribirá 
-    ''' al evento HandleCreated (en WinForms) o al PreRender (en Web) con el método <see cref="AddEventHandlers "/>.  
-    ''' De esta manera cuando tenga lugar el evento (para entonces ya tendrá asociados sus controles hijos) se realizará la
-    ''' vigilancia de los controles hijos seleccionados, con la ayuda de los objetos <see cref="IControlAdapter"/> correspondientes 
+    ''' Setting it at runtime (will be made from the designer of the container) will make the parent control to subscribe 
+    ''' to the HandleCreated event (in WinForms) or to PreRender (in Web), with the method <see cref="AddEventHandlers "/>.
+    ''' Thus when the event takes place (by then already has its children associated) will be carried out the monitoring 
+    ''' of the selected control children, with the help of their corresponding <see cref="IControlAdapter"/> objects.
     ''' </remarks>
     <Browsable(False)> _
     Public MustOverride Property ParentControl() As Object
 
 #End Region
 
-#Region "Gestión interna de la Seguridad"
+#Region "Internal Security Management"
     Private _defSecurity As UIRestrictions
 
     ''' <summary>
-    ''' Inicializa la seguridad del componente, procesando las restricciones definidas, subscribiéndose a determinados
-    ''' eventos de <see cref="SecurityEnvironment"/>, y añadiendo manejadores de eventos a los controles a supervisar según la seguridad 
-    ''' definida
+    ''' Initializes the security component, processing the defined restrictions, subscribing to certain events of <see cref="SecurityEnvironment"/>,
+    ''' and adding event handlers to supervised controls according to the defined security
     ''' </summary>
     Protected Sub InitializeSecurity(ByVal sender As Object, ByVal e As EventArgs)
         If Not ParentControl Is Nothing Then
@@ -588,12 +591,12 @@ Public MustInherit Class ControlRestrictedUI
             If TypeOf (ParentControl) Is System.Windows.Forms.Form Then
                 _keyPreviewOriginal = DirectCast(ParentControl, System.Windows.Forms.Form).KeyPreview
             End If
-            OnHotKeyChanged()  ' Verificamos si ya se encuentra establecida una HotKey
+            OnHotKeyChanged()  ' Verify if it is already established a HotKey
             AddEventHandlers()
 
-            ' En WinForms este método se llamará en el evento HandleCreated del control padre (formulario)
-            ' por lo que todas las propiedades Visible y Enabled ya establecidas serán controladas automáticamente
-            ' Sin embargo, las propiedades de otros controles más específicos como los UltraGrid no. De ahí la llamada siguiente
+            ' In WinForms this method will be called in the event HandleCreated of the parent control (form),
+            ' so all Visible and Enabled properties are set and automatically controlled.
+            ' However, the properties of other specific controls as UltraGrid no. Hence the following call
             ReviseAppliedSecurity(Nothing)
 
             If SecurityEnvironment.AutomaticUpdateOfControlsFile Then
@@ -603,8 +606,8 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Se ordena la supervisión de las propiedades Visible y Enabled. El adaptador de cada control (<see cref="IControlAdapter"/>) 
-    ''' se suscribirá a los eventos correspondientes (ej: VisibleChanged y EnabledChanged o PreRender) 
+    ''' It is ordered the monitoring of Visible and Enabled properties. Each control adapter (<see cref="IControlAdapter"/>)
+    ''' will subscribe to the corresponding events (e.g. VisibleChanged y EnabledChanged o PreRender)
     ''' </summary>
     Private Sub AddEventHandlers()
 
@@ -633,10 +636,9 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Elimina la subscripción a los eventos que permiten controlar los cambios sobre las propiedades Visible y Enabled para la lista 
-    ''' de adaptadores indicada 
+    ''' Removes the subscription to the events that allow to control changes in properties Visible and Enabled, to the list of adapters indicated
     ''' </summary>
-    ''' <remarks>Se invoca al cambiar la definición de la seguridad antes de llamar al método <see cref="AddEventHandlers "/></remarks>
+    ''' <remarks>It is invoked by changing the security definition, before calling the method <see cref="AddEventHandlers "/></remarks>
     Private Sub RemoveEventHandlers(ByVal lInitial As IList(Of IControlAdapter))
         For Each c As IControlAdapter In lInitial
             c.FinalizeSupervision()
@@ -644,9 +646,10 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Referencia la propiedad cuyo cambio se está controlando: Enabled o Visible
+    ''' It references the property whose change is being monitored: Enabled or Visible
     ''' </summary>
-    ''' <remarks>Las propiedades concretas dependerán del control implicado, lo que es abstraido a través del adaptador (<see cref="IControlAdapter"/>) 
+    ''' <remarks>The specific properties will depend on the control involved, which is abstracted through 
+    ''' the adapter (<see cref="IControlAdapter"/>)
     ''' </remarks>
     Public Enum TChange
         Enabled = 0
@@ -656,20 +659,23 @@ Public MustInherit Class ControlRestrictedUI
     Private _decidingChange As Boolean = False
 
     ''' <summary>
-    ''' Comprueba si el cambio sobre la propiedad indicada (<see cref="TChange"/>) es válido atendiendo a la definición de seguridad, 
-    ''' a los roles del usuario y al estado actual de la aplicación.
-    ''' Si el cambio no es válido se deshará, esto es, se establecerá nuevamente a False
+    ''' Checks if the change on the specified property (<see cref="TChange"/>) is valid considering the definition of security, 
+    ''' user roles and the current state of the application.
+    ''' If the change is invalid will be undone, this is, set again to False.
     ''' </summary>
-    ''' <param name="controlAdapt">Adaptador del control sobre el que se debe verificar el cambio</param>
-    ''' <param name="type">Especifica si se debe verificar el cambio de Visible o Enabled</param>
-    ''' <remarks>Se ofrece como método público para su uso por parte de los adaptadores de control (<see cref="IControlAdapter"/>) </remarks>
+    ''' <param name="controlAdapt">Control adapter on which must be verified the changed</param>
+    ''' <param name="type">Specifies whether to verify the change of Visible or Enabled</param>
+    ''' <remarks>
+    ''' Control adapters (<see cref="IControlAdapter"/>) call this method of the security component in response to 
+    ''' the attempt to change the monitored properties.
+    ''' </remarks>
     Public Sub VerifyChange(ByVal controlAdapt As IControlAdapter, ByVal type As TChange)
         If _decidingChange Then Exit Sub
         _decidingChange = True
 
         Select Case type
             Case TChange.Enabled
-                ' Si se ha establecido =False no hay nada que impedir
+                ' If set to False there is nothing to prevent
                 If controlAdapt.Enabled Then
                     If Not ChangeAllowed(controlAdapt, type) Then
                         controlAdapt.Enabled = False
@@ -677,7 +683,7 @@ Public MustInherit Class ControlRestrictedUI
                 End If
 
             Case TChange.Visible
-                ' Si se ha establecido =False no hay nada que impedir
+                ' If set to False there is nothing to prevent
                 If controlAdapt.Visible Then
                     If Not ChangeAllowed(controlAdapt, type) Then
                         controlAdapt.Visible = False
@@ -688,28 +694,27 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Comprueba si el cambio sobre la propiedad Visible o Enabled (o la correspondiente del control)
-    ''' es válido atendiendo a las restricciones establecidas, a los roles del usuario y al estado actual
-    ''' de la aplicación.
+    ''' Checks if the change on the specified property (<see cref="TChange"/>) is valid considering the security 
+    ''' definition, user roles and the current state of the application.
     ''' </summary>
-    ''' <param name="controlAdapt">Adaptador del control sobre el que se debe verificar el cambio</param>
-    ''' <param name="type ">Especifica si se debe verificar el cambio de Visible o Enabled</param>
-    ''' <returns><b>False</b> si el cambio no está permitido. <b>True</b> en caso contrario</returns>
+    ''' <param name="controlAdapt">Control adapter on which must be verified the changed</param>
+    ''' <param name="type ">Specifies whether to verify the change of Visible or Enabled</param>
+    ''' <returns><b>False</b> is the change is not allowed. <b>True</b> otherwise</returns>
     Public Function ChangeAllowed(ByVal controlAdapt As IControlAdapter, ByVal type As TChange) As Boolean
-        If _paused Then Return True ' Si está pausada la supervisión en este control no impediremos nada. Tampoco generaremos el evento BeforeApplyingRestrinction
+        If _paused Then Return True ' If monitoring in this control is paused we will prevent anything. Neither we will generate the event BeforeApplyingRestrinction
 
-        Dim allowed As Boolean = True  ' Mientras no se demuestre lo contrario se permitirá
+        Dim allowed As Boolean = True  ' Until proven otherwise be permitted
 
         Try
-            ' Aplicar en primer lugar la lógica de la regla de PERMISOS
+            ' Apply first the logic of the rule of AUTHORIZATIONS
             '-------
-            ' Buscar un criterio por el que permitir
+            ' Find a criterion by which to allow
             For Each p As RestrictionOnControl In _defSecurity.Authorizations
                 If Not p.ControlAdapt.Control Is controlAdapt.Control Then Continue For
                 If (type = TChange.Visible And Not p.Visible) OrElse (type = TChange.Enabled And Not p.Enabled) Then Continue For
-                allowed = False    ' A este control (y propiedad) se le ha aplicado una lógica positiva: sólo se permitirá el cambio a los explicitados
+                allowed = False    ' To this control (and property) has been applied a positive logic: only allowed changing to explicit ones
                 'If p.rol <> 0 AndAlso Array.IndexOf(ActualRoles, p.rol) < 0 Then Continue For
-                If Array.IndexOf(p.roles, 0) < 0 Then     ' 0 => Todos los roles
+                If Array.IndexOf(p.roles, 0) < 0 Then     ' 0 => All roles
                     Dim authorizedRole As Boolean = False
                     For Each r As Integer In UserRoles
                         If Array.IndexOf(p.roles, r) >= 0 Then
@@ -728,12 +733,12 @@ Public MustInherit Class ControlRestrictedUI
 
             If allowed Then
 
-                ' Aplicar en segundo lugar la lógica de la regla de PROHIBICIONES
+                ' Apply second the logic of the rule of PROHIBITIONS
                 '-------
-                ' Buscamos un rol del usuario para el que no se prohiba
-                ' Si se encuentra se permite la modificación. En caso contrario no
+                ' We seek a user role for which it is not prohibited
+                ' If we find it then the change is allowed. Otherwise no
                 For Each rol As Integer In UserRoles
-                    allowed = True    ' Inicialmente suponemos que el rol no estará restringido
+                    allowed = True    ' Initially we suppose that the user rol is not restringed
                     For Each p As RestrictionOnControl In _defSecurity.Prohibitions
                         'If p.rol <> 0 And p.rol <> rol Then Continue For
                         If Array.IndexOf(p.roles, 0) < 0 AndAlso Array.IndexOf(p.roles, rol) < 0 Then Continue For
@@ -744,12 +749,12 @@ Public MustInherit Class ControlRestrictedUI
                         allowed = False
                         Exit For
                     Next
-                    If allowed Then Exit For ' Este rol no está bloqueado
+                    If allowed Then Exit For ' To this rol is not prevented
                 Next
 
             End If
 
-            'Dar la opción de permitir o no el cambio en base a una lógica más compleja
+            'We give the option to allow or not change based on more complex logic
             RaiseEvent BeforeApplyingRestriction(controlAdapt, type, allowed)
             Return allowed
 
@@ -761,14 +766,13 @@ Public MustInherit Class ControlRestrictedUI
     End Function
 
     ''' <summary>
-    ''' Comprueba si tras el cambio de la situación actual (definición de la seguridad,
-    ''' cambios de roles del usuario, de estado..) hay que permitir o no los estados Visible y Enabled buscados.
+    ''' Checks if after a change in the current situacion (security definition, change on user roles, application state, ...) 
+    ''' properties Visible and Enabled must be activated.
     ''' </summary>
-    ''' <param name="lInitial ">En el caso de un cambio en la definición de la seguridad recoge los controles que han estado vigilándose</param>
+    ''' <param name="lInitial ">In the case of a change in security definition includes controls that have been monitoring</param>
     ''' <remarks></remarks>
     Private Sub ReviseAppliedSecurity(ByVal lInitial As IList(Of IControlAdapter))
-        If _paused Then Exit Sub ' Si está pausada la supervisión en este control, no haremos nada. Se invocará este método cuando se restablezca
-
+        If _paused Then Exit Sub ' If monitoring in this control is paused we will do nothing. This method will be invoked when it is reset
         Try
             _decidingChange = True
 
@@ -809,9 +813,9 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Devuelve una lista con todos los controles que se están supervisando
-    ''' <param name="enabled"><b>true</b>: considerar los que tienen la propiedad Enabled controlada</param>
-    ''' <param name="visible"><b>true</b>:Considerar los que tienen la propiedad Visible controlada</param>
+    ''' Returns a list of all controls that are being monitored
+    ''' <param name="enabled"><b>true</b>: consider those who have controlled the Enabled property</param>
+    ''' <param name="visible"><b>true</b>: consider those who have controlled the Visible property</param>
     ''' </summary>
     Private Function SupervisedControls(ByVal cEnabled As Boolean, ByVal cVisible As Boolean) As IList(Of IControlAdapter)
         If _defSecurity Is Nothing Then Return Nothing
@@ -838,9 +842,9 @@ Public MustInherit Class ControlRestrictedUI
     End Function
 
     ''' <summary>
-    ''' Devuelve la relación de roles que tiene el usuario según señala la aplicación Host (<see cref="IHost"/>) 
+    ''' Returns the list of roles that have a user according to what is signaled by Host application (<see cref="IHost"/>) 
     ''' </summary>
-    ''' <remarks>Si no se ha establecido ningún objeto IHost se devolverá una lista con un único rol: 0</remarks>
+    ''' <remarks>If there is no IHost object set, will return a list with only one role: 0</remarks>
     Private ReadOnly Property UserRoles() As Integer()
         Get
             If SecurityEnvironment.Host Is Nothing Then
@@ -856,10 +860,10 @@ Public MustInherit Class ControlRestrictedUI
     Private _userRoles As Integer()
 
     ''' <summary>
-    ''' Devuelve el estado actual de la aplicación (para el tipo de pantalla --control de seguridad-- e instancia concreta) según
-    ''' la aplicación Host (<see cref="IHost"/>)
+    ''' Returns the current state of the application (for the form --security component-- and concrete instance), according 
+    ''' to the Host application (<see cref="IHost"/>)
     ''' </summary>
-    ''' <remarks>Si no se ha establecido ningún objeto IHost se devolverá como estado: 0</remarks>
+    ''' <remarks>If there is no IHost object set, will return as state: 0</remarks>
     Private ReadOnly Property HostState() As Integer
         Get
             If SecurityEnvironment.Host Is Nothing Then
@@ -871,15 +875,15 @@ Public MustInherit Class ControlRestrictedUI
     End Property
 
     ''' <summary>
-    ''' Indica (True) si es un componente a usar en aplicaciones Web o en aplicaciones WinForms
+    ''' Indicates (True) if its a component used in Web applications or WinForms applications
     ''' </summary>
-    ''' <remarks>Este componente debe ser heredado, y las clases que lo refinen deben sobrescribir este método</remarks>
+    ''' <remarks>Inherited classes should override this method</remarks>
     <Browsable(False)> _
     Public MustOverride ReadOnly Property WebComponent() As Boolean
 
 #End Region
 
-#Region "Escucha eventos EntornoSeguridad"
+#Region "Listen SecurityEnvironment events"
 
     Private Sub OnControlAdapterFactoriesChanged()
         If SecurityEnvironment.AutomaticUpdateOfControlsFile Then
@@ -892,9 +896,8 @@ Public MustInherit Class ControlRestrictedUI
             If SecurityEnvironment.ComponentsSecurity.ContainsKey(ID) Then
                 PriorityEmbeddedSecurity = False
             Else
-                ' Se ha eliminado la seguridad establecido a nivel de Entorno -> aplica la embebida
-                ' (si desde el entorno se quisiera que no hubiera ningún tipo de seguridad -> sí existiria una definición de seguridad
-                ' aunque vacía)
+                ' Removed security set to Environment level -> it apply the embedded one
+                ' (if you want no security at environment level, for this component, you should define an empty security)
                 PriorityEmbeddedSecurity = True
             End If
             ReinitializeSecurity()
@@ -918,12 +921,12 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Atiende el evento (<see cref="IHost.StateChanged"/>) del objeto que implemente la interface (<see cref="IHost"/>)(capturado y relanzado por <see cref="SecurityEnvironment "/>)
+    ''' Handles the event <see cref="IHost.StateChanged"/> of the object that implements the <see cref="IHost"/> interface (captured and reissued by <see cref="SecurityEnvironment "/>)
     ''' </summary>
     ''' <param name="_ID"></param>
     ''' <param name="_instanceID"></param>
     ''' <param name="newState "></param>
-    ''' <remarks>Sólo se deberá atender este evento si el ID del control al que va dirigido, así como la instancia es Nothing o coincide con la del control que lo escucha</remarks>
+    ''' <remarks>Should only be handled this event if control ID and the instance is Nothing or or coincides with that of the control that listens</remarks>
     Private Sub OnStateChanged(ByVal _ID As String, ByVal _instanceID As String, ByVal newState As Integer)
         If (String.IsNullOrEmpty(_ID) Or Me.ID = _ID) AndAlso (String.IsNullOrEmpty(_instanceID) Or Me.InstanceID = _instanceID) Then
             ReviseAppliedSecurity(Nothing)
@@ -931,11 +934,11 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 
     ''' <summary>
-    ''' Atiende el evento (<see cref="IHost.RolesChanged "/>) del objeto que implemente la interface (<see cref="IHost"/>)(capturado y relanzado por <see cref="SecurityEnvironment "/>)
+    ''' Handles the event (<see cref="IHost.RolesChanged "/>) of the object that implements the <see cref="IHost"/> interface (captured and reissued by <see cref="SecurityEnvironment "/>)
     ''' </summary>
     ''' <param name="_ID"></param>
     ''' <param name="_instanceID"></param>
-    ''' <remarks>Sólo se deberá atender este evento si el ID del control al que va dirigido, así como la instancia es Nothing o coincide con la del control que lo escucha</remarks>
+    ''' <remarks>Should only be handled this event if control ID and the instance is Nothing or or coincides with that of the control that listens</remarks>
     Private Sub OnRolesChanged(ByVal _ID As String, ByVal _instanceID As String)
         If (String.IsNullOrEmpty(_ID) Or Me.ID = _ID) AndAlso (String.IsNullOrEmpty(_instanceID) Or Me.InstanceID = _instanceID) Then
             ReviseAppliedSecurity(Nothing)
@@ -945,14 +948,13 @@ Public MustInherit Class ControlRestrictedUI
 
 #End Region
 
-#Region "Formulario de edición de seguridad"
+#Region "Maintenance security Form"
 
     ''' <summary>
-    ''' Muesta el formulario de mantenimiento de la seguridad, lo que permitirá tanto la consulta como modificación de las restricciones
-    ''' del componente de seguridad que se pasa como parámetro. Al igual que en tiempo de diseño es posible recuperar o guardar la seguridad
-    ''' hacia un archivo, entre otras cosas.
+    ''' Shows the maintenance security form, allowing both consultation and modification of restrictions of the security component.
+    ''' As in design time it is possible to recover or save the security to a file, among other things.
     ''' </summary>
-    ''' <remarks>Para ser invocado en tiempo de ejecución en aplicaciones WinForms, en modo de test o configuración</remarks>
+    ''' <remarks>To be invoked at runtime in WinForms applications, in test or configuration mode</remarks>
     Public Sub ShowConfigurationSecurityForm(Optional ByVal host As IHost = Nothing, _
                                                  Optional ByVal restrictionsDef As String() = Nothing)
         If WebComponent Then Exit Sub
@@ -966,16 +968,15 @@ Public MustInherit Class ControlRestrictedUI
     End Sub
 #End Region
 
-#Region "Interceptar Tecla de Acceso Rápido (Hot key)"
+#Region "Capture Hot key"
 
     ''' <summary>
-    ''' Atiende el evento <see cref="SecurityEnvironment.HotKeyChanged"/>. Si se ha habilitado una tecla de acceso rápido para abrir
-    ''' el mantenimiento de la seguridad se asociará el evento KeyDown del formulario (o contenedor) en el que esté incrustado el 
-    ''' componente de seguridad con el método <see cref="OnParentControlKeyDown"/>, que lanzará la pantalla de mantenimiento. 
+    ''' Handles the event <see cref="SecurityEnvironment.HotKeyChanged"/>. If you have enabled a Hotkey to open the maintenance
+    ''' security form it will associate the KeyDown event of the form (or user control) on which is embedded the security
+    ''' component with the method <see cref="OnParentControlKeyDown"/>, that will launch the maintenance form.
     ''' </summary>
-    ''' <remarks>El uso de HotKey está pensado para facilitar la configuración de la seguridad desde el tiempo de ejecución, pero
-    ''' en las fases de desarrollo y prueba de las aplicaciones
-    ''' </remarks>
+    ''' <remarks>Using HotKey is designed for easy configuration of security at runtime, but in phases of development and 
+    ''' testing of application</remarks>
     Private Sub OnHotKeyChanged()
         If Not TypeOf (ParentControl) Is System.Windows.Forms.Control Then Exit Sub
 
@@ -1001,16 +1002,15 @@ Public MustInherit Class ControlRestrictedUI
 
 #End Region
 
-#Region "Registro de controles en Fichero"
+#Region "Controls Register in File"
 
     ''' <summary>
-    ''' Devuelve la relación de controles asociados a un determinado formulario (o contenedor), según aparece registrado
-    ''' en el archivo que se indica
+    ''' Returns the list of controls associated to a certain form (or user control), as found recorded in the file indicated
     ''' </summary>
-    ''' <param name="controlsFile ">Ruta del archivo desde el que leer los controles</param>
-    ''' <param name="idControlRestrictedUI  ">Cadena que identifica el formulario (o contenedor)</param>
-    ''' <remarks>Ver <see cref="RegisterControls "/>, <see cref="SecurityEnvironment.AutomaticUpdateOfControlsFile "/> 
-    ''' y <see cref="ConfigFile "/></remarks>
+    ''' <param name="controlsFile ">File path from which to read controls</param>
+    ''' <param name="idControlRestrictedUI  ">String identifying the form (or container)</param>
+    ''' <remarks>See <see cref="RegisterControls "/>, <see cref="SecurityEnvironment.AutomaticUpdateOfControlsFile "/> 
+    ''' and <see cref="ConfigFile "/></remarks>
     Protected Friend Function ReadComponentControls(ByVal controlsFile As String, ByVal idControlRestrictedUI As String) As String()
         Dim list As String = ""
         Dim fichero As String = controlsFile
@@ -1072,16 +1072,21 @@ Public MustInherit Class ControlRestrictedUI
     End Function
 
     ''' <summary>
-    ''' Devuelve en <paramref name="lista"/> una relación de todos los controles contenidos en el formulario o contenedor (control) referenciado
-    ''' por <paramref name="controlAdapt"/>.
+    ''' Returns in <paramref name="lista"/> the list of all controls contained in the form (or user control) referenced 
+    ''' by <paramref name="controlAdapt"/>.
     ''' </summary>
-    ''' <param name="list">Cadena que recoge la lista de controles</param>
-    ''' <param name="controlAdapt">Adaptador que envuelve el control del que se buscarán sus controles hijo. Será igual al formulario (o contenedor) padre en la llamada inicial (es un método recursivo)</param>
-    ''' <param name="parent ">Adaptador que envuelve el control padre referenciado por <paramref name=" controlAdapt"/>. Se dejará vacío en la llamada inicial (es un método recursivo)</param>
+    ''' <param name="list">String that receives the list of controls</param>
+    ''' <param name="controlAdapt">
+    ''' Adapter that wraps the control from which will seek its child controls. It will be the parent form (or container) 
+    ''' on the first call (it is a recursive method)
+    ''' </param>
+    ''' <param name="parent ">
+    ''' Adapter that wraps the parent control referenced by <paramref name=" controlAdapt"/>. It will be empty on the first call (it is a recursive method)
+    ''' </param>
     ''' <remarks>
-    ''' El número de controles 'descubiertos' dentro de ese contenedor dependerá de la existencia o no de factorías de adaptadores de controles
-    ''' que entiendan o no de determinados controles y busquen dentro de ellos. Así, por ejemplo, la factoría AdapterInfragisticsWinForms_Factory
-    ''' ofrece adaptadores como AdapterInfragisticsWinForms_UltraGrid, que permite descubrir (y gestionar) las columnas de un control UltraGrid
+    ''' The number of controls 'discovered' within that container will depend on the presence or absence of controls adapter factories
+    ''' that understand certain controls and look into them. For example, the factory AdapterInfragisticsWinForms_Factory offers
+    ''' adapters like AdapterInfragisticsWinForms_UltraGrid, that lets discover (and manage) the columns of a UltraGrid control
     ''' </remarks>
     Protected Sub MakeControlsListOf(ByRef list As String, ByVal controlAdapt As IControlAdapter, Optional ByVal parent As IControlAdapter = Nothing)
 
@@ -1095,20 +1100,20 @@ Public MustInherit Class ControlRestrictedUI
 
 #End Region
 
-#Region "Implementación de INotifyPropertyChanged"
-    'Nota: esta interfaz es nueva en la versión 2.0 de .NET Framework. 
-    'Notifica a los clientes que un valor de propiedad ha cambiado. 
-    'Espacio de nombres: System.ComponentModel
+#Region "INotifyPropertyChanged implementation"
+    'Note: this interface is new in version 2.0 of .NET Framework. 
+    'Notifies clients that a property value has changed.
+    'Namespace: System.ComponentModel
     'If your data source implements INotifyPropertyChanged and you are performing asynchronous operations, you should not make changes to the data source on a background thread. Instead, you should read the data on a background thread and merge the data into a list on the UI thread.
     '
-    'Ver tb. artículo "Windows Forms Data Binding and Objects"  (Rockford Lhotka)
-    'Esa interfaz es una alternativa (recomendada) a :
+    'See also article "Windows Forms Data Binding and Objects"  (Rockford Lhotka)
+    'That interface is an alternative (recommended) to:
     'When we bind a control to a property on our object, data binding automatically starts listening for a property changed event named propertyChanged, 
     'where property is the name of the property of the object .
     'For instance, our Order class defines an ID property. When the ID property is bound to a control, data binding starts listening for an IDChanged event. 
     'If this event is raised by our object, data binding automatically refreshes all controls bound to our object.
     '
-    'También interesante: 
+    'Also interesting: 
     '" A generic asynchronous INotifyPropertyChanged helper" (http://www.claassen.net/geek/blog/2007/07/generic-asynchronous.html)
 
     Protected Sub NotifyPropertyChanged(ByVal info As String)
@@ -1118,12 +1123,12 @@ Public MustInherit Class ControlRestrictedUI
     Public Event PropertyChanged(ByVal sender As Object, ByVal e As System.ComponentModel.PropertyChangedEventArgs) Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
 #End Region
 
-#Region "Implementación de ISupportInitialice"
+#Region "ISupportInitialice implementation"
 
-    ' La implementación de la interface ISupportInitialice nos permite conocer en qué momento el diseñador inicia y acaba de cargar las
-    ' propiedades. Esto nos permite llamar a ReinitializeSecurity (lo que ocurrirá ya posteriomente al modificar RestrictionsDefinition) una
-    ' vez que estén el resto de propiedades ya rellenas, entre ellas ID.
-    ' (Designer asigna las propiedades en orden alfabético)
+    ' The implementation of ISupportInitialice interface allows us to know at what point the designer starts and just load the properties.
+    ' This allows us to call ReinitializeSecurity (which will occur subsequently when modifying RestrictionsDefinition)
+    ' once the other properties are already filled, including ID.
+    ' (Designer assigns the properties in alphabetical order)
     ' ->Design-Time Integration—Batch Initialization: http://en.csharp-online.net/Design-Time_Integration%25E2%2580%2594Batch_Initialization
 
     Private Sub BeginInit() Implements System.ComponentModel.ISupportInitialize.BeginInit

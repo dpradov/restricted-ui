@@ -35,7 +35,7 @@ Imports RestrictedWinFormsUI
 
 
 ''' <summary>
-''' Adaptador para controles UltraTree de NetAdventage (Infragistics), para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI"/>)
+''' Adapter for UltreTree controls (NetAdventage, Infragistics), for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterInfragisticsWinForms_UltraTree

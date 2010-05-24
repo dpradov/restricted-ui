@@ -33,7 +33,7 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para controles (<see cref=" Windows.Forms.TreeView"/>), para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI "/>)
+''' Adapter for <see cref="Windows.Forms.TreeView"/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWinForms_TreeView
@@ -53,8 +53,8 @@ Public Class AdapterWinForms_TreeView
             children.Add(adapt)
         Next
 
-        ' Tenemos que añadir también los adaptadores de aquellos nodos que puedan estar ocultos.
-        ' Como hemos tenido que eliminarlos del TreeView no se encontrarán con el bucle anterior
+        ' We must also add adapters of nodes that may be hidden.
+        ' As we had to remove them from the TreeView will not be found with the previous loop
         For Each adapt In AdapterWinForms_TreeNode.hiddenNodesAdapter(_control)
             children.Add(adapt)
         Next
@@ -84,14 +84,14 @@ Public Class AdapterWinForms_TreeView
                     End If
                 Next
                 If control Is Nothing Then
-                    ' Comprobamos si ese control buscado es uno que se encuentra oculto
-                    ' Si es así devolvemos directamente el adaptador ya existente
+                    ' We check whether that control is one that is hidden
+                    ' If so we return directly the existing adapter
                     For Each adapt As AdapterWinForms_TreeNode In AdapterWinForms_TreeNode.hiddenNodesAdapter(parent)
                         If absoluteIdentifier.StartsWith(adapt.Identification.ToUpper) Then
                             If absoluteIdentifier = adapt.Identification.ToUpper Then
-                                Return adapt    ' Es directamente el elemento buscado
+                                Return adapt    ' It is directly the searched element
                             Else
-                                ' El elemento buscado es un hijo de éste -> seguimos con el bucle
+                                ' The searched element is a child of this one -> continue with the loop
                                 control = DirectCast(adapt.Control, TreeNode)
                                 parent = control
                                 nodes = control.Nodes

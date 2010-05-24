@@ -33,8 +33,8 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador para controles que heredan de Windows.Forms.Control, para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI "/>).
-''' Se apoya en que existe la propiedad Visible y Enabled y que tienen sus hijos accesibles a través de Controls.
+''' Adapter for <see cref="Windows.Forms.Control"/> controls, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
+''' It builds on existing Visible and Enabled properties and on have their children accessible through <see cref="Control.Controls "/> .
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWinForms_Control
@@ -59,7 +59,7 @@ Public Class AdapterWinForms_Control
         End Get
     End Property
 
-#Region "Control de Visible y Enabled"
+#Region "Visible and Enabled Management"
 
     Public Overridable Property Enabled() As Boolean Implements IControlAdapter.Enabled
         Get

@@ -33,8 +33,8 @@ Imports RestrictedUI
 
 
 ''' <summary>
-''' Adaptador genérico para controles que hereden de <see cref="Web.UI.WebControls.WebControl"/>, para su uso desde la librería de Interface Restringida (<see cref="RestrictedUI"/>)
-''' Se apoya en que existe la propiedad Visible y Enabled y que tienen sus hijos accesibles a través de <see cref="WebControl.Controls "/>.
+''' Generic adapter for controls that inherit from <see cref="Web.UI.WebControls.WebControl"/>, for its use from the Restricted User Interface library (<see cref="RestrictedUI"/>)
+''' It builds on existing Visible and Enabled properties and on have their children accessible through <see cref="WebControl.Controls "/> .
 ''' </summary>
 ''' <remarks></remarks>
 Public Class AdapterWeb_WebControl

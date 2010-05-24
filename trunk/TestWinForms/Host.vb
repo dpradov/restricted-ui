@@ -37,9 +37,9 @@ Public Class Host
     Public Event RolesChanged(ByVal ID As String, ByVal instanceID As String) Implements RestrictedUI.IHost.RolesChanged
 
     Public Sub ShowError(ByVal [error] As String) Implements IHost.ShowError
-        ' Hay controles que se crean dinámicamente y es normal que no se localicen en el evento HandleCreated (caso de WinForms)
-        If [error].Contains("Control no localizado") Then
-            If [error].Contains("cControles.") Then
+        ' There are controls that are dynamically created and so it is normal not to locate them in the event HandleCreated (if WinForms)
+        If [error].Contains("Not found control") Then
+            If [error].Contains("cControls.") Then
                 Exit Sub
             End If
         End If
@@ -47,7 +47,7 @@ Public Class Host
         MessageBox.Show([error])
     End Sub
 
-    ' En esta implementación, el estado podrá ser diferente según el control e instancia que pregunte
+    ' In this implementation, the state may be different depending on the component and instance.
     Public Property State(ByVal ID As String, ByVal instanceID As String) As Integer Implements RestrictedUI.IHost.State
         Get
             Dim nState As Integer = 0
@@ -62,7 +62,7 @@ Public Class Host
     End Property
     Private _State As New Dictionary(Of String, Integer)
 
-    ' En esta implementación, los roles que devolvamos serán los mismos con independencia del formulario o de la instancia
+    ' In this implementation, the roles that we refer will be the same regardless of the form or the instance
     Public Property UserRoles(ByVal ID As String, ByVal instanceID As String) As Integer() Implements RestrictedUI.IHost.UserRoles
         Get
             Return _userRoles
@@ -78,9 +78,9 @@ End Class
 
 
 ''' <summary>
-''' Clase auxiliar con la que interactuar a modo de prueba desde UI. Permite enlazar controles de usuario
-''' que recojan el estado y los roles de la aplicación, asumiendo que éstos se refieren al ID del componente
-''' de seguridad y a la instancia concreta que los crea.
+''' Helper class to interact with on a trial basis from UI.
+''' It allows to bind user controls to collect the status and roles of the application,
+''' assuming that they refer to the ID of the security component and the specific instance that creates them.
 ''' </summary>
 ''' <remarks></remarks>
 Public Class Host_Aux
@@ -118,25 +118,28 @@ Public Class Host_Aux
     End Property
 
     ''' <summary>
-    ''' Propiedad auxiliar con la que interactuar a modo de prueba desde UI (de manera indirecta a través de StrRolesUsuario) 
-    ''' Leerá/actualizará RolesUsuario, propiedad que escucharán todos los controles
+    ''' Auxiliar property with which to interact on a trial basis from UI (indirectly through StrRolesUsuario)
+    ''' It reads/updates UserRoles, a property that will listen all controls
     ''' </summary>
     Public Property UserRolesStr(ByVal ID As String, ByVal instanceID As String) As String
         Get
-            Return RestrictedUI.Util.ConvertToString(_host.UserRoles(ID, instanceID))
+            'Return RestrictedUI.Util.ConvertToString(_host.UserRoles(ID, instanceID))
+            Return SecurityEnvironment.RolesToStrUsingAlias(_host.UserRoles(ID, instanceID), ID, SecurityEnvironment.ComponentsSecurity(ID).Roles, SecurityEnvironment.CommonRoles)
         End Get
         Set(ByVal value As String)
             If Not String.IsNullOrEmpty(value) Then
-                _host.UserRoles(ID, instanceID) = RestrictedUI.Util.ConvertToArrayInt(value)
+                '_host.UserRoles(ID, instanceID) = RestrictedUI.Util.ConvertToArrayInt(value)
+                Dim roles As Integer() = SecurityEnvironment.GetRolesID(value, ID, SecurityEnvironment.ComponentsSecurity(ID).Roles, SecurityEnvironment.CommonRoles)
+                _host.UserRoles(ID, instanceID) = roles
                 NotifyPropertyChanged("UserRolesStr")
             End If
         End Set
     End Property
 
     ''' <summary>
-    ''' Como cada instancia estará enlazada a un objeto Host_Aux distinto, no verán los cambios sobre los roles efectuados sobre el objeto Host 
-    ''' salvo que escuchemos el evento que dispara Host y notifiquemos explícitamente la modificación 
-    ''' de la propiedad 
+    ''' As each instance will be linked to a different Host_Aux object,
+    ''' they will not see the changes on the roles carried out on the Host object 
+    ''' unless we listen to the event that triggers Host and explicitly notify the change on the property
     ''' </summary>
     Private Sub OnRolesChanged(ByVal ID As String, ByVal instanceID As String)
         'If (String.IsNullOrEmpty(ID) Or Me._ID = ID) AndAlso (String.IsNullOrEmpty(instanceID) Or Me._instanceID = instanceID) Then
@@ -150,7 +153,7 @@ Public Class Host_Aux
     End Sub
 
 
-#Region "Implementación de INotifyPropertyChanged"
+#Region "INotifyPropertyChanged implementation"
     Private Sub NotifyPropertyChanged(ByVal info As String)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(info))
     End Sub
