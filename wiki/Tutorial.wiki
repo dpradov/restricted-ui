@@ -1,4 +1,5 @@
 #summary Tutorial containing API reference and example usages
+#labels Featured
 
 <wiki:toc/>
 <br/>
