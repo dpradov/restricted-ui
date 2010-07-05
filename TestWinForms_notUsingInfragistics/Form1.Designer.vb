@@ -54,6 +54,8 @@ Partial Class Form1
         Me.TreeView1 = New System.Windows.Forms.TreeView
         Me.Label6 = New System.Windows.Forms.Label
         Me.gbCommands = New System.Windows.Forms.GroupBox
+        Me.cbSuperviseDeactivation = New System.Windows.Forms.CheckBox
+        Me.btnChangeState_N = New System.Windows.Forms.Button
         Me.btnReinitialize = New System.Windows.Forms.Button
         Me.cbUseReadOnly = New System.Windows.Forms.CheckBox
         Me.Label3 = New System.Windows.Forms.Label
@@ -285,6 +287,8 @@ Partial Class Form1
         '
         'gbCommands
         '
+        Me.gbCommands.Controls.Add(Me.cbSuperviseDeactivation)
+        Me.gbCommands.Controls.Add(Me.btnChangeState_N)
         Me.gbCommands.Controls.Add(Me.btnReinitialize)
         Me.gbCommands.Controls.Add(Me.cbUseReadOnly)
         Me.gbCommands.Controls.Add(Me.Label3)
@@ -313,6 +317,27 @@ Partial Class Form1
         Me.gbCommands.TabIndex = 28
         Me.gbCommands.TabStop = False
         Me.gbCommands.Text = "gbCommands"
+        '
+        'cbSuperviseDeactivation
+        '
+        Me.cbSuperviseDeactivation.AutoSize = True
+        Me.cbSuperviseDeactivation.Location = New System.Drawing.Point(469, 14)
+        Me.cbSuperviseDeactivation.Name = "cbSuperviseDeactivation"
+        Me.cbSuperviseDeactivation.Size = New System.Drawing.Size(136, 17)
+        Me.cbSuperviseDeactivation.TabIndex = 37
+        Me.cbSuperviseDeactivation.Text = "Supervise Deactivation"
+        Me.ToolTip1.SetToolTip(Me.cbSuperviseDeactivation, resources.GetString("cbSuperviseDeactivation.ToolTip"))
+        Me.cbSuperviseDeactivation.UseVisualStyleBackColor = True
+        '
+        'btnChangeState_N
+        '
+        Me.btnChangeState_N.Location = New System.Drawing.Point(177, 25)
+        Me.btnChangeState_N.Name = "btnChangeState_N"
+        Me.btnChangeState_N.Size = New System.Drawing.Size(68, 23)
+        Me.btnChangeState_N.TabIndex = 36
+        Me.btnChangeState_N.Text = "Random N"
+        Me.ToolTip1.SetToolTip(Me.btnChangeState_N, "Changes state 1000 times randomly between 0 and 4")
+        Me.btnChangeState_N.UseVisualStyleBackColor = True
         '
         'btnReinitialize
         '
@@ -580,6 +605,7 @@ Partial Class Form1
         Me.ControlRestrictedUIWinForms1.ParentControl = Me
         Me.ControlRestrictedUIWinForms1.Paused = False
         Me.ControlRestrictedUIWinForms1.RestrictionsDefinition = New String() {"$Group 0= GroupBox1.CheckBox1, GroupBox1.TextBox2", "$Group 1= TextBox", "+0/GroupBox1.CheckBox1,E,0", "+99/Combo,V"}
+        Me.ControlRestrictedUIWinForms1.SuperviseDeactivation = False
         '
         'Form1
         '
@@ -669,5 +695,7 @@ Partial Class Form1
     Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripComboBox2 As System.Windows.Forms.ToolStripComboBox
+    Friend WithEvents btnChangeState_N As System.Windows.Forms.Button
+    Friend WithEvents cbSuperviseDeactivation As System.Windows.Forms.CheckBox
 
 End Class

@@ -25,6 +25,8 @@ cControls.Name
 cControls.Type
 cControls.Groups
 gbCommands
+gbCommands.cbSuperviseDeactivation
+gbCommands.btnChangeState_N
 gbCommands.btnReinitialize
 gbCommands.cbUseReadOnly
 gbCommands.Label3

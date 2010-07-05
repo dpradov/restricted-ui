@@ -64,7 +64,6 @@ Partial Class Form1
         Me.CheckBox1 = New System.Windows.Forms.CheckBox
         Me.TextBox2 = New System.Windows.Forms.TextBox
         Me.UltraGrid1 = New Infragistics.Win.UltraWinGrid.UltraGrid
-        Me.EntidadBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.btnEnableEnabled = New System.Windows.Forms.Button
         Me.btnDisableVisible = New System.Windows.Forms.Button
         Me.btnEnableVisible_N = New System.Windows.Forms.Button
@@ -81,6 +80,8 @@ Partial Class Form1
         Me.Label5 = New System.Windows.Forms.Label
         Me.Label6 = New System.Windows.Forms.Label
         Me.gbCommands = New System.Windows.Forms.GroupBox
+        Me.cbSuperviseDeactivation = New System.Windows.Forms.CheckBox
+        Me.btnChangeState_N = New System.Windows.Forms.Button
         Me.btnReinitialize = New System.Windows.Forms.Button
         Me.cbUseReadOnly = New System.Windows.Forms.CheckBox
         Me.Label3 = New System.Windows.Forms.Label
@@ -112,15 +113,16 @@ Partial Class Form1
         Me.CopyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.PasteToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
         Me.ToolStripComboBox2 = New System.Windows.Forms.ToolStripComboBox
+        Me.EntidadBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.ControlRestrictedUIWinForms1 = New RestrictedWinFormsUI.ControlRestrictedUIWinForms(Me.components)
         Me.GroupBox1.SuspendLayout()
         CType(Me.UltraGrid1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.EntidadBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.UltraTree1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbCommands.SuspendLayout()
         CType(Me.cControls, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
+        CType(Me.EntidadBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ControlRestrictedUIWinForms1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -252,10 +254,6 @@ Partial Class Form1
         Me.UltraGrid1.TabIndex = 19
         Me.UltraGrid1.Text = "UltraGrid1"
         '
-        'EntidadBindingSource
-        '
-        Me.EntidadBindingSource.DataSource = GetType(TestWinForms.Entity)
-        '
         'btnEnableEnabled
         '
         Me.btnEnableEnabled.Location = New System.Drawing.Point(95, 179)
@@ -313,7 +311,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(194, 30)
+        Me.Label2.Location = New System.Drawing.Point(263, 30)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(54, 13)
         Me.Label2.TabIndex = 17
@@ -322,7 +320,7 @@ Partial Class Form1
         'txtRoles
         '
         Me.txtRoles.BackColor = System.Drawing.SystemColors.Info
-        Me.txtRoles.Location = New System.Drawing.Point(285, 27)
+        Me.txtRoles.Location = New System.Drawing.Point(323, 27)
         Me.txtRoles.Name = "txtRoles"
         Me.txtRoles.Size = New System.Drawing.Size(80, 20)
         Me.txtRoles.TabIndex = 16
@@ -419,6 +417,8 @@ Partial Class Form1
         '
         'gbCommands
         '
+        Me.gbCommands.Controls.Add(Me.cbSuperviseDeactivation)
+        Me.gbCommands.Controls.Add(Me.btnChangeState_N)
         Me.gbCommands.Controls.Add(Me.btnReinitialize)
         Me.gbCommands.Controls.Add(Me.cbUseReadOnly)
         Me.gbCommands.Controls.Add(Me.Label3)
@@ -447,6 +447,27 @@ Partial Class Form1
         Me.gbCommands.TabIndex = 28
         Me.gbCommands.TabStop = False
         Me.gbCommands.Text = "gbCommands"
+        '
+        'cbSuperviseDeactivation
+        '
+        Me.cbSuperviseDeactivation.AutoSize = True
+        Me.cbSuperviseDeactivation.Location = New System.Drawing.Point(469, 14)
+        Me.cbSuperviseDeactivation.Name = "cbSuperviseDeactivation"
+        Me.cbSuperviseDeactivation.Size = New System.Drawing.Size(136, 17)
+        Me.cbSuperviseDeactivation.TabIndex = 37
+        Me.cbSuperviseDeactivation.Text = "Supervise Deactivation"
+        Me.ToolTip1.SetToolTip(Me.cbSuperviseDeactivation, resources.GetString("cbSuperviseDeactivation.ToolTip"))
+        Me.cbSuperviseDeactivation.UseVisualStyleBackColor = True
+        '
+        'btnChangeState_N
+        '
+        Me.btnChangeState_N.Location = New System.Drawing.Point(177, 25)
+        Me.btnChangeState_N.Name = "btnChangeState_N"
+        Me.btnChangeState_N.Size = New System.Drawing.Size(68, 23)
+        Me.btnChangeState_N.TabIndex = 36
+        Me.btnChangeState_N.Text = "Random N"
+        Me.ToolTip1.SetToolTip(Me.btnChangeState_N, "Changes state 1000 times randomly between 0 and 4")
+        Me.btnChangeState_N.UseVisualStyleBackColor = True
         '
         'btnReinitialize
         '
@@ -705,6 +726,10 @@ Partial Class Form1
         Me.ToolStripComboBox2.Name = "ToolStripComboBox2"
         Me.ToolStripComboBox2.Size = New System.Drawing.Size(121, 21)
         '
+        'EntidadBindingSource
+        '
+        Me.EntidadBindingSource.DataSource = GetType(TestWinForms.Entity)
+        '
         'ControlRestrictedUIWinForms1
         '
         Me.ControlRestrictedUIWinForms1.ConfigFile = "TestWinForms\Security.txt"
@@ -714,6 +739,7 @@ Partial Class Form1
         Me.ControlRestrictedUIWinForms1.ParentControl = Me
         Me.ControlRestrictedUIWinForms1.Paused = False
         Me.ControlRestrictedUIWinForms1.RestrictionsDefinition = New String() {"$Group 0= GroupBox1.CheckBox1, GroupBox1.TextBox2", "$Group 1= TextBox", "+0/GroupBox1.CheckBox1,E,0", "+99/Combo,V"}
+        Me.ControlRestrictedUIWinForms1.SuperviseDeactivation = False
         '
         'Form1
         '
@@ -737,7 +763,6 @@ Partial Class Form1
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.UltraGrid1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.EntidadBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.UltraTree1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbCommands.ResumeLayout(False)
         Me.gbCommands.PerformLayout()
@@ -746,6 +771,7 @@ Partial Class Form1
         Me.ToolStrip1.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        CType(Me.EntidadBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ControlRestrictedUIWinForms1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
@@ -810,5 +836,7 @@ Partial Class Form1
     Friend WithEvents CopyToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents PasteToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolStripComboBox2 As System.Windows.Forms.ToolStripComboBox
+    Friend WithEvents btnChangeState_N As System.Windows.Forms.Button
+    Friend WithEvents cbSuperviseDeactivation As System.Windows.Forms.CheckBox
 
 End Class

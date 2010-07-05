@@ -123,6 +123,9 @@
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>381, 17</value>
   </metadata>
+  <data name="cbSuperviseDeactivation.ToolTip" xml:space="preserve">
+    <value>If checked it will be also supervised the deactivation of properties (the attempt to make invisible or disabled a control). It will be assumed that if the activation is allowed then there is no reason to make invisible or disabled the control, and so the deactivation will not be allowed.</value>
+  </data>
   <data name="cbAditionalLogicOfRestriction.ToolTip" xml:space="preserve">
     <value>If checked: only allow changes on CheckBox1 if, in addition to the security restrictions imposed, the contents of the controls TextBox and TextBox2 are the same.
 Note: Changes in TextBox1 or TextBox2 don't trigger automatically the visible or enabled state of the CheckBox1. This extra condition is analyzed only when there 
