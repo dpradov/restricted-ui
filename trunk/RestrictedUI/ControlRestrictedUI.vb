@@ -387,15 +387,16 @@ Public MustInherit Class ControlRestrictedUI
     ''' </summary>
     ''' <returns><b>True</b> if the control was monitored and was properly excluded, <b>False</b> otherwise</returns>
     ''' <param name="Control"></param>
-    ''' <remarks>The review of applied security because of some change in the current situation (security definition, 
-    ''' change in user roles, state, ..) will not affect this control
+    ''' <remarks>The review of applied security because of some change in the current situation
+    ''' (change in user roles, state, ..) will not affect this control
     ''' </remarks>
     Public Function ExcludeControl(ByVal Control As Object) As Boolean
         If _defSecurity Is Nothing Or Control Is Nothing Then Return False
 
         Try
-            For Each c As IControlAdapter In Me.SupervisedControls(True, False)
+            For Each c As IControlAdapter In Me.SupervisedControls(True, True)
                 If c.Control Is Control Then
+                    c.FinalizeSupervision()
                     Return _defSecurity.ExcludeControl(Control)
                 End If
             Next
