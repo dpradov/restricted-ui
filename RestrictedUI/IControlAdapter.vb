@@ -61,9 +61,14 @@ Public Interface IControlAdapter
     ''' Gets or sets a value that determines the visibility of the associated control (wrapped by this adapter)
     ''' </summary>
     ''' <remarks>
-    ''' Actually controlled property need not be exactly 'Visible'; it is the responsibility of the 
+    ''' <para>Actually controlled property need not be exactly 'Visible'; it is the responsibility of the 
     ''' control adapter to offer that interface and to act on the properties that the control has (for example, some controls
-    ''' do not offer Enabled but ReadOnly)
+    ''' do not offer Enabled but ReadOnly)</para>
+    ''' <para>
+    ''' Important: Although the host application normally should use directly the properties in the control to change its
+    ''' visibility, it is also possible do it through the use of an IControlAdapter. So, changes on this property on the adaptar should 
+    ''' also be controlled according to the security policy.
+    ''' </para>
     ''' </remarks>
     Property Visible() As Boolean
 
@@ -71,9 +76,14 @@ Public Interface IControlAdapter
     ''' Gets or sets a value that enables or disables the associated control (wrapped by this adapter)
     ''' </summary>
     ''' <remarks>
-    ''' Actually controlled property need not be exactly 'Enabled'; it is the responsibility of the 
+    ''' <para>Actually controlled property need not be exactly 'Enabled'; it is the responsibility of the 
     ''' control adapter to offer that interface and to act on the properties that the control has (for example, some controls
-    ''' do not offer Enabled but ReadOnly)
+    ''' do not offer Enabled but ReadOnly)</para>
+    ''' <para>
+    ''' Important: Although the host application normally should use directly the properties in the control to change its
+    ''' enabled state, it is also possible do it through the use of an IControlAdapter. So, changes on this property on the adaptar should 
+    ''' also be controlled according to the security policy.
+    ''' </para>
     ''' </remarks>
     Property Enabled() As Boolean
 
