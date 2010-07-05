@@ -35,8 +35,11 @@ Option Strict On
 
 
 ''' <summary>
-''' It contains all the interface restrictions (UI) (permissions and prohibitions) that define security for 
-''' a <see cref=" ControlRestrictedUI"/> component, and that therefore they usually involve a form or user control.
+''' <para>It contains all the interface restrictions (UI) (permissions and prohibitions) that define security for 
+''' a <see cref=" ControlRestrictedUI"/> component, and that therefore they usually involve a form or user control.</para>
+''' <para>Includes also the list of controls for which the attempt of making it invisible or disabled should or not be supervised,
+''' and so it may or not be prevented (independently of the value of <see cref="ControlRestrictedUI.SuperviseDeactivation "/> 
+''' property, established in the <see cref=" ControlRestrictedUI"/> component)</para>
 ''' </summary>
 ''' <remarks>
 ''' <para>All restrictions apply to individual controls, bearing in mind that the prohibitions will take precedence 
@@ -55,6 +58,8 @@ Public Class UIRestrictions
     Private _ParentControl As Object
     Private _prohibitions As IList(Of RestrictionOnControl) = New List(Of RestrictionOnControl)
     Private _authorizations As IList(Of RestrictionOnControl) = New List(Of RestrictionOnControl)
+    Private _ControlsToSuperviseDeactivation As ArrayList = Nothing
+    Private _ControlsNotToSuperviseDeactivation As ArrayList = Nothing
     Private _IDControlRestrictedUI As String = ""
 
     Sub New(Optional ByVal IDControlRestrictedUI As String = "")
@@ -93,6 +98,86 @@ Public Class UIRestrictions
         End Set
     End Property
 
+    ''' <summary>
+    ''' List of controls for which the 'deactivation' of its properties (attempt of making the control invisible or disabled)
+    ''' should be supervised, and so it may be prevented.
+    ''' </summary>
+    ''' <remarks>
+    ''' The supervision of the deactivation of the controls included in this list will be done independently of the 
+    ''' <see cref="ControlRestrictedUI.SuperviseDeactivation "/> property. This list is designed to allow to keep 
+    ''' <see cref="ControlRestrictedUI.SuperviseDeactivation"/> to False, so none of the controls, except the ones 
+    ''' indicated here, can be prevented to be deactivated (invisible and/or disabled).
+    ''' </remarks> 
+    Public ReadOnly Property ControlsToSuperviseDeactivation() As IList
+        Get
+            Return _ControlsToSuperviseDeactivation
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' List of controls for which the 'deactivation' of its properties (attempt of making the control invisible or disabled)
+    ''' should not be prevented.
+    ''' </summary>
+    ''' <remarks>
+    ''' The deactivation of the controls included in this list will be ignored independently of the 
+    ''' <see cref="ControlRestrictedUI.SuperviseDeactivation"/> property. This list is designed to allow to keep 
+    ''' <see cref="ControlRestrictedUI.SuperviseDeactivation"/> to True, so all of the controls, except the ones
+    ''' indicated here, can be prevented to be deactivated (invisible and/or disabled).
+    ''' </remarks> 
+    Public ReadOnly Property ControlsNotToSuperviseDeactivation() As IList
+        Get
+            Return _ControlsNotToSuperviseDeactivation
+        End Get
+    End Property
+
+    Delegate Sub SubDeactivation(ByVal control As Object)
+
+    ''' <summary>
+    ''' Adds the control indicated to the list of controls whose deactivation (attempt of making invisble or 
+    ''' disabled) should be supervised.
+    ''' </summary>
+    ''' <remarks>
+    ''' The supervision of the deactivation of the controls indicated with this method will be done independently 
+    ''' of the <see cref="ControlRestrictedUI.SuperviseDeactivation"/> property. The use of this method is designed to allow to keep 
+    ''' <see cref="ControlRestrictedUI.SuperviseDeactivation"/> to False, so none of the controls, except the ones indicated here, 
+    ''' can be prevented to be deactivated (invisible and/or disabled).
+    ''' </remarks> 
+    Public Sub SuperviseDeactivationOnControl(ByVal control As Object)
+        If _ControlsToSuperviseDeactivation Is Nothing Then
+            _ControlsToSuperviseDeactivation = New ArrayList(20)
+        End If
+        If Not _ControlsToSuperviseDeactivation.Contains(control) Then
+            _ControlsToSuperviseDeactivation.Add(control)
+        End If
+        If _ControlsNotToSuperviseDeactivation IsNot Nothing Then
+            _ControlsNotToSuperviseDeactivation.Remove(control)
+            If _ControlsNotToSuperviseDeactivation.Count = 0 Then _ControlsNotToSuperviseDeactivation = Nothing
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Adds the control indicated to the list of controls whose deactivation (attempt of making invisble or 
+    ''' disabled) should not be supervised.
+    ''' </summary>
+    ''' <remarks>
+    ''' The deactivation of the controls indicated with this method will be ignored independently of the 
+    ''' <see cref="ControlRestrictedUI.SuperviseDeactivation"/> property. The use of this method is designed to allow to keep 
+    ''' <see cref="ControlRestrictedUI.SuperviseDeactivation"/> to True, so all of the controls, except the ones indicated here, 
+    ''' can be prevented to be deactivated (invisible and/or disabled).
+    ''' </remarks> 
+    Public Sub DontSuperviseDeactivationOnControl(ByVal control As Object)
+        If _ControlsNotToSuperviseDeactivation Is Nothing Then
+            _ControlsNotToSuperviseDeactivation = New ArrayList(20)
+        End If
+        If Not _ControlsNotToSuperviseDeactivation.Contains(control) Then
+            _ControlsNotToSuperviseDeactivation.Add(control)
+        End If
+        If _ControlsToSuperviseDeactivation IsNot Nothing Then
+            _ControlsToSuperviseDeactivation.Remove(control)
+            If _ControlsToSuperviseDeactivation.Count = 0 Then _ControlsToSuperviseDeactivation = Nothing
+        End If
+    End Sub
+
 
     ''' <summary>
     ''' Removes the control from the list of supervised controls, considered in this security definition 
@@ -122,6 +207,13 @@ Public Class UIRestrictions
         For Each r As RestrictionOnControl In toRemove
             _prohibitions.Remove(r)
         Next
+
+        If _ControlsToSuperviseDeactivation IsNot Nothing Then
+            _ControlsToSuperviseDeactivation.Remove(control)
+        End If
+        If _ControlsNotToSuperviseDeactivation IsNot Nothing Then
+            _ControlsNotToSuperviseDeactivation.Remove(control)
+        End If
 
         Return found
     End Function
@@ -194,6 +286,7 @@ Public Class UIRestrictions
 
     ''' <summary>
     ''' Constructor from a string of serialized restrictions (positive --authorizations-- and negative --prohibitions).
+    ''' The restrictions can include lists of controls to explicitily supervise the deactivation (or not to supervise)
     ''' </summary>
     ''' <param name="restrictions">String with the serialized content (restrictions)</param>
     ''' <param name="parentControl">Control UI to which this security is linked (usually it will be a form)</param>
@@ -215,7 +308,7 @@ Public Class UIRestrictions
         ' We prepare a dictionary with the possible defined groups, including the adapters of the controls they reference, for
         ' use in deserialization of the restrictions
 
-        Dim lGroupsControls As New Dictionary(Of String, List(Of IControlAdapter))
+        Dim dictGroupsControls As New Dictionary(Of String, List(Of IControlAdapter))
         Dim controlAdapt As IControlAdapter
 
         If parentControl IsNot Nothing And groups IsNot Nothing Then
@@ -231,7 +324,7 @@ Public Class UIRestrictions
                         lctrlAdapt.Add(controlAdapt)
                     End If
                 Next
-                lGroupsControls.Add(g.Name.ToUpper, lctrlAdapt)
+                dictGroupsControls.Add(g.Name.ToUpper, lctrlAdapt)
             Next
 
         End If
@@ -241,14 +334,22 @@ Public Class UIRestrictions
             If cad = "" Then Continue For
             Select Case cad(0)
                 Case "-"c
-                    ReadRestrictionsLine(cad.Substring(1), _prohibitions, lGroupsControls)
+                    ReadRestrictionsLine(cad.Substring(1), _prohibitions, dictGroupsControls)
                 Case "+"c
-                    ReadRestrictionsLine(cad.Substring(1), _authorizations, lGroupsControls)
+                    ReadRestrictionsLine(cad.Substring(1), _authorizations, dictGroupsControls)
+                Case "#"c
+                    ReadSuperviseDeactivationLine(cad.Substring(1), dictGroupsControls)
                 Case Else
-                    ReadRestrictionsLine(cad, _authorizations, lGroupsControls)
+                    ReadRestrictionsLine(cad, _authorizations, dictGroupsControls)
             End Select
         Next
 
+        If _ControlsToSuperviseDeactivation IsNot Nothing Then
+            _ControlsToSuperviseDeactivation.TrimToSize()
+        End If
+        If _ControlsNotToSuperviseDeactivation IsNot Nothing Then
+            _ControlsNotToSuperviseDeactivation.TrimToSize()
+        End If
     End Sub
 
 
@@ -262,7 +363,6 @@ Public Class UIRestrictions
     ''' <remarks></remarks>
     Private Sub ReadRestrictionsLine(ByVal line As String, ByVal list As IList(Of RestrictionOnControl), ByVal lGroupsControls As Dictionary(Of String, List(Of IControlAdapter)))
         Dim cad() As String = line.Split("/"c)
-        Dim pos As Integer
         Dim v As RestrictionOnControl
 
         If cad.Length < 2 Then
@@ -280,11 +380,12 @@ Public Class UIRestrictions
         ' Read individual restrictions
         '---------------------
         For i As Integer = 1 To cad.Length - 1
+            cad(i) = cad(i).Trim
+            If cad(i) = "" Then Continue For
 
             ' If it contains a $ character indicates that it is using a group of controls
-            ' If _ControPadre is Nothing we will not break down the group (e.g. for its use from frmDefinicionSeguridad)
-            pos = cad(i).IndexOf("$"c)
-            If _ParentControl Is Nothing Or pos < 0 Then
+            ' If _ParentControl is Nothing we will not break down the group (e.g. for its use from frmDefinicionSeguridad)
+            If _ParentControl Is Nothing Or cad(i)(0) <> "$"c Then
                 v = New RestrictionOnControl(cad(i), roles, _ParentControl)
                 ' Si el padre no es nothing el control debe necesariamente haberse localizado si es correcto.
                 ' Si es Nothing estaremos en modo diseño (en proyecto Web), por lo que puede no haberse localizado.
@@ -314,12 +415,87 @@ Public Class UIRestrictions
     End Sub
 
     ''' <summary>
-    ''' Removes the permissions and prohibitions of the security definition
+    ''' <para>Deserializes a line with a list of controls for which the attempt of making it invisible or disabled should or not be supervised,
+    ''' and so it may or not be prevented (independently of the value of <see cref="ControlRestrictedUI.SuperviseDeactivation "/> 
+    ''' property, established in the <see cref=" ControlRestrictedUI"/> component)</para>    
+    ''' <para>
+    '''  The lines are of the form:
+    '''  #Yes=control1,control2,....    :  Controls whose 'deactivation' should be supervised
+    '''  #No=control1,control2,....     :  Controls whose 'deactivation' should NOT be supervised
+    ''' </para>
+    ''' </summary>
+    ''' <param name="line">Text line with list of controls, on the form: #Yes=control1,... or #No=control1,... </param>
+    ''' <param name="dictGroupsControls">Dictionary with the defined groups, including the relation of control adapters, for its possible use
+    ''' in the deserialization of the line</param> 
+    ''' <remarks></remarks>    
+    Public Sub ReadSuperviseDeactivationLine(ByVal line As String, ByVal dictGroupsControls As Dictionary(Of String, List(Of IControlAdapter)))
+        If _ParentControl Is Nothing Then Exit Sub
+
+        Dim pos As Integer
+        Dim cad() As String
+        Dim controlAdapt As IControlAdapter = Nothing
+        Dim subDeactivation As SubDeactivation
+
+        ' Identify the type of line: Supervise Deactivation or Dont't Supervise Deactivation:
+        pos = line.IndexOf("="c)
+        If line.Substring(0, pos).Trim.ToUpper = "YES" Then
+            subDeactivation = AddressOf SuperviseDeactivationOnControl
+        ElseIf line.Substring(0, pos).Trim.ToUpper = "NO" Then
+            subDeactivation = AddressOf DontSuperviseDeactivationOnControl
+        Else
+            SecurityEnvironment.ShowError(Constants.ERROR_INCORRECT_DEFINITION + line, _ParentControl, _IDControlRestrictedUI)
+            Exit Sub
+        End If
+
+        cad = line.Substring(pos + 1).Split(","c)
+
+
+        For i As Integer = 0 To cad.Length - 1
+            cad(i) = cad(i).Trim
+            If cad(i) = "" Then Continue For
+
+            ' If it contains a $ character indicates that it is using a group of controls
+            If cad(i)(0) <> "$"c Then
+                controlAdapt = SecurityEnvironment.GetAdapter(_ParentControl).FindControl(cad(i))
+                If controlAdapt.IsNull Then
+                    SecurityEnvironment.ShowError(Constants.ERROR_CONTROL_NOTFOUND + cad(i), _ParentControl, _IDControlRestrictedUI)
+                Else
+                    subDeactivation(controlAdapt.Control)
+                End If
+
+            Else
+                ' We will recover each group control
+                Dim groupName As String = cad(i).Substring(1).Trim
+                Dim lAdaptControl As List(Of IControlAdapter) = Nothing
+                If dictGroupsControls.TryGetValue(groupName.ToUpper, lAdaptControl) Then
+                    For Each c As IControlAdapter In lAdaptControl
+                        subDeactivation(c.Control)
+                    Next
+                Else
+                    SecurityEnvironment.ShowError(Constants.GROUP_NOTDEFINED + groupName, _ParentControl, _IDControlRestrictedUI)
+                End If
+            End If
+
+        Next
+
+    End Sub
+
+    ''' <summary>
+    ''' Removes the permissions, prohibitions and exceptions to general treatment of <see cref="ControlRestrictedUI.SuperviseDeactivation"/> of 
+    ''' the security definition
     ''' </summary>
     ''' <remarks></remarks>
     Public Sub Clear()
         _prohibitions.Clear()
         _authorizations.Clear()
+        If _ControlsToSuperviseDeactivation IsNot Nothing Then
+            _ControlsToSuperviseDeactivation.Clear()
+            _ControlsToSuperviseDeactivation = Nothing
+        End If
+        If _ControlsNotToSuperviseDeactivation IsNot Nothing Then
+            _ControlsNotToSuperviseDeactivation.Clear()
+            _ControlsNotToSuperviseDeactivation = Nothing
+        End If
     End Sub
 
 End Class

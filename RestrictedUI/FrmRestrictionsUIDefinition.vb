@@ -78,11 +78,12 @@ Imports System.Reflection
 Friend Class FrmRestrictionsUIDefinition
     Implements INotifyPropertyChanged
 
-#Region "Campos privados"
+#Region "Private fields"
     Private _securityComponent As ControlRestrictedUI
     Private _parentControlAdapter As IControlAdapter
     Private _configFile As String = Nothing
     Private _InitialRestrictionsDefinition As String() = Nothing
+    Private _SuperviseDeactivationLines As String() = Nothing
     Private _componentsSecurityBak As New Dictionary(Of String, ComponentSecurity)
     Private _backupAvailable As Boolean = False
     Private _host As IHost = Nothing
@@ -283,6 +284,7 @@ Friend Class FrmRestrictionsUIDefinition
             Dim Groups As Group() = Nothing
             SecurityEnvironment.GetRestrictionsAndGroups(_InitialRestrictionsDefinition, Restrictions, Groups)
             defSecurity = New UIRestrictions(Restrictions, _securityComponent.ID, Nothing, Nothing)  ' ControlPadre a Nothing porque no queremos buscar los IAdaptdoresControles ni traducir los Grupos
+            RecoverSuperviseDeactivationLines(Restrictions)
 
             If Groups.Length > 0 Then
                 LoadGroups(Groups)
@@ -293,6 +295,7 @@ Friend Class FrmRestrictionsUIDefinition
             gbSecuritySource.Text = SOURCE_PARAM
         Else
             defSecurity = New UIRestrictions(_securityComponent.Restrictions, _securityComponent.ID, Nothing, Nothing)  ' ControlPadre a Nothing porque no queremos buscar los IAdaptdoresControles ni traducir los Grupos
+            RecoverSuperviseDeactivationLines(_securityComponent.Restrictions)
             LoadGroups(_securityComponent.Groups)
             LoadRestrictions(defSecurity, commonRoles, particularRoles.ToArray)
             If _DesignTime Then
@@ -1306,9 +1309,10 @@ Friend Class FrmRestrictionsUIDefinition
 
             Dim aux As String() = defSecurity.RestrictionsToArrayString(useAliasRoles)
 
-            restrictionsDefined = lGroups.ToArray
-            ReDim Preserve restrictionsDefined(restrictionsDefined.Length + aux.Length - 1)
-            aux.CopyTo(restrictionsDefined, lGroups.Count)
+            ReDim restrictionsDefined(lGroups.Count + aux.Length + _SuperviseDeactivationLines.Length - 1)
+            lGroups.CopyTo(restrictionsDefined, 0)
+            _SuperviseDeactivationLines.CopyTo(restrictionsDefined, lGroups.Count)
+            aux.CopyTo(restrictionsDefined, lGroups.Count + _SuperviseDeactivationLines.Length)
 
         Finally
             SecurityEnvironment.CommonRolesAUX = Nothing
@@ -1319,6 +1323,18 @@ Friend Class FrmRestrictionsUIDefinition
 
     End Function
 
+    Sub RecoverSuperviseDeactivationLines(ByVal restrictions As String())
+        Dim list As New ArrayList(restrictions.Length)
+
+        For Each line As String In restrictions
+            line = Trim(line)
+            If line = "" Then Continue For
+            If line(0) = "#"c Then
+                list.Add(line)
+            End If
+        Next
+        _SuperviseDeactivationLines = CType(list.ToArray(GetType(String)), String())
+    End Sub
 
     ' New restrictions
 
@@ -1440,6 +1456,7 @@ Friend Class FrmRestrictionsUIDefinition
             SecurityEnvironment.CommonRolesAUX = GetCommonRoles()
             SecurityEnvironment.ParticularRolesAUX = GetParticularRoles.ToArray
             defSecurity = New UIRestrictions(restrictions, _securityComponent.ID, Nothing, Nothing)  ' ControlPadre a Nothing porque no queremos buscar los IAdaptdoresControles ni traducir los Grupos
+            RecoverSuperviseDeactivationLines(restrictions)
         Finally
             SecurityEnvironment.CommonRolesAUX = Nothing
             SecurityEnvironment.ParticularRolesAUX = Nothing
@@ -1454,7 +1471,8 @@ Friend Class FrmRestrictionsUIDefinition
 
     Private Sub ShowRestrictionsGrid(ByVal show As Boolean)
         cRestrictions.Visible = show
-        txtRestrictions.Visible = Not show
+        lblDeactivation.Visible = show
+        txtRestrictions.Visible = Not show        
 
         cbFilterOnSelectedRol.Visible = show
 

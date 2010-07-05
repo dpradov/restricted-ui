@@ -1265,7 +1265,7 @@ Public Class SecurityEnvironment
                         ShowError(Constants.GROUP_INCORRECT + cad)
                     End Try
 
-                Case Else  'Case "+"c, "-"c
+                Case Else  'Case "+"c, "-"c, '#'c
                     RestrictionsList.Add(cad)
             End Select
         Next

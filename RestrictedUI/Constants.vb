@@ -2,7 +2,7 @@
     Public Const ERROR_CONTROL_NOTFOUND As String = "Not found control:"
     Public Const ERROR_ROLES_LIST_INCORRECT As String = "List of roles incorrect:"
     Public Const GROUP_NOTDEFINED As String = "Group not defined:"
-    Public Const GROUP_INCORRECT As String = "Grupo incorrect. It will be ignored: "
+    Public Const GROUP_INCORRECT As String = "Group incorrect. It will be ignored: "
     Public Const RESTRICTION_WILL_BE_IGNORED As String = "-> Restriction will be ignored: "
     Public Const ERROR_INCORRECT_DEFINITION As String = "Incorrect Definition : "
     Public Const ERROR_CLASS_METHOD_NOTFOUND As String = "Class or method (GetInstance) not found in the DLL"
