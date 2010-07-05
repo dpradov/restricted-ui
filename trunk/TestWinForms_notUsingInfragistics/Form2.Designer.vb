@@ -34,20 +34,21 @@ Partial Class Form2
         Me.UserControl21 = New TestWinForms.UserControl2
         Me.TabPage4 = New System.Windows.Forms.TabPage
         Me.UserControl22 = New TestWinForms.UserControl2
-        Me.ControlSeguridadWinForms1 = New RestrictedWinFormsUI.ControlRestrictedUIWinForms(Me.components)
+        Me.ControlRestrictedUIWinForms1 = New RestrictedWinFormsUI.ControlRestrictedUIWinForms(Me.components)
         Me.UserControl31 = New TestWinForms.UserControl3
         Me.cConfigFile = New System.Windows.Forms.TextBox
+        Me.btnChangeState_N = New System.Windows.Forms.Button
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.TabPage4.SuspendLayout()
-        CType(Me.ControlSeguridadWinForms1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ControlRestrictedUIWinForms1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(355, 15)
+        Me.Button1.Location = New System.Drawing.Point(154, 33)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 0
@@ -140,13 +141,13 @@ Partial Class Form2
         '
         'ControlSeguridadWinForms1
         '
-        Me.ControlSeguridadWinForms1.ConfigFile = "PruebaWinForms\Seguridad.txt"
-        Me.ControlSeguridadWinForms1.ControlsFile = "PruebaWinForms\Controles.txt"
-        Me.ControlSeguridadWinForms1.ID = "Form2"
-        Me.ControlSeguridadWinForms1.InstanceID = "00"
-        Me.ControlSeguridadWinForms1.ParentControl = Me
-        Me.ControlSeguridadWinForms1.Paused = False
-        Me.ControlSeguridadWinForms1.RestrictionsDefinition = New String() {"-0/TabControl1.TabPage4.UserControl22.GroupBox1.RadioButton2,E"}
+        Me.ControlRestrictedUIWinForms1.ConfigFile = "PruebaWinForms\Seguridad.txt"
+        Me.ControlRestrictedUIWinForms1.ControlsFile = "PruebaWinForms\Controles.txt"
+        Me.ControlRestrictedUIWinForms1.ID = "Form2"
+        Me.ControlRestrictedUIWinForms1.InstanceID = "00"
+        Me.ControlRestrictedUIWinForms1.ParentControl = Me
+        Me.ControlRestrictedUIWinForms1.Paused = False
+        Me.ControlRestrictedUIWinForms1.RestrictionsDefinition = New String() {"-0/TabControl1.TabPage4.UserControl22.GroupBox1.RadioButton2,E"}
         '
         'UserControl31
         '
@@ -165,11 +166,20 @@ Partial Class Form2
         Me.cConfigFile.TabIndex = 85
         Me.cConfigFile.Text = resources.GetString("cConfigFile.Text")
         '
+        'btnChangeState_N
+        '
+        Me.btnChangeState_N.Location = New System.Drawing.Point(334, 12)
+        Me.btnChangeState_N.Name = "btnChangeState_N"
+        Me.btnChangeState_N.Size = New System.Drawing.Size(98, 23)
+        Me.btnChangeState_N.TabIndex = 86
+        Me.btnChangeState_N.Text = "Random State N times"
+        Me.btnChangeState_N.UseVisualStyleBackColor = True
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(448, 406)
+        Me.Controls.Add(Me.btnChangeState_N)
         Me.Controls.Add(Me.cConfigFile)
         Me.Controls.Add(Me.UserControl31)
         Me.Controls.Add(Me.TabControl1)
@@ -181,12 +191,12 @@ Partial Class Form2
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage4.ResumeLayout(False)
-        CType(Me.ControlSeguridadWinForms1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ControlRestrictedUIWinForms1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ControlSeguridadWinForms1 As RestrictedWinFormsUI.ControlRestrictedUIWinForms
+    Friend WithEvents ControlRestrictedUIWinForms1 As RestrictedWinFormsUI.ControlRestrictedUIWinForms
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
@@ -199,4 +209,5 @@ Partial Class Form2
     Friend WithEvents UserControl22 As TestWinForms.UserControl2
     Friend WithEvents UserControl31 As TestWinForms.UserControl3
     Friend WithEvents cConfigFile As System.Windows.Forms.TextBox
+    Friend WithEvents btnChangeState_N As System.Windows.Forms.Button
 End Class

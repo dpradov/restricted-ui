@@ -133,6 +133,7 @@ Public Class Form1
 #Region "Methods to force the Visible and Enabled properties and thus verify the operation of the Security library"
 
     Private Sub btnEnableVisible_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEnableVisible.Click
+        Dim adapt As IControlAdapter
         Me.combo.Visible = True
         Me.TextBox.Visible = True
         'Me.GroupBox1.Visible = True
@@ -141,41 +142,56 @@ Public Class Form1
 
         'TreeView1.Visible = True
 
-        Dim adapt As IControlAdapter
+        ' TreeNodes cannot be made invisible/visible directly with the control. That is something
+        ' offered by adapter
         adapt = New AdapterWinForms_TreeView(TreeView1)
         For Each c As IControlAdapter In adapt.Controls
             c.Visible = True
         Next
-        adapt.FindControl("Nodo0.Nodo1").Visible = True
-        adapt.FindControl("Nodo0.Nodo2").Visible = True
-        adapt.FindControl("Nodo3.Nodo4").Visible = True
-        adapt.FindControl("Nodo3.Nodo4.Nodo5").Visible = True
+        ' Also:
+        adapt.FindControl("Node3").Visible = True
+        adapt.FindControl("Node0.Node1").Visible = True
+        adapt.FindControl("Node0.Node2").Visible = True
+        adapt.FindControl("Node3.Node4").Visible = True
+        adapt.FindControl("Node3.Node4.Node5").Visible = True
 
         'cControles.Visible = True
         adapt = New AdapterWinForms_DataGridView(cControls)
         For Each c As IControlAdapter In adapt.Controls
             c.Visible = True
         Next
-
+        ' Also directly with the control:
+        cControls.Columns(0).Visible = True
+        cControls.Columns(1).Visible = True
+        cControls.Columns(2).Visible = True
+        cControls.Columns(3).Visible = True
     End Sub
 
     Private Sub btnEnableEnabled_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEnableEnabled.Click
+        Dim adapt As IControlAdapter
         'Me.GroupBox1.Enabled = True
         Me.combo.Enabled = True
         Me.TextBox.Enabled = True
         Me.TextBox2.Enabled = True
         Me.CheckBox1.Enabled = True
 
-        'cControles.Enabled = True
-        Dim adapt As IControlAdapter
+        TreeView1.Enabled = True
+        ' TreeNodes cannot be made disabled with the control.
+        cControls.Enabled = True
+        cControls.ReadOnly = False
         adapt = New AdapterWinForms_DataGridView(cControls)
         For Each c As IControlAdapter In adapt.Controls
             c.Enabled = True
         Next
-
+        ' Also directly with the control:
+        cControls.Columns(0).ReadOnly = False
+        cControls.Columns(1).ReadOnly = False
+        cControls.Columns(2).ReadOnly = False
+        cControls.Columns(3).ReadOnly = False
     End Sub
 
     Private Sub btnDisableVisible_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDisableVisible.Click
+        Dim adapt As IControlAdapter
         'Me.GroupBox1.Visible = False
         Me.combo.Visible = False
         Me.TextBox.Visible = False
@@ -183,39 +199,49 @@ Public Class Form1
         Me.CheckBox1.Visible = False
 
         'TreeView1.Visible = False
-
-        Dim adapt As IControlAdapter
+        ' TreeNodes cannot be made invisible/visible directly with the control. That is something
+        ' offered by adapter
         adapt = New AdapterWinForms_TreeView(TreeView1)
         For Each c As IControlAdapter In adapt.Controls
             c.Visible = False
         Next
-        adapt.FindControl("Nodo0.Nodo1").Visible = False
-        adapt.FindControl("Nodo0.Nodo2").Visible = False
-        adapt.FindControl("Nodo3.Nodo4").Visible = False
-        adapt.FindControl("Nodo3.Nodo4.Nodo5").Visible = False
+        'Also:
+        adapt.FindControl("Node0.Node1").Visible = False
+        adapt.FindControl("Node0.Node2").Visible = False
+        adapt.FindControl("Node3.Node4").Visible = False
+        adapt.FindControl("Node3.Node4.Node5").Visible = False
 
         'cControles.Visible = False
         adapt = New AdapterWinForms_DataGridView(cControls)
         For Each c As IControlAdapter In adapt.Controls
             c.Visible = False
         Next
-
+        ' Also directly with the control:
+        cControls.Columns(0).Visible = False
+        cControls.Columns(1).Visible = False
+        cControls.Columns(2).Visible = False
+        cControls.Columns(3).Visible = False
     End Sub
 
     Private Sub btnDisableEnabled_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDisableEnabled.Click
+        Dim adapt As IControlAdapter
         Me.combo.Enabled = False
         Me.TextBox.Enabled = False
         'Me.GroupBox1.Enabled = False
         Me.TextBox2.Enabled = False
         Me.CheckBox1.Enabled = False
 
+        TreeView1.Enabled = False
         'cControles.Enabled = False
-        Dim adapt As IControlAdapter
         adapt = New AdapterWinForms_DataGridView(cControls)
         For Each c As IControlAdapter In adapt.Controls
             c.Enabled = False
         Next
-
+        ' Also directly with the control:
+        cControls.Columns(0).ReadOnly = True
+        cControls.Columns(1).ReadOnly = True
+        cControls.Columns(2).ReadOnly = True
+        cControls.Columns(3).ReadOnly = True
     End Sub
 
     Private Sub btnEnableVisible_N_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnEnableVisible_N.Click
@@ -227,6 +253,18 @@ Public Class Form1
 #End Region
 
 #Region "Test of actions to perform on the security component"
+    ''' <summary>
+    ''' Changes the value of the property SuperviseDeactivation
+    ''' </summary>
+    ''' <remarks>
+    ''' <para>By the use of the <see cref="ControlRestrictedUI.SuperviseDeactivation"/> property now we can supervise 
+    ''' also the deactivation of properties (the attempt to make invisible or disabled a control).</para>
+    ''' <para>If we must supervise the deactivation of a property we will assume that if the activation is allowed 
+    ''' then there is no reason to make invisible or disabled the control, and so the deactivation will not be allowed.</para>
+    ''' </remarks>
+    Private Sub cbSuperviseDeactivation_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbSuperviseDeactivation.CheckedChanged
+        ControlRestrictedUIWinForms1.SuperviseDeactivation = cbSuperviseDeactivation.Checked
+    End Sub
 
     ''' <summary>
     ''' Test of the property Pause on the security component
@@ -304,14 +342,6 @@ Public Class Form1
 
         AdapterWinForms_DataGridView.UseReadOnly = cbUseReadOnly.Checked
 
-        ControlRestrictedUIWinForms1.Paused = True
-        If cbUseReadOnly.Checked Then
-            cControls.Enabled = True
-        Else
-            cControls.ReadOnly = True
-        End If
-        ControlRestrictedUIWinForms1.ReinitializeSecurity()
-        ControlRestrictedUIWinForms1.Paused = False
     End Sub
 
 #End Region
@@ -413,4 +443,24 @@ Public Class Form1
 
 #End Region
 
+    ''' <summary>
+    ''' Method to test the performance overhead of this library when there is many changes that force the
+    ''' revision of the security applied.
+    ''' Will be forced 1000! state changes
+    ''' </summary>
+    Private Sub btnChangeState_N_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnChangeState_N.Click
+        Dim dt1 As DateTime
+        Dim dt2 As DateTime
+        Dim diff As TimeSpan
+        Dim r As New Random()
+
+        dt1 = Now
+        For i As Integer = 1 To 500
+            _hostAux.State = r.Next(4, 6)
+            _hostAux.State = r.Next(3)
+        Next
+        dt2 = Now
+        diff = dt2 - dt1
+        MsgBox("1000 state changes in " + diff.TotalMilliseconds.ToString() + " ms")
+    End Sub
 End Class

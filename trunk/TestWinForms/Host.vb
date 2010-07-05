@@ -62,6 +62,18 @@ Public Class Host
     End Property
     Private _State As New Dictionary(Of String, Integer)
 
+    '' In this implementation, the state is the same for all the application
+    'Public Property State(ByVal ID As String, ByVal instanceID As String) As Integer Implements RestrictedUI.IHost.State
+    '    Get
+    '        Return _State
+    '    End Get
+    '    Set(ByVal value As Integer)
+    '        _State = value
+    '        RaiseEvent StateChanged(Nothing, Nothing, value)
+    '    End Set
+    'End Property
+    'Private _State As Integer
+
     ' In this implementation, the roles that we refer will be the same regardless of the form or the instance
     Public Property UserRoles(ByVal ID As String, ByVal instanceID As String) As Integer() Implements RestrictedUI.IHost.UserRoles
         Get

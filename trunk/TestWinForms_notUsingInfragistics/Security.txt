@@ -27,6 +27,9 @@ Group Enabled Buttons= gbCommands.btnEnableEnabled, gbCommands.btnEnableVisible,
 Group Trees= TreeView1
 
 [Restrictions]
+#Yes=TextBox,$Group Trees
+#Yes=GroupBox1.CheckBox1
+#No=GroupBox1.TextBox2
 +123/TextBox,V,2
 +Adm/$Group Trees,E/MenuStrip1.EditToolStripMenuItem.CutToolStripMenuItem,V
 +Dtor/GroupBox1.CheckBox1,V

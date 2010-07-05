@@ -1,5 +1,5 @@
 [Factories]
-; Relative paths will be expressed in relation to the folder containing the solution (. sln). This path will be used to locate the DLL in design time. 
+; Relative paths will be expressed in relation to the folder containing the solution (. sln). This path will be used to locate the DLL in design time.
 ; We will assume that the DLL is in the same folder as the executable, so in runtime the path will be ignored and used only the name of the file
 ; Note: You may also use absolute paths.
 TestWinForms\bin\Debug\RestrictedWinFormsUI_Infragistics.dll, RestrictedWinFormsUI_Infragistics.AdapterInfragisticsWinForms_Factory
@@ -28,6 +28,9 @@ Group Enabled Buttons= gbCommands.btnEnableEnabled, gbCommands.btnEnableVisible,
 Group Trees= TreeView1, UltraTree1
 
 [Restrictions]
+#Yes=TextBox,$Group Trees
+#Yes=GroupBox1.CheckBox1
+#No=GroupBox1.TextBox2
 +123/TextBox,V,2
 +Adm/$Group Trees,E/MenuStrip1.EditToolStripMenuItem.CutToolStripMenuItem,V
 +Dtor/GroupBox1.CheckBox1,V
@@ -55,7 +58,7 @@ Group 1 - new group= Button1, TextBox1
 123,My Role 1,MyR1
 
 [States]
-77, State 77
+77,State 77
 
 [Groups]
 
