@@ -100,19 +100,29 @@ Public Class UIRestrictions
     ''' </summary>
     Friend Function ExcludeControl(ByVal control As Object) As Boolean
         Dim found As Boolean = False
+        Dim toRemove As New ArrayList(10)
 
-        For i As Integer = 0 To _authorizations.Count - 1
-            If _authorizations(i).ControlAdapt.Control Is control Then
-                _authorizations.Remove(_authorizations(i))
+        For Each a As RestrictionOnControl In _authorizations
+            If a.ControlAdapt.Control Is control Then
+                toRemove.Add(a)
                 found = True
             End If
         Next
-        For i As Integer = 0 To _prohibitions.Count - 1
-            If _prohibitions(i).ControlAdapt.Control Is control Then
-                _prohibitions.Remove(_prohibitions(i))
+        For Each r As RestrictionOnControl In toRemove
+            _authorizations.Remove(r)
+        Next
+
+        toRemove.Clear()
+        For Each p As RestrictionOnControl In _prohibitions
+            If p.ControlAdapt.Control Is control Then
+                toRemove.Add(p)
                 found = True
             End If
         Next
+        For Each r As RestrictionOnControl In toRemove
+            _prohibitions.Remove(r)
+        Next
+
         Return found
     End Function
 
