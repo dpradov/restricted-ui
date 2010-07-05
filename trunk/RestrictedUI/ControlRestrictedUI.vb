@@ -62,6 +62,81 @@ Public MustInherit Class ControlRestrictedUI
 #Region "Security Configuration: Public Interface"
 
     ''' <summary>
+    ''' It determines if the restrictions will be applied also in the deactivation of the controls (controlling the 
+    ''' attempt of making a control invisible or disabled), not only in the activation.
+    ''' </summary>
+    ''' <remarks>
+    ''' <para>
+    ''' By default, it is only supervised and perhaps prevented (depending on the policy defined) the 'activation' of 
+    ''' the properties, namely the attempt to make visible or enable the control. It is not prevented to make invisible 
+    ''' or disabled a control.</para>
+    ''' <para>
+    ''' Probably we will want to apply this RestrictedUI library to existing applications, that will already have 
+    ''' implemented some kind of security mechanism, perhaps in a static way, embedded in the code. This new
+    ''' library could overlap initially that existing security, and so could help ensure compliance with the 
+    ''' prohibitions, but not the authorizations. At least, not if this <see cref="SuperviseDeactivation"/>
+    ''' property is set to False (by default).</para>
+    ''' <para>
+    ''' For example, if the 'X' button should be enabled only for the HR manager, this new library will ensure that it 
+    ''' is disabled for any other role, independently of what the original security implementation may be doing. However,
+    ''' if the role of HR manager should always have that button enabled, and the original security implementation prevents
+    ''' it by mistake (or because it corresponds to an obsolete policy definition), the new library will not avoid it.
+    ''' The RestrictedUI library will enable the 'X' button for the HR manager every time it has to reconsider security
+    ''' (for a change in status or roles, for example), but it will not prevent that the original security mechanism 
+    ''' might disable it later.</para>
+    ''' <para>
+    ''' With this <see cref="SuperviseDeactivation"/> property we can change that behaviour and monitor also the 
+    ''' deactivation of the controls, allowing or preventing it according to the security definition.</para>
+    ''' </remarks> 
+    <Category("Configuration"), _
+    Description("It determines if the restrictions will be applied also in the deactivation of the controls (controlling the " + _
+                "attempt of making a control invisible or disabled), not only in the activation.")> _
+    Public Property SuperviseDeactivation() As Boolean
+        Get
+            Return _SuperviseDeactivation
+        End Get
+        Set(ByVal value As Boolean)
+            _SuperviseDeactivation = value
+            NotifyPropertyChanged("SuperviseDeactivation")
+        End Set
+    End Property
+    Private _SuperviseDeactivation As Boolean = False
+
+    ''' <summary>
+    ''' Indicates to this ControlRestrictedUI component to also supervise the deactivation of the control
+    ''' passed as paremeter (controlling the attempt of making this control invisible or disabled), not only 
+    ''' the activation.
+    ''' </summary>
+    ''' <remarks>
+    ''' The supervision of the deactivation of the controls indicated with this method will be done independently 
+    ''' of the <see cref="SuperviseDeactivation"/> property. The use of this method is designed to allow to keep 
+    ''' <see cref="SuperviseDeactivation"/> to False, so none of the controls, except the ones indicated here, 
+    ''' can be prevented to be deactivated (invisible and/or disabled).
+    ''' </remarks> 
+    Public Sub SuperviseDeactivationOnControl(ByVal control As IControlAdapter)
+        If _defSecurity IsNot Nothing Then
+            _defSecurity.SuperviseDeactivationOnControl(control)
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Indicates to this ControlRestrictedUI component to not supervise the deactivation of the control (controlling 
+    ''' the attempt of making this control invisible or disabled).
+    ''' </summary>
+    ''' <remarks>
+    ''' The deactivation of the controls indicated with this method will be ignored independently of the 
+    ''' <see cref="SuperviseDeactivation"/> property. The use of this method is designed to allow to keep 
+    ''' <see cref="SuperviseDeactivation"/> to True, so all of the controls, except the ones indicated here, 
+    ''' can be prevented to be deactivated (invisible and/or disabled).
+    ''' </remarks> 
+    Public Sub DontSuperviseDeactivationOnControl(ByVal control As IControlAdapter)
+        If _defSecurity IsNot Nothing Then
+            _defSecurity.DontSuperviseDeactivationOnControl(control)
+        End If
+    End Sub
+
+
+    ''' <summary>
     ''' <para>Identifier of this <see cref=" ControlRestrictedUI "/> component, restrictions monitor. </para>
     ''' <para>From this identifier it can be read / updated the security definition from a file, to be established 
     ''' at an environment level</para>
@@ -69,7 +144,7 @@ Public MustInherit Class ControlRestrictedUI
     ''' </summary>
     ''' <remarks>You should assign a value. By default a GUID is assigned</remarks> 
     <Category("Configuration"), _
-    Description("Identificador del componente ControlRestriccionesUI")> _
+    Description("Identifier of the ControlRestriccionesUI component")> _
     Public Property ID() As String
         Get
             Return _ID
@@ -108,7 +183,9 @@ Public MustInherit Class ControlRestrictedUI
 
 
     ''' <summary>
-    ''' Configuration of the restrictions (prohibitions and permissions) to be set.
+    ''' Configuration of the restrictions (prohibitions and permissions) to be set. Can include also a list of
+    ''' controls for which the attempt of making it invisible or disabled should or not be supervised,
+    ''' and so it may or not be prevented.
     ''' </summary>
     ''' <remarks>
     ''' More information on management of restrictions in <see cref="UIRestrictions "/> and <see cref="RestrictionOnControl "/>.
@@ -116,9 +193,11 @@ Public MustInherit Class ControlRestrictedUI
     ''' <seealso cref="RestrictionOnControl "/>
     ''' </remarks>
     <Category("Configuration"), _
-    Description("Configuration of the restrictions (prohibitions and permissions) to be set." + _
+    Description("Configuration of the restrictions (prohibitions and permissions) to be set. " + _
                 "All restrictions apply to individual controls, bearing in mind that the prohibitions will take precedence over permissions, " + _
-                "that is, permissions will be aplied first and then restricted on the basis of the prohibitions" _
+                "that is, permissions will be aplied first and then restricted on the basis of the prohibitions. " + _
+                "Can include also a list of controls for which the attempt of making it invisible or disabled should or not be supervised, " + _
+                "and so it may or not be prevented." _
                 )> _
     <Editor(GetType(RestrictionsDefinitionEditor), GetType(UITypeEditor))> _
     Public Property RestrictionsDefinition() As String()
@@ -137,6 +216,8 @@ Public MustInherit Class ControlRestrictedUI
             If Not _initializing Then ReinitializeSecurity()
             NotifyPropertyChanged("RestrictionsDefinition")
             NotifyPropertyChanged("RestrictionsDefinitionEmbedded")
+            NotifyPropertyChanged("Groups")
+            NotifyPropertyChanged("Restrictions")
         End Set
     End Property
     Protected _restrictionsDefinition As String()
@@ -432,27 +513,33 @@ Public MustInherit Class ControlRestrictedUI
     ''' </para>
     ''' </remarks>
     Public Sub RegisterControls()
-        Dim lista As String = ""
-        Dim file As String = ControlsFile
-        If SecurityEnvironment.AdaptFilePath(file, Me.DesignMode) Then
-            ' We can get the identification of the parent control without problems in WinForms, but it is not possible in Web
-            ' (at least I could not get it)
-            ' Therefore, rather than rely on the parent control to identify the form, will use the component identifier that is embedded in it
-            'Dim idParent As String = Util.GetControlPadreID(_parentControl)
-            Dim idParent As String = Me.ID
+        Try
+            Dim lista As String = ""
+            Dim file As String = ControlsFile
+            If SecurityEnvironment.AdaptFilePath(file, Me.DesignMode) Then
+                ' We can get the identification of the parent control without problems in WinForms, but it is not possible in Web
+                ' (at least I could not get it)
+                ' Therefore, rather than rely on the parent control to identify the form, will use the component identifier that is embedded in it
+                'Dim idParent As String = Util.GetControlPadreID(_parentControl)
+                Dim idParent As String = Me.ID
 
-            Dim controlsLists As Dictionary(Of String, String) = ReadControls(SecurityEnvironment.ReadFile(file))
-            MakeControlsListOf(lista, SecurityEnvironment.GetAdapter(_parentControl))
-            lista = "[" + idParent + "]" + vbCrLf + lista
-            controlsLists.Remove(idParent)
-            controlsLists.Add(idParent, lista)
-            My.Computer.FileSystem.DeleteFile(file)
-            lista = ""
-            For Each compName As String In controlsLists.Keys
-                lista += controlsLists(compName) + vbCrLf + vbCrLf
-            Next
-            My.Computer.FileSystem.WriteAllText(file, lista, True)
-        End If
+                Dim controlsLists As Dictionary(Of String, String) = ReadControls(SecurityEnvironment.ReadFile(file))
+                MakeControlsListOf(lista, SecurityEnvironment.GetAdapter(_parentControl))
+                lista = "[" + idParent + "]" + vbCrLf + lista
+                controlsLists.Remove(idParent)
+                controlsLists.Add(idParent, lista)
+                My.Computer.FileSystem.DeleteFile(file)
+                lista = ""
+                For Each compName As String In controlsLists.Keys
+                    lista += controlsLists(compName) + vbCrLf + vbCrLf
+                Next
+                My.Computer.FileSystem.WriteAllText(file, lista, True)
+            End If
+
+        Catch ex As Exception
+            SecurityEnvironment.ShowError("ControlRestrictedUI.RegisterControls:" + ex.Message, Me.ParentControl, ID)
+        End Try
+
     End Sub
 
 
@@ -580,30 +667,36 @@ Public MustInherit Class ControlRestrictedUI
     ''' and adding event handlers to supervised controls according to the defined security
     ''' </summary>
     Protected Sub InitializeSecurity(ByVal sender As Object, ByVal e As EventArgs)
-        If Not ParentControl Is Nothing Then
-            _defSecurity = New UIRestrictions(Restrictions, ID, ParentControl, Groups)
-            AddHandler SecurityEnvironment.ControlAdapterFactoriesChanged, AddressOf OnControlAdapterFactoriesChanged
-            AddHandler SecurityEnvironment.SecurityChanged, AddressOf OnSecurityChanged
-            AddHandler SecurityEnvironment.SecurityChangedWithCancelInMind, AddressOf OnSecurityChangedWithCancelInMind
-            AddHandler SecurityEnvironment.HotKeyChanged, AddressOf OnHotKeyChanged
-            AddHandler SecurityEnvironment.StateChanged, AddressOf OnStateChanged
-            AddHandler SecurityEnvironment.RolesChanged, AddressOf OnRolesChanged
+        Try
+            If Not ParentControl Is Nothing Then
+                _defSecurity = New UIRestrictions(Restrictions, ID, ParentControl, Groups)
+                AddHandler SecurityEnvironment.ControlAdapterFactoriesChanged, AddressOf OnControlAdapterFactoriesChanged
+                AddHandler SecurityEnvironment.SecurityChanged, AddressOf OnSecurityChanged
+                AddHandler SecurityEnvironment.SecurityChangedWithCancelInMind, AddressOf OnSecurityChangedWithCancelInMind
+                AddHandler SecurityEnvironment.HotKeyChanged, AddressOf OnHotKeyChanged
+                AddHandler SecurityEnvironment.StateChanged, AddressOf OnStateChanged
+                AddHandler SecurityEnvironment.RolesChanged, AddressOf OnRolesChanged
 
-            If TypeOf (ParentControl) Is System.Windows.Forms.Form Then
-                _keyPreviewOriginal = DirectCast(ParentControl, System.Windows.Forms.Form).KeyPreview
+                If TypeOf (ParentControl) Is System.Windows.Forms.Form Then
+                    _keyPreviewOriginal = DirectCast(ParentControl, System.Windows.Forms.Form).KeyPreview
+                End If
+                OnHotKeyChanged()  ' Verify if it is already established a HotKey
+                AddEventHandlers()
+
+                ' In WinForms this method will be called in the event HandleCreated of the parent control (form),
+                ' so all Visible and Enabled properties are set and automatically controlled.
+                ' However, the properties of other specific controls as UltraGrid no. Hence the following call
+                ReviseAppliedSecurity(Nothing)
+
+                If SecurityEnvironment.AutomaticUpdateOfControlsFile Then
+                    RegisterControls()
+                End If
             End If
-            OnHotKeyChanged()  ' Verify if it is already established a HotKey
-            AddEventHandlers()
 
-            ' In WinForms this method will be called in the event HandleCreated of the parent control (form),
-            ' so all Visible and Enabled properties are set and automatically controlled.
-            ' However, the properties of other specific controls as UltraGrid no. Hence the following call
-            ReviseAppliedSecurity(Nothing)
+        Catch ex As Exception
+            SecurityEnvironment.ShowError("ControlRestrictedUI.InitializeSecurity:" + ex.Message, Me.ParentControl, ID)
+        End Try
 
-            If SecurityEnvironment.AutomaticUpdateOfControlsFile Then
-                RegisterControls()
-            End If
-        End If
     End Sub
 
     ''' <summary>
@@ -660,37 +753,41 @@ Public MustInherit Class ControlRestrictedUI
     Private _decidingChange As Boolean = False
 
     ''' <summary>
-    ''' Checks if the change on the specified property (<see cref="TChange"/>) is valid considering the definition of security, 
+    ''' It verifies if the change on the specified property (<see cref="TChange"/>) is valid considering the definition of security, 
     ''' user roles and the current state of the application.
-    ''' If the change is invalid will be undone, this is, set again to False.
+    ''' If the change is invalid will be undone, this is, set again to False (if it was trying to activate the property) or
+    ''' set again to True (if it was trying to deactivate the property)
     ''' </summary>
     ''' <param name="controlAdapt">Control adapter on which must be verified the changed</param>
     ''' <param name="type">Specifies whether to verify the change of Visible or Enabled</param>
     ''' <remarks>
-    ''' Control adapters (<see cref="IControlAdapter"/>) call this method of the security component in response to 
-    ''' the attempt to change the monitored properties.
+    ''' <para>Control adapters (<see cref="IControlAdapter"/>) call this method of the security component in response to 
+    ''' the attempt to change the monitored properties.</para>
+    ''' <para>Note: the attempt of making disabled or invisible a control only will be verified if the 
+    ''' ControlRestrictedUI component have been configured to monitor the deactivation of the properties 
+    ''' (through the <see cref="SuperviseDeactivation"/> property) </para>
     ''' </remarks>
     Public Sub VerifyChange(ByVal controlAdapt As IControlAdapter, ByVal type As TChange)
         If _decidingChange Then Exit Sub
         _decidingChange = True
 
-        Select Case type
-            Case TChange.Enabled
-                ' If set to False there is nothing to prevent
-                If controlAdapt.Enabled Then
-                    If Not ChangeAllowed(controlAdapt, type) Then
-                        controlAdapt.Enabled = False
-                    End If
-                End If
+        Dim tryingToActivate As Boolean
+        If type = TChange.Enabled Then
+            tryingToActivate = controlAdapt.Enabled
+        Else
+            tryingToActivate = controlAdapt.Visible
+        End If
 
-            Case TChange.Visible
-                ' If set to False there is nothing to prevent
-                If controlAdapt.Visible Then
-                    If Not ChangeAllowed(controlAdapt, type) Then
-                        controlAdapt.Visible = False
-                    End If
-                End If
-        End Select
+        If Not ChangeAllowed(controlAdapt, type, tryingToActivate) Then
+            Select Case type
+                Case TChange.Enabled
+                    controlAdapt.Enabled = Not controlAdapt.Enabled
+
+                Case TChange.Visible
+                    controlAdapt.Visible = Not controlAdapt.Visible
+            End Select
+        End If
+
         _decidingChange = False
     End Sub
 
@@ -700,70 +797,112 @@ Public MustInherit Class ControlRestrictedUI
     ''' </summary>
     ''' <param name="controlAdapt">Control adapter on which must be verified the changed</param>
     ''' <param name="type ">Specifies whether to verify the change of Visible or Enabled</param>
+    ''' <param name="tryingToActivate">Indicates if the change tries to set to True (activate) or to False the property (deactivate)</param>
     ''' <returns><b>False</b> is the change is not allowed. <b>True</b> otherwise</returns>
-    Public Function ChangeAllowed(ByVal controlAdapt As IControlAdapter, ByVal type As TChange) As Boolean
+    ''' <remarks>
+    ''' <para>The value returned by <see cref="ActivationAllowed"/> indicates if the control can be made visible 
+    ''' or enabled (depending on the <paramref name="type"/> parameter. By the use of the <see cref="SuperviseDeactivation"/> 
+    ''' property now we can supervise also the deactivation of properties (the attempt to make invisible or 
+    ''' disabled a control).</para>
+    ''' <para>If we must supervise the deactivation of a property we will assume that if the activation is 
+    ''' allowed then there is no reason to make invisible or disabled the control, and so the deactivation 
+    ''' will not be allowed.</para>
+    ''' </remarks>
+    Public Function ChangeAllowed(ByVal controlAdapt As IControlAdapter, ByVal type As TChange, ByVal tryingToActivate As Boolean) As Boolean
         If _paused Then Return True ' If monitoring in this control is paused we will prevent anything. Neither we will generate the event BeforeApplyingRestrinction
 
         Dim allowed As Boolean = True  ' Until proven otherwise be permitted
 
         Try
-            ' Apply first the logic of the rule of AUTHORIZATIONS
-            '-------
-            ' Find a criterion by which to allow
-            For Each p As RestrictionOnControl In _defSecurity.Authorizations
-                If Not p.ControlAdapt.Control Is controlAdapt.Control Then Continue For
-                If (type = TChange.Visible And Not p.Visible) OrElse (type = TChange.Enabled And Not p.Enabled) Then Continue For
-                allowed = False    ' To this control (and property) has been applied a positive logic: only allowed changing to explicit ones
-                'If p.rol <> 0 AndAlso Array.IndexOf(ActualRoles, p.rol) < 0 Then Continue For
-                If Array.IndexOf(p.roles, 0) < 0 Then     ' 0 => All roles
-                    Dim authorizedRole As Boolean = False
-                    For Each r As Integer In UserRoles
-                        If Array.IndexOf(p.roles, r) >= 0 Then
-                            authorizedRole = True
-                            Exit For
-                        End If
-                    Next
-                    If Not authorizedRole Then Continue For
+            If tryingToActivate Then
+                allowed = ActivationAllowed(controlAdapt, type)
+            Else
+                If _SuperviseDeactivation Then
+                    ' If we must supervise deactivation and this control is not excluded
+                    If _defSecurity.ControlsNotToSuperviseDeactivation Is Nothing OrElse _
+                       Not _defSecurity.ControlsNotToSuperviseDeactivation.Contains(controlAdapt.Control) Then
+                        allowed = Not ActivationAllowed(controlAdapt, type)
+                    End If
+                Else
+                    ' If we must not supervise deactivation except for this and probably other controls
+                    If _defSecurity.ControlsToSuperviseDeactivation IsNot Nothing AndAlso _
+                       _defSecurity.ControlsToSuperviseDeactivation.Contains(controlAdapt.Control) Then
+                        allowed = Not ActivationAllowed(controlAdapt, type)
+                    End If
                 End If
-
-                If Not p.states Is Nothing AndAlso Array.IndexOf(p.states, HostState) < 0 Then Continue For
-
-                allowed = True
-                Exit For
-            Next
-
-            If allowed Then
-
-                ' Apply second the logic of the rule of PROHIBITIONS
-                '-------
-                ' We seek a user role for which it is not prohibited
-                ' If we find it then the change is allowed. Otherwise no
-                For Each rol As Integer In UserRoles
-                    allowed = True    ' Initially we suppose that the user rol is not restringed
-                    For Each p As RestrictionOnControl In _defSecurity.Prohibitions
-                        'If p.rol <> 0 And p.rol <> rol Then Continue For
-                        If Array.IndexOf(p.roles, 0) < 0 AndAlso Array.IndexOf(p.roles, rol) < 0 Then Continue For
-                        If p.ControlAdapt.Control IsNot controlAdapt.Control Then Continue For
-                        If (type = TChange.Visible And Not p.Visible) OrElse (type = TChange.Enabled And Not p.Enabled) Then Continue For
-                        If p.states IsNot Nothing AndAlso Array.IndexOf(p.states, HostState) < 0 Then Continue For
-
-                        allowed = False
-                        Exit For
-                    Next
-                    If allowed Then Exit For ' To this rol is not prevented
-                Next
-
             End If
 
             'We give the option to allow or not change based on more complex logic
             RaiseEvent BeforeApplyingRestriction(controlAdapt, type, allowed)
             Return allowed
 
+
         Catch ex As Exception
             SecurityEnvironment.ShowError("ControlRestrictedUI.ChangeAllowed (" + controlAdapt.Identification(, Me) + ") :" + ex.Message, Me.ParentControl, ID)
             Return True
         End Try
+    End Function
 
+
+    ''' <summary>
+    ''' Checks if the activation of the specified property (<see cref="TChange"/>) is valid considering the security 
+    ''' definition, user roles and the current state of the application.
+    ''' </summary>
+    ''' <param name="controlAdapt">Control adapter on which must be verified the activation</param>
+    ''' <param name="type ">Specifies whether to verify the activation of Visible or Enabled</param>
+    ''' <returns><b>False</b> is the activation is not allowed. <b>True</b> otherwise</returns>
+    Private Function ActivationAllowed(ByVal controlAdapt As IControlAdapter, ByVal type As TChange) As Boolean        
+        Dim allowed As Boolean = True  ' Until proven otherwise be permitted
+
+        ' Apply first the logic of the rule of AUTHORIZATIONS
+        '-------
+        ' Find a criterion by which to allow
+        For Each p As RestrictionOnControl In _defSecurity.Authorizations
+            If Not p.ControlAdapt.Control Is controlAdapt.Control Then Continue For
+            If (type = TChange.Visible And Not p.Visible) OrElse (type = TChange.Enabled And Not p.Enabled) Then Continue For
+            allowed = False    ' To this control (and property) has been applied a positive logic: only allowed changing to explicit ones
+            'If p.rol <> 0 AndAlso Array.IndexOf(ActualRoles, p.rol) < 0 Then Continue For
+            If Array.IndexOf(p.roles, 0) < 0 Then     ' 0 => All roles
+                Dim authorizedRole As Boolean = False
+                For Each r As Integer In UserRoles
+                    If Array.IndexOf(p.roles, r) >= 0 Then
+                        authorizedRole = True
+                        Exit For
+                    End If
+                Next
+                If Not authorizedRole Then Continue For
+            End If
+
+            If Not p.states Is Nothing AndAlso Array.IndexOf(p.states, HostState) < 0 Then Continue For
+
+            allowed = True
+            Exit For
+        Next
+
+        If allowed Then
+
+            ' Apply second the logic of the rule of PROHIBITIONS
+            '-------
+            ' We seek a user role for which it is not prohibited
+            ' If we find it then the change is allowed. Otherwise no
+            For Each rol As Integer In UserRoles
+                allowed = True    ' Initially we suppose that the user rol is not restringed
+                For Each p As RestrictionOnControl In _defSecurity.Prohibitions
+                    'If p.rol <> 0 And p.rol <> rol Then Continue For
+                    If Array.IndexOf(p.roles, 0) < 0 AndAlso Array.IndexOf(p.roles, rol) < 0 Then Continue For
+                    If p.ControlAdapt.Control IsNot controlAdapt.Control Then Continue For
+                    If (type = TChange.Visible And Not p.Visible) OrElse (type = TChange.Enabled And Not p.Enabled) Then Continue For
+                    If p.states IsNot Nothing AndAlso Array.IndexOf(p.states, HostState) < 0 Then Continue For
+
+                    allowed = False
+                    Exit For
+                Next
+                If allowed Then Exit For ' To this rol is not prevented
+            Next
+
+        End If
+
+        Return allowed
     End Function
 
     ''' <summary>
@@ -783,11 +922,11 @@ Public MustInherit Class ControlRestrictedUI
 
             If Not lInitial Is Nothing Then
                 For Each c As IControlAdapter In lInitial
-                    c.Enabled = ChangeAllowed(c, TChange.Enabled)
+                    c.Enabled = ActivationAllowed(c, TChange.Enabled)
                 Next
             End If
             For Each c As IControlAdapter In lFinal
-                c.Enabled = ChangeAllowed(c, TChange.Enabled)
+                c.Enabled = ActivationAllowed(c, TChange.Enabled)
             Next
 
 
@@ -797,11 +936,11 @@ Public MustInherit Class ControlRestrictedUI
 
             If Not lInitial Is Nothing Then
                 For Each c As IControlAdapter In lInitial
-                    c.Visible = ChangeAllowed(c, TChange.Visible)
+                    c.Visible = ActivationAllowed(c, TChange.Visible)
                 Next
             End If
             For Each c As IControlAdapter In lFinal
-                c.Visible = ChangeAllowed(c, TChange.Visible)
+                c.Visible = ActivationAllowed(c, TChange.Visible)
             Next
 
             _decidingChange = False

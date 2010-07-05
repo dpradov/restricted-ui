@@ -120,6 +120,9 @@
   <metadata name="ToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <data name="lblDeactivation.ToolTip" xml:space="preserve">
+    <value>It is possible to indicate the controls for which the attempt of making it invisible or disabled should or not be supervised, and so it may or not be prevented (independently of the value of SuperviseDeactivation, established in the ControlRestrictedUI component)</value>
+  </data>
   <metadata name="OpenFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>111, 17</value>
   </metadata>
