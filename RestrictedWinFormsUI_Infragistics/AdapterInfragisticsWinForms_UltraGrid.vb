@@ -43,14 +43,19 @@ Public Class AdapterInfragisticsWinForms_UltraGrid
     Inherits AdapterWinForms_Control
     Implements IControlAdapter
 
-    Private _readOnly As Boolean = False
+    Private _internalChange As Boolean = False
+    Protected Shared DictReadOnly As New Dictionary(Of Control, Boolean)
 
     Sub New(ByVal control As UltraGrid)
         MyBase.New(control)
+        If Not DictReadOnly.ContainsKey(_control) Then
+            DictReadOnly.Add(_control, False)
+        End If
     End Sub
 
-
 #Region "Customizing Enabled: Enabled or ReadOnly"
+
+    Protected Shared Event UseReadOnlyChanged()
 
     ''' <summary>
     ''' The adapter manages the enabling of the wrapped control through the ReadOnly property, rather than Enabled property.
@@ -65,50 +70,123 @@ Public Class AdapterInfragisticsWinForms_UltraGrid
             Return _useReadOnly
         End Get
         Set(ByVal value As Boolean)
-            _useReadOnly = value
+            If _useReadOnly <> value Then
+                _useReadOnly = value
+                RaiseEvent UseReadOnlyChanged()
+            End If
         End Set
     End Property
     Protected Shared _useReadOnly As Boolean = False
 
+    Protected Shared Event ReadOnlyChanged()
+    Protected Property [ReadOnly]() As Boolean
+        Get
+            Return DictReadOnly.Item(_control)
+        End Get
+        Set(ByVal value As Boolean)
+            If [ReadOnly] <> value Then
+                DictReadOnly.Item(_control) = value
+                If Not _internalChange Then
+                    RaiseEvent ReadOnlyChanged()   ' To give chances to undo the change
+                End If
+            End If
+        End Set
+    End Property
+
+
     Public Overrides Sub SuperviseEnabled(ByVal security As ControlRestrictedUI)
         _security = security
-        If Not _useReadOnly Then
-            RemoveHandler _control.EnabledChanged, AddressOf control_EnabledChanged
-            AddHandler _control.EnabledChanged, AddressOf control_EnabledChanged
-        Else
-            RemoveHandler DirectCast(_control, UltraGrid).BeforeEnterEditMode, AddressOf control_BeforeChanging
-            AddHandler DirectCast(_control, UltraGrid).BeforeEnterEditMode, AddressOf control_BeforeChanging
-            RemoveHandler DirectCast(_control, UltraGrid).BeforeRowInsert, AddressOf control_BeforeChanging
-            AddHandler DirectCast(_control, UltraGrid).BeforeRowInsert, AddressOf control_BeforeChanging
-            RemoveHandler DirectCast(_control, UltraGrid).BeforeRowsDeleted, AddressOf control_BeforeChanging
-            AddHandler DirectCast(_control, UltraGrid).BeforeRowsDeleted, AddressOf control_BeforeChanging
-        End If
+        RemoveHandler AdapterInfragisticsWinForms_UltraGrid.UseReadOnlyChanged, AddressOf OnUseReadOnlyChanged
+        AddHandler AdapterInfragisticsWinForms_UltraGrid.UseReadOnlyChanged, AddressOf OnUseReadOnlyChanged
+        RemoveHandler AdapterInfragisticsWinForms_UltraGrid.ReadOnlyChanged, AddressOf OnReadOnlyChanged
+        AddHandler AdapterInfragisticsWinForms_UltraGrid.ReadOnlyChanged, AddressOf OnReadOnlyChanged
+
+        RemoveHandler _control.EnabledChanged, AddressOf UltraGrid_EnabledChanged
+        AddHandler _control.EnabledChanged, AddressOf UltraGrid_EnabledChanged
+
+        RemoveHandler DirectCast(_control, UltraGrid).BeforeEnterEditMode, AddressOf control_BeforeChanging
+        AddHandler DirectCast(_control, UltraGrid).BeforeEnterEditMode, AddressOf control_BeforeChanging
+        RemoveHandler DirectCast(_control, UltraGrid).BeforeRowInsert, AddressOf control_BeforeChanging
+        AddHandler DirectCast(_control, UltraGrid).BeforeRowInsert, AddressOf control_BeforeChanging
+        RemoveHandler DirectCast(_control, UltraGrid).BeforeRowsDeleted, AddressOf control_BeforeChanging
+        AddHandler DirectCast(_control, UltraGrid).BeforeRowsDeleted, AddressOf control_BeforeChanging
     End Sub
 
     Protected Overrides Sub FinalizeSupervision()
         RemoveHandler _control.VisibleChanged, AddressOf control_VisibleChanged
-        RemoveHandler _control.EnabledChanged, AddressOf control_EnabledChanged
+        RemoveHandler _control.EnabledChanged, AddressOf UltraGrid_EnabledChanged
         RemoveHandler DirectCast(_control, UltraGrid).BeforeEnterEditMode, AddressOf control_BeforeChanging
         RemoveHandler DirectCast(_control, UltraGrid).BeforeRowInsert, AddressOf control_BeforeChanging
         RemoveHandler DirectCast(_control, UltraGrid).BeforeRowsDeleted, AddressOf control_BeforeChanging
+        RemoveHandler AdapterInfragisticsWinForms_UltraGrid.UseReadOnlyChanged, AddressOf OnUseReadOnlyChanged
+        RemoveHandler AdapterInfragisticsWinForms_UltraGrid.ReadOnlyChanged, AddressOf OnReadOnlyChanged
     End Sub
 
     Protected Sub control_BeforeChanging(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs)
-        _security.VerifyChange(Me, ControlRestrictedUI.TChange.Enabled)
-        e.Cancel = _readOnly
+        e.Cancel = [ReadOnly]
+    End Sub
+
+    Protected Sub UltraGrid_EnabledChanged(ByVal sender As Object, ByVal e As EventArgs)
+        If _internalChange Then Exit Sub
+        _internalChange = True
+        Try
+            If Not _useReadOnly Then
+                _security.VerifyChange(Me, ControlRestrictedUI.TChange.Enabled)
+            Else
+                _control.Enabled = True
+                If _security.ChangeAllowed(Me, ControlRestrictedUI.TChange.Enabled, False) Then
+                    [ReadOnly] = True
+                End If
+            End If
+
+        Finally
+            _internalChange = False
+        End Try
+    End Sub
+
+    Protected Sub OnUseReadOnlyChanged()
+        Dim EnabledState As Boolean
+
+        _internalChange = True
+        Try
+            If _useReadOnly Then
+                ' useReadOnly was False before, and so Enabled state is actually set by .Enabled property
+                EnabledState = _control.Enabled
+                _control.Enabled = True
+            Else
+                EnabledState = Not [ReadOnly]
+                [ReadOnly] = False
+            End If
+
+            Enabled = EnabledState
+
+        Finally
+            _internalChange = False
+        End Try
+    End Sub
+
+    Protected Sub OnReadOnlyChanged()
+        If Not _security.ChangeAllowed(Me, ControlRestrictedUI.TChange.Enabled, Not [ReadOnly]) Then  ' It isn't necessary when UseReadOnly = False. The event triggered on Enabled change will be controlled
+            _internalChange = True
+            Try
+                [ReadOnly] = Not [ReadOnly]
+            Finally
+                _internalChange = False
+            End Try
+        End If
     End Sub
 
     Public Overrides Property Enabled() As Boolean
         Get
             If _useReadOnly Then
-                Return _readOnly
+                Return Not [ReadOnly]
             Else
                 Return _control.Enabled
             End If
         End Get
         Set(ByVal value As Boolean)
             If _useReadOnly Then
-                _readOnly = Not value
+                [ReadOnly] = Not value
             Else
                 _control.Enabled = value
             End If
