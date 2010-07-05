@@ -39,14 +39,14 @@ Imports RestrictedUI
 Public Class AdapterWinForms_TreeNode
     Implements IControlAdapter
 
-    Protected _security As ControlRestrictedUI
     Protected _control As TreeNode
     Protected _visible As Boolean
     Protected _parent As Object
-    Private _position As Integer
     Private _identification As String
 
-#Region "Shared methods"
+#Region "Shared"
+    Protected Shared _security As ControlRestrictedUI
+    Protected Shared _Childs As New Dictionary(Of Object, ArrayList)
 
     Protected Shared _hiddenControlsAdapter As New List(Of AdapterWinForms_TreeNode)
 
@@ -60,13 +60,18 @@ Public Class AdapterWinForms_TreeNode
         Return list
     End Function
 
+    Private Shared _nodesSupervised As New List(Of TreeNode)
 #End Region
 
     Sub New(ByVal control As TreeNode)
         _control = control
         _visible = True   ' By construction, only create an adapter for a node in a TreeView if it is visible (it exists..)
         ' If it was invisible, not create a new one but return the existing one. See comment to Visible property
-        _position = -1
+        If _control.Parent IsNot Nothing Then
+            _parent = _control.Parent
+        Else
+            _parent = _control.TreeView
+        End If
     End Sub
 
     ReadOnly Property Control() As Object Implements IControlAdapter.Control
@@ -87,14 +92,20 @@ Public Class AdapterWinForms_TreeNode
 
     Public Sub SuperviseVisible(ByVal seguridad As ControlRestrictedUI) Implements IControlAdapter.SuperviseVisible
         _security = seguridad
+        If Not _nodesSupervised.Contains(_control) Then
+            _nodesSupervised.Add(_control)
+        End If
+        SaveSiblings()
     End Sub
 
     Sub FinalizeSupervision() Implements IControlAdapter.FinalizeSupervision
+        _nodesSupervised.Remove(_control)        
     End Sub
 
-    ''' <remarks>The TreeView control does not allow to show or hide its nodes.
+    ''' <remarks>
+    ''' <para>The TreeView control does not allow to show or hide its nodes.</para>
     ''' Here we allow it by removing or adding nodes. That is why we do not need to capture any event like VisibleChanged.
-    ''' If it is wanted to make a node visible or invisible, must be done through this method
+    ''' <para>If it is wanted to make a node visible or invisible, must be done through this method</para>
     ''' </remarks>
     Public Property Visible() As Boolean Implements IControlAdapter.Visible
         Get
@@ -102,39 +113,69 @@ Public Class AdapterWinForms_TreeNode
         End Get
         Set(ByVal value As Boolean)
             If value <> _visible Then
+                Dim supervised As Boolean = (_security IsNot Nothing AndAlso _nodesSupervised.Contains(_control))
                 Try
-                    Dim nodos As TreeNodeCollection
+                    If Not supervised OrElse _
+                       _security.ChangeAllowed(Me, ControlRestrictedUI.TChange.Visible, value) Then
 
-                    If value = False Then
-                        If _control.Parent IsNot Nothing Then
-                            _parent = _control.Parent
-                            nodos = DirectCast(_parent, TreeNode).Nodes
+                        If value = False Then
+                            If Not supervised Then SaveSiblings() ' Supervised controls saved siblings on 'SuperviseVisible'
+                            _identification = Identification
+                            _visible = False
+                            _control.Remove()
+                            _hiddenControlsAdapter.Add(Me)
                         Else
-                            _parent = _control.TreeView
-                            nodos = DirectCast(_parent, TreeView).Nodes
-                        End If
-                        _position = nodos.IndexOf(_control)
-                        _identification = Identification
-                        _visible = False
-                        _control.Remove()
-                        _hiddenControlsAdapter.Add(Me)
-                    Else
-                        If _security Is Nothing OrElse _security.ChangeAllowed(Me, ControlRestrictedUI.TChange.Visible) Then
+                            Dim nodes As TreeNodeCollection
                             If TypeOf _parent Is TreeView Then
-                                nodos = DirectCast(_parent, TreeView).Nodes
+                                nodes = DirectCast(_parent, TreeView).Nodes
                             Else
-                                nodos = DirectCast(_parent, TreeNode).Nodes
+                                nodes = DirectCast(_parent, TreeNode).Nodes
                             End If
-                            nodos.Insert(_position, _control)
+                            Dim siblings As ArrayList = _Childs.Item(_parent)
+                            Dim indexMe As Integer
+                            Dim position As Integer = 0
+                            Dim lastPrevNode As TreeNode = Nothing
+                            indexMe = siblings.IndexOf(_control)
+                            For Each node As TreeNode In nodes
+                                If siblings.IndexOf(node) < indexMe Then
+                                    lastPrevNode = node
+                                Else
+                                    Exit For
+                                End If
+                            Next
+                            If lastPrevNode IsNot Nothing Then
+                                position = nodes.IndexOf(lastPrevNode) + 1
+                            End If
+                            nodes.Insert(position, _control)
                             _visible = True
                             _hiddenControlsAdapter.Remove(Me)
                         End If
                     End If
+
                 Catch ex As Exception
                 End Try
             End If
         End Set
     End Property
+
+    Public Sub SaveSiblings()
+        If Not _Childs.ContainsKey(_parent) Then
+
+            Dim nodes As TreeNodeCollection
+            If _control.Parent IsNot Nothing Then
+                nodes = DirectCast(_parent, TreeNode).Nodes
+            Else
+                nodes = DirectCast(_parent, TreeView).Nodes
+            End If
+
+            Dim siblings As New ArrayList(nodes.Count)
+            For Each node As TreeNode In nodes
+                siblings.Add(node)
+            Next
+            _Childs.Add(_parent, siblings)
+        End If
+    End Sub
+
 
     Public Property Enabled() As Boolean Implements IControlAdapter.Enabled
         Get
