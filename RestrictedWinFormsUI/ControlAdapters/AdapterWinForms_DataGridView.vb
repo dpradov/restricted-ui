@@ -42,11 +42,16 @@ Public Class AdapterWinForms_DataGridView
     Inherits AdapterWinForms_Control
     Implements IControlAdapter
 
+    Private _internalChange As Boolean = False
+
     Sub New(ByVal control As DataGridView)
         MyBase.New(control)
     End Sub
 
 #Region "Customizing Enabled: Enabled or ReadOnly"
+
+    Protected Shared Event UseReadOnlyChanged()
+
     ''' <summary>
     ''' The adapter manages the enabling of the wrapped control through the ReadOnly property, rather than Enabled property.
     ''' </summary>
@@ -60,26 +65,84 @@ Public Class AdapterWinForms_DataGridView
             Return _useReadOnly
         End Get
         Set(ByVal value As Boolean)
-            _useReadOnly = value
+            If _useReadOnly <> value Then
+                _useReadOnly = value
+                RaiseEvent UseReadOnlyChanged()
+            End If
         End Set
     End Property
     Protected Shared _useReadOnly As Boolean = False
 
     Public Overrides Sub SuperviseEnabled(ByVal seguridad As ControlRestrictedUI)
         _security = seguridad
-        If Not _useReadOnly Then
-            RemoveHandler _control.EnabledChanged, AddressOf control_EnabledChanged
-            AddHandler _control.EnabledChanged, AddressOf control_EnabledChanged
-        Else
-            RemoveHandler DirectCast(_control, DataGridView).ReadOnlyChanged, AddressOf control_EnabledChanged
-            AddHandler DirectCast(_control, DataGridView).ReadOnlyChanged, AddressOf control_EnabledChanged
-        End If
+        RemoveHandler AdapterWinForms_DataGridView.UseReadOnlyChanged, AddressOf OnUseReadOnlyChanged
+        AddHandler AdapterWinForms_DataGridView.UseReadOnlyChanged, AddressOf OnUseReadOnlyChanged
+
+        RemoveHandler _control.EnabledChanged, AddressOf DataGridView_EnabledChanged
+        AddHandler _control.EnabledChanged, AddressOf DataGridView_EnabledChanged
+        RemoveHandler DirectCast(_control, DataGridView).ReadOnlyChanged, AddressOf DataGridView_ReadOnlyChanged
+        AddHandler DirectCast(_control, DataGridView).ReadOnlyChanged, AddressOf DataGridView_ReadOnlyChanged
     End Sub
 
     Protected Overrides Sub FinalizeSupervision()
+        RemoveHandler AdapterWinForms_DataGridView.UseReadOnlyChanged, AddressOf OnUseReadOnlyChanged
         RemoveHandler _control.VisibleChanged, AddressOf control_VisibleChanged
-        RemoveHandler _control.EnabledChanged, AddressOf control_EnabledChanged
-        RemoveHandler DirectCast(_control, DataGridView).ReadOnlyChanged, AddressOf control_EnabledChanged
+        RemoveHandler _control.EnabledChanged, AddressOf DataGridView_EnabledChanged
+        RemoveHandler DirectCast(_control, DataGridView).ReadOnlyChanged, AddressOf DataGridView_ReadOnlyChanged
+    End Sub
+
+    Protected Sub OnUseReadOnlyChanged()
+        Dim EnabledState As Boolean
+
+        _internalChange = True
+        Try
+            If _useReadOnly Then
+                ' useReadOnly was False before, and so Enabled state is actually set by .Enabled property
+                EnabledState = _control.Enabled
+                _control.Enabled = True
+            Else
+                EnabledState = Not DirectCast(_control, DataGridView).ReadOnly
+                DirectCast(_control, DataGridView).ReadOnly = False
+            End If
+
+            Enabled = EnabledState
+
+        Finally
+            _internalChange = False
+        End Try
+    End Sub
+
+    Protected Sub DataGridView_EnabledChanged(ByVal sender As Object, ByVal e As EventArgs)
+        If _internalChange Then Exit Sub
+        _internalChange = True
+        Try
+            If Not _useReadOnly Then
+                _security.VerifyChange(Me, ControlRestrictedUI.TChange.Enabled)
+            Else
+                ' We will reinterpret this attempt to disable the control, via Enabled, to set it ReadOnly, that will be verified
+                _control.Enabled = True
+                If _security.ChangeAllowed(Me, ControlRestrictedUI.TChange.Enabled, False) Then
+                    DirectCast(_control, DataGridView).ReadOnly = True
+                End If
+            End If
+        Finally
+            _internalChange = False
+        End Try
+    End Sub
+
+    Protected Sub DataGridView_ReadOnlyChanged(ByVal sender As Object, ByVal e As EventArgs)
+        If _internalChange Then Exit Sub
+        _internalChange = True
+        Try
+            If Not _useReadOnly Then
+                ' ReadOnly will be True. We will interpret it as attempt to disable the control, that will be verified
+                DirectCast(_control, DataGridView).ReadOnly = False
+                _control.Enabled = False
+            End If
+            _security.VerifyChange(Me, ControlRestrictedUI.TChange.Enabled)
+        Finally
+            _internalChange = False
+        End Try
     End Sub
 
     Public Overrides Property Enabled() As Boolean
