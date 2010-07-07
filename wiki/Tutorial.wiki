@@ -17,7 +17,8 @@ This approach is currently used in the company where I work. While offering grea
 
 <br/>
 ==Key Features==
-On the one hand the library / architecture described here does not require to centralize the definition of this security, but it's seen as a case; secondly, to ensure compliance with these interface restrictions it is not necessary to require the programmer to use specific methods or properties of the library, to check if the change is allowed or not, nor has to be controlled by any code; simply any attempt to make visible or enabled any interface element supervised not allowed by the security policy is intercepted and prevented. 
+On the one hand the library / architecture described here does not require to centralize the definition of this security, but it's seen as a case; secondly, to ensure compliance with these interface restrictions it is not necessary to require the programmer to use specific methods or properties of the library, to check if the change is allowed or not, nor has to be controlled by any code; simply any attempt to make visible or enabled any interface element supervised not allowed by the security policy is intercepted and prevented. By default, it is only supervised the attempt of making visible or enabled the control, but it can be configured to monitor also the 'deactivation' of that properties, that is, the attempt to make invisible or disabled the control.
+
 
 It is allowed to define restrictions policy not only on the basis of roles but also on the application states, in both !WinForms and Web applications; and to simplify the definition of this policy a form of maintenace is provided, available both at design time and runtime. 
 
@@ -77,6 +78,8 @@ Base component of the Restricted Interface library (RestrictedUI): can restrict 
 
  * *`VerifyChange`* - Checks if the change on the specified property (`TChange`) is valid considering the definition of security, user roles and the current state of the application. If the change is invalid will be undone, this is, set again to `False`.
  Control adapters call this method of the security component in response to the attempt to change the monitored properties.
+
+ * *`SuperviseDeactivation`* - It determines if the restrictions will be applied also in the 'deactivation' of the controls (controlling the attempt of making a control invisible or disabled), not only in the activation.
 
 
 <br/>
@@ -140,7 +143,11 @@ These elements may be applied in positive logic (permissions) or negative (prohi
  * If a control has no associated restriction element (neither positive nor negative) then it will not be monitored, and any role and in any state could activate its `Visible` and `Enabled` properties. 
 
 
-Actually controlled properties in the control need not be exactly '`Visible`' and '`Enabled`' (as shown in `IControlAdapter`). It is only supervised and perhaps prevented (depending on the policy defined) the 'activation' of these properties, namely the attempt to make visible or enable the control. It is not prevented to make invisible or disabled a control.
+Actually controlled properties in the control need not be exactly '`Visible`' and '`Enabled`' (as shown in `IControlAdapter`). 
+
+By default, it is only supervised and perhaps prevented (depending on the policy defined) the 'activation' of the properties, namely the attempt to make visible or enable the control. It is not prevented to make invisible or disabled a control. With the property `SuperviseDeactivation` (in `ControlRestrictedUI` component) it is possible to change that general behaviour and monitor also the 'deactivation' of the controls, allowing or preventing it according to the security definition.
+It is also possible to indicate a list of controls for which the attempt of making it invisible or disabled should or not be supervised, and so it may or not be prevented (independently of the value of that `SuperviseDeactivation` property).
+
 
 
 <br/>
@@ -341,6 +348,8 @@ Group Enabled Buttons= gbCommands.btnEnableEnabled, gbCommands.btnEnableVisible,
 Group Trees= TreeView1, UltraTree1
 
 [Restrictions]
+#Yes=TextBox,$Group Trees
+#No=GroupBox1.CheckBox1
 +123/TextBox,V,2
 +Adm/$Group Trees,E/MenuStrip1.EditarToolStripMenuItem.CortarToolStripMenuItem,V
 +Dtor/GroupBox1.CheckBox1,V
@@ -401,6 +410,10 @@ We have for convenience two ways of displaying the permissions: tabular or text,
 
 <br>
 http://restricted-ui.googlecode.com/svn/wiki/images/English/frmRestrictionsUIDefinition_text.gif
+
+From this text view, it is also posible to indicate controls with an explicit treatment of the 'deactivation' supervision: controls for which the attempt of making it invisible or disabled should or not be supervised (#Yes=... or #No=...), and so it may or not be prevented.
+
+
 
 If we use this form at runtime we can also double click a control to highlight it (it will blink several times). We will also have the possibility to modify (if the object implementing `IHost` interface permits it) the state and the role or roles associated to this component and instance, so that we can test security. For convenience we can reduce this form to offer only these controls:
 
