@@ -17,7 +17,7 @@ Este enfoque es el que se usa actualmente en la empresa en la que trabajo. Aun o
 
 <br/>
 ==Características principales==
-Por un lado la librería / arquitectura que aquí se explica no obliga a centralizar la definición de esta seguridad, pero sí la contempla como un caso más; por otro lado para asegurar el cumplimiento de estas restricciones no es necesario obligar al programador a utilizar métodos ni propiedades específicas de la librería, que verifiquen si el cambio se permite o no, ni tiene que ser controlado por código a añadir; simplemente cualquier intento de hacer visible o habilitar cualquier elemento de interface supervisado que no sea admitido por la política de seguridad es interceptado e impedido. 
+Por un lado la librería / arquitectura que aquí se explica no obliga a centralizar la definición de esta seguridad, pero sí la contempla como un caso más; por otro lado para asegurar el cumplimiento de estas restricciones no es necesario obligar al programador a utilizar métodos ni propiedades específicas de la librería, que verifiquen si el cambio se permite o no, ni tiene que ser controlado por código a añadir; simplemente cualquier intento de hacer visible o habilitar cualquier elemento de interface supervisado que no sea admitido por la política de seguridad es interceptado e impedido. Por defecto sólo se supervisa el intento de hacer visible o habilitar, pero es posible forzar también la supervisión de la 'desactivación' de esas propiedades, esto es, del intento de hacer invisible o desabilitar esos controles.
 
 Se permite definir la política de restricciones no sólo en base a roles sino a estados de la aplicación, tanto en aplicaciones !WinForms como Web; y para simplificar la definición de esta política se ofrece un formulario de mantenimiento, disponible tanto en tiempo de diseño como de ejecución.
 
@@ -59,13 +59,9 @@ Componente base de la librería de Interface Restringida (!RestrictedUI): permit
  * *`VerifyChange`* - Comprueba si el cambio sobre la propiedad indicada (`TChange`) es válido atendiendo a la definición de seguridad, a los roles del usuario y al estado actual de la aplicación. Si el cambio no es válido se deshará, esto es, se establecerá nuevamente a False 
  Los adaptadores de control llaman a este método del componente de seguridad en respuesta al intento de modificación de las propiedades supervisadas. 
 
- * *`RegisterControls`* - Fuerza el registro o actualización de los controles existentes en el formulario o contenedor en donde está incrustado este componente `ControlRestrictedUI`.
-
  * *`ID, InstanceID`* - Identificador del componente y de la instancia concreta. A  partir del `ID` podrá leerse/actualizarse la seguridad desde un archivo, para establecerla a nivel de entorno. Con estos dos atributos el objeto `IHost` podrá indicar el estado y roles que aplican, distinguiendo no sólo por pantalla sino por instancia concreta.
 
  * *`RestrictionsDefinition`* - Configuración de los bloqueos y permisos que se establecerán.
-
- * *`BeforeApplyingRestriction`* - Ocurre justo antes de llegar a permitir o impedir el cambio de la propiedad `Visible` o `Enabled`, para dar la opción de permitir o no el cambio en base a una lógica más compleja 
 
  * *`ConfigFile`* - Obtiene o establece la ruta hacia un fichero de configuración, a utilizar fundamentalmente en tiempo de diseño.
  El fichero de configuración hace posible ofrecer en tiempo de diseño y durante la definición de la seguridad en el formulario `FrmRestrictionsUIDefinition` la relación de roles y estados a utilizar, así como de factorías de adaptadores adicionales, para así 'descubrir' nuevos controles en tiempo de diseño.
@@ -73,6 +69,12 @@ Componente base de la librería de Interface Restringida (!RestrictedUI): permit
 
  * *`ControlsFile`* - Nombre del archivo sobre el que podrá escribirse la relación los controles contenidos en el formulario o control de usuario controlado por este componente.
  Este archivo hace posible ofrecer en tiempo de diseño desde el formulario `FrmRestrictionsUIDefinition` controles que se crearán dinámicamente. Para aplicaciones Web debe utilizarse necesariamente para poder configurar la seguridad en tiempo de diseño con la ayuda de ese formulario. 
+
+ * *`RegisterControls`* - Fuerza el registro o actualización de los controles existentes en el formulario o contenedor en donde está incrustado este componente `ControlRestrictedUI`.
+
+ * *`BeforeApplyingRestriction`* - Ocurre justo antes de llegar a permitir o impedir el cambio de la propiedad `Visible` o `Enabled`, para dar la opción de permitir o no el cambio en base a una lógica más compleja 
+
+ * *`SuperviseDeactivation`* - Establece si la restricciones se deberán aplicar también en la 'desactivación' de los controles, supervisando el intento de ocultarlos o desabilitarlos, y no solo en la 'activación'.
 
 
 <br/>
@@ -137,7 +139,8 @@ Estos elementos podrán ser aplicados en lógica positiva (permisos) o negativa 
  * Si un control no tiene ningún elemento de restricción asociado (ni positivo ni negativo) entonces no será supervisado, y cualquier rol y en cualquier estado podrá activar sus propiedades `Visible` y `Enabled`.
 
 Las propiedades realmente controladas en el control no tienen por qué ser exactamente '`Visible`' y '`Enabled`' (como se indica en `IControlAdapter`)
-Sólo se supervisa y tal vez se impida (según la política definida) la 'activación' de esas propiedades, esto es, el intento de hacer visible o habilitar el control. No se impide el hacer invisible o deshabilitar un control.
+Por defecto sólo se supervisa y tal vez se impida (según la política definida) la 'activación' de esas propiedades, esto es, el intento de hacer visible o habilitar el control. No se impide el ocultar o deshabilitar un control.
+Mediante la propiedad `SuperviseDeactivation` (del componente `ControlRestrictedUI`) es posible modificar ese comportamiento general y monitorizar también la 'desactivación' de los controles, pudiendo por tanto impedirla atendiendo a la definición de la política de seguridad.
 
 
 <br/>
@@ -341,6 +344,8 @@ Group Enabled Buttons= gbCommands.btnEnableEnabled, gbCommands.btnEnableVisible,
 Group Trees= TreeView1, UltraTree1
 
 [Restrictions]
+#Yes=TextBox,$Group Trees
+#No=GroupBox1.CheckBox1
 +123/TextBox,V,2
 +Adm/$Group Trees,E/MenuStrip1.EditarToolStripMenuItem.CortarToolStripMenuItem,V
 +Dtor/GroupBox1.CheckBox1,V
@@ -402,6 +407,11 @@ Podemos leer la configuración de seguridad del componente desde el que hemos la
 Contamos para mayor facilidad con dos formas de mostrar los permisos: tabular o de texto, ambas editables.
 <br>
 http://restricted-ui.googlecode.com/svn/wiki/images/Spanish/frmRestrictionsUIDefinition_text.gif
+
+Desde esta vista de texto es posible indicar la relación de controles para los que se precisa una tratamiento explícito de la monitorización de la 'desactivación': 
+aquellos para los que el intento de ocultar o desabilitar debe ser o no supervisado (#Yes=... or #No=...), y por lo tanto podrá o no ser impedido.
+
+
 
 Si usamos este formulario en tiempo de ejecución podremos también hacer doble click en un control para hacerlo resaltar (parpadeará varias veces) Tendremos también la posibilidad de modificar (si el objeto que implemente la interface `IHost` lo permite) el estado y el rol o roles asociados a este componente e instancia, para así testear la seguridad. Para mayor comodidad podemos reducir este formulario para que sólo ofrezca estos controles:
 
