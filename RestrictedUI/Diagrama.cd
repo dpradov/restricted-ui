@@ -141,12 +141,12 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="RestrictedUI.FrmRestrictionsUIDefinition" Collapsed="true">
-    <Position X="3" Y="7.25" Width="2" />
+    <Position X="2.75" Y="7.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>GwEdyt90Xm6vKJsS+iSrG3qH9/at81ucPC+ypDYhSPA=</HashCode>
       <FileName>FrmRestrictionsUIDefinition.vb</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
+    <Lollipop Position="0.469" />
   </Class>
   <Struct Name="RestrictedUI.HotKey" Collapsed="true">
     <Position X="9.5" Y="6.75" Width="1.5" />

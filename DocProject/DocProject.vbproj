@@ -75,7 +75,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties DocumentationScope="PublicOnly" IsDocProject="true" ProcessComponentTypeName="DocProject.BuildProcess" DocProjectVersion="1.11.0.0" BuildEngineProviderName="Sandcastle" Sandcastle_Version="2.4.10520.1" Sandcastle_PresentationName="Visual Studio 2005" Sandcastle_ProduceHelp1x="True" ExternalSources="" Sandcastle_DocumentationSetName="RestrictedUI" />
+      <UserProperties Sandcastle_DocumentationSetName="RestrictedUI" ExternalSources="" Sandcastle_ProduceHelp1x="True" Sandcastle_PresentationName="Visual Studio 2005" Sandcastle_Version="2.4.10520.1" BuildEngineProviderName="Sandcastle" DocProjectVersion="1.11.0.0" ProcessComponentTypeName="DocProject.BuildProcess" IsDocProject="true" DocumentationScope="PublicOnly" />
     </VisualStudio>
   </ProjectExtensions>
   <ItemGroup>
