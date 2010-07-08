@@ -598,7 +598,7 @@ Partial Class Form1
         '
         'ControlRestrictedUIWinForms1
         '
-        Me.ControlRestrictedUIWinForms1.ConfigFile = "TestWinForms\Security.txt"
+        Me.ControlRestrictedUIWinForms1.ConfigFile = "TestWinForms\SecurityNotInfrag.txt"
         Me.ControlRestrictedUIWinForms1.ControlsFile = "TestWinForms\Controls.txt"
         Me.ControlRestrictedUIWinForms1.ID = "Form1"
         Me.ControlRestrictedUIWinForms1.InstanceID = "00"
