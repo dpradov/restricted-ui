@@ -139,15 +139,16 @@ Partial Class Form2
         Me.UserControl22.Size = New System.Drawing.Size(262, 167)
         Me.UserControl22.TabIndex = 0
         '
-        'ControlSeguridadWinForms1
+        'ControlRestrictedUIWinForms1
         '
-        Me.ControlRestrictedUIWinForms1.ConfigFile = "PruebaWinForms\Seguridad.txt"
+        Me.ControlRestrictedUIWinForms1.ConfigFile = "PruebaWinForms\SecurityNotInfrag.txt"
         Me.ControlRestrictedUIWinForms1.ControlsFile = "PruebaWinForms\Controles.txt"
         Me.ControlRestrictedUIWinForms1.ID = "Form2"
         Me.ControlRestrictedUIWinForms1.InstanceID = "00"
         Me.ControlRestrictedUIWinForms1.ParentControl = Me
         Me.ControlRestrictedUIWinForms1.Paused = False
         Me.ControlRestrictedUIWinForms1.RestrictionsDefinition = New String() {"-0/TabControl1.TabPage4.UserControl22.GroupBox1.RadioButton2,E"}
+        Me.ControlRestrictedUIWinForms1.SuperviseDeactivation = False
         '
         'UserControl31
         '
@@ -174,6 +175,7 @@ Partial Class Form2
         Me.btnChangeState_N.TabIndex = 86
         Me.btnChangeState_N.Text = "Random State N times"
         Me.btnChangeState_N.UseVisualStyleBackColor = True
+        '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
