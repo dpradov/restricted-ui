@@ -44,23 +44,99 @@ Public Class AdapterWinForms_TreeNode
     Protected _parent As Object
     Private _identification As String
 
+    Protected _security As ControlRestrictedUI
+    Protected _TV As TreeView_NodesSecurity = Nothing
+
+    Private ReadOnly Property TV() As TreeView_NodesSecurity
+        Get
+            If _TV Is Nothing OrElse Not BelongsToTree(_control, _TV) Then
+                _TV = GetTreeView_NodesSecurity(_control)
+            End If
+            Return _TV
+        End Get
+    End Property
+
+
+    Protected Friend Class TreeView_NodesSecurity
+        Public ReadOnly TreeView As TreeView
+        Public ReadOnly Childs As New Dictionary(Of Object, ArrayList)
+        Public ReadOnly NodesSupervised As New List(Of TreeNode)
+        Protected Friend _HiddenControlsAdapter As New List(Of AdapterWinForms_TreeNode)
+
+        Public Function HiddenNodesAdapter(Optional ByVal padre As Object = Nothing) As IList(Of AdapterWinForms_TreeNode)
+            If padre Is Nothing Then
+                Return _HiddenControlsAdapter
+            Else
+                Dim list As New List(Of AdapterWinForms_TreeNode)
+                For Each adapt As AdapterWinForms_TreeNode In _HiddenControlsAdapter
+                    If adapt._parent Is padre Then
+                        list.Add(adapt)
+                    End If
+                Next
+                Return list
+            End If
+        End Function
+
+        Sub New(ByVal TreeView As TreeView)
+            Me.TreeView = TreeView
+        End Sub
+
+    End Class
+
+
 #Region "Shared"
-    Protected Shared _security As ControlRestrictedUI
-    Protected Shared _Childs As New Dictionary(Of Object, ArrayList)
 
-    Protected Shared _hiddenControlsAdapter As New List(Of AdapterWinForms_TreeNode)
+    Private Shared _ListTV As New List(Of WeakReference)
 
-    Protected Friend Shared Function hiddenNodesAdapter(Optional ByVal padre As Object = Nothing) As IList(Of AdapterWinForms_TreeNode)
-        Dim list As New List(Of AdapterWinForms_TreeNode)
-        For Each adapt As AdapterWinForms_TreeNode In _hiddenControlsAdapter
-            If padre Is Nothing OrElse adapt._parent Is padre Then
-                list.Add(adapt)
+    Protected Friend Shared Function GetTreeView_NodesSecurity(ByVal TreeView As TreeView) As TreeView_NodesSecurity
+        For Each wr As WeakReference In _ListTV
+            If wr.IsAlive AndAlso CType(wr.Target, TreeView_NodesSecurity).TreeView Is TreeView Then
+                Return CType(wr.Target, TreeView_NodesSecurity)
             End If
         Next
-        Return list
+
+        Dim TV = New TreeView_NodesSecurity(TreeView)
+        _ListTV.Add(New WeakReference(TV))
+        Return TV
     End Function
 
-    Private Shared _nodesSupervised As New List(Of TreeNode)
+    Protected Friend Shared Function GetTreeView_NodesSecurity(ByVal TreeNode As TreeNode) As TreeView_NodesSecurity
+        If TreeNode.TreeView IsNot Nothing Then
+            Return GetTreeView_NodesSecurity(TreeNode.TreeView)
+
+        Else
+            For Each wr As WeakReference In _ListTV
+                If wr.IsAlive Then
+                    Dim TV = CType(wr.Target, TreeView_NodesSecurity)
+                    If BelongsToTree(TreeNode, TV) Then
+                        Return TV
+                    End If
+                End If
+            Next
+            Return Nothing
+        End If
+    End Function
+
+    Protected Shared Function BelongsToTree(ByVal node As TreeNode, ByVal TV As TreeView_NodesSecurity) As Boolean
+        If node.TreeView Is TV.TreeView Then Return True
+
+        Dim belongs = False
+        Dim auxNode As TreeNode
+
+        For Each adapter In TV.HiddenNodesAdapter
+            auxNode = node
+            Do
+                If auxNode Is adapter._control Then
+                    belongs = True
+                    Exit For
+                End If
+                auxNode = auxNode.Parent
+            Loop Until auxNode Is Nothing
+        Next
+
+        Return belongs
+    End Function
+
 #End Region
 
     Sub New(ByVal control As TreeNode)
@@ -91,15 +167,18 @@ Public Class AdapterWinForms_TreeNode
     End Sub
 
     Public Sub SuperviseVisible(ByVal seguridad As ControlRestrictedUI) Implements IControlAdapter.SuperviseVisible
+        If TV Is Nothing Then Exit Sub ' It will update _TV
+
         _security = seguridad
-        If Not _nodesSupervised.Contains(_control) Then
-            _nodesSupervised.Add(_control)
+        If Not _TV.NodesSupervised.Contains(_control) Then
+            _TV.NodesSupervised.Add(_control)
         End If
         SaveSiblings()
     End Sub
 
     Sub FinalizeSupervision() Implements IControlAdapter.FinalizeSupervision
-        _nodesSupervised.Remove(_control)        
+        If TV Is Nothing Then Exit Sub ' It will update _TV
+        _TV.NodesSupervised.Remove(_control)
     End Sub
 
     ''' <remarks>
@@ -113,7 +192,9 @@ Public Class AdapterWinForms_TreeNode
         End Get
         Set(ByVal value As Boolean)
             If value <> _visible Then
-                Dim supervised As Boolean = (_security IsNot Nothing AndAlso _nodesSupervised.Contains(_control))
+                If TV Is Nothing Then Exit Property ' It will update _TV
+
+                Dim supervised As Boolean = (_security IsNot Nothing AndAlso _TV.NodesSupervised.Contains(_control))
                 Try
                     If Not supervised OrElse _
                        _security.ChangeAllowed(Me, ControlRestrictedUI.TChange.Visible, value) Then
@@ -123,7 +204,7 @@ Public Class AdapterWinForms_TreeNode
                             _identification = Identification
                             _visible = False
                             _control.Remove()
-                            _hiddenControlsAdapter.Add(Me)
+                            _TV._HiddenControlsAdapter.Add(Me)
                         Else
                             Dim nodes As TreeNodeCollection
                             If TypeOf _parent Is TreeView Then
@@ -131,7 +212,7 @@ Public Class AdapterWinForms_TreeNode
                             Else
                                 nodes = DirectCast(_parent, TreeNode).Nodes
                             End If
-                            Dim siblings As ArrayList = _Childs.Item(_parent)
+                            Dim siblings As ArrayList = _TV.Childs.Item(_parent)
                             Dim indexMe As Integer
                             Dim position As Integer = 0
                             Dim lastPrevNode As TreeNode = Nothing
@@ -148,7 +229,7 @@ Public Class AdapterWinForms_TreeNode
                             End If
                             nodes.Insert(position, _control)
                             _visible = True
-                            _hiddenControlsAdapter.Remove(Me)
+                            _TV._HiddenControlsAdapter.Remove(Me)
                         End If
                     End If
 
@@ -159,7 +240,9 @@ Public Class AdapterWinForms_TreeNode
     End Property
 
     Public Sub SaveSiblings()
-        If Not _Childs.ContainsKey(_parent) Then
+        If TV Is Nothing Then Exit Sub ' It will update _TV
+
+        If Not _TV.Childs.ContainsKey(_parent) Then
 
             Dim nodes As TreeNodeCollection
             If _control.Parent IsNot Nothing Then
@@ -172,7 +255,7 @@ Public Class AdapterWinForms_TreeNode
             For Each node As TreeNode In nodes
                 siblings.Add(node)
             Next
-            _Childs.Add(_parent, siblings)
+            _TV.Childs.Add(_parent, siblings)
         End If
     End Sub
 
@@ -207,9 +290,11 @@ Public Class AdapterWinForms_TreeNode
             If _control.TreeView IsNot Nothing Then
                 cad = SecurityEnvironment.GetAdapter(_control.TreeView).Identification(, seguridad) + "." + cad
             Else
+                If TV Is Nothing Then Return cad
+
                 ' This control has been removed from TreeView by its adapter, to make it invisible
                 ' We will locate the parent node adapter
-                For Each adapt As AdapterWinForms_TreeNode In AdapterWinForms_TreeNode.hiddenNodesAdapter(Nothing)
+                For Each adapt As AdapterWinForms_TreeNode In _TV.HiddenNodesAdapter(Nothing)
                     If adapt._control Is control Then
                         cad = adapt.Identification + "." + cad.Substring(cad.IndexOf("."c) + 1)
                         Exit For
@@ -232,11 +317,13 @@ Public Class AdapterWinForms_TreeNode
             children.Add(adapt)
         Next
 
-        ' We must also add the adapters of nodes that may be hidden.
-        ' As we had to remove them from the TreeView will not be found with the previous loop
-        For Each adapt In AdapterWinForms_TreeNode.hiddenNodesAdapter(_control)
-            children.Add(adapt)
-        Next
+        If TV IsNot Nothing Then     ' It will update _TV
+            ' We must also add the adapters of nodes that may be hidden.
+            ' As we had to remove them from the TreeView will not be found with the previous loop
+            For Each adapt In _TV.HiddenNodesAdapter(_control)
+                children.Add(adapt)
+            Next
+        End If
 
         Return children
     End Function
@@ -258,9 +345,11 @@ Public Class AdapterWinForms_TreeNode
                     End If
                 Next
                 If control Is Nothing Then
+                    If TV Is Nothing Then Return New NullControlAdapter
+
                     ' We check whether that searched control is one that is hidden
                     ' If so we return directly the existing adapter
-                    For Each adapt As AdapterWinForms_TreeNode In AdapterWinForms_TreeNode.hiddenNodesAdapter(parent)
+                    For Each adapt As AdapterWinForms_TreeNode In _TV.HiddenNodesAdapter(parent)
                         If AbsoluteIdentifier.StartsWith(adapt.Identification.ToUpper) Then
                             If AbsoluteIdentifier = adapt.Identification.ToUpper Then
                                 Return adapt    ' It is directly the searched element
