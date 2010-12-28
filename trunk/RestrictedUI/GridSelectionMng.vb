@@ -37,6 +37,8 @@
 ''' </summary>
 ''' <remarks></remarks>
 Public Class GridSelectionMng
+    Implements IDisposable
+
     Private _cGrid As DataGridView
     Private _cbSelectAll As CheckBox
     Private _colIndex As Integer
@@ -59,9 +61,41 @@ Public Class GridSelectionMng
         End If
     End Sub
 
-    Protected Overrides Sub Finalize()
-        MyBase.Finalize()
+#Region " IDisposable Support "
 
+    ' Keep track of when the object is disposed.
+    Protected disposed As Boolean = False
+
+    ' This method disposes the base object's resources.
+    Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+        Try
+            If Not Me.disposed Then
+                If disposing Then
+                    CleanUp()
+                End If
+                ' Code to dispose the unmanaged resources held by the class
+            End If
+            Me.disposed = True
+        Finally
+
+        End Try
+    End Sub
+
+
+    ' Do not change or add Overridable to these methods.
+    ' Put cleanup code in Dispose(ByVal disposing As Boolean).
+    Public Sub Dispose() Implements IDisposable.Dispose
+        Dispose(True)
+        GC.SuppressFinalize(Me)
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        Dispose(False)
+        MyBase.Finalize()
+    End Sub
+#End Region
+
+    Private Sub CleanUp()
         If _cGrid IsNot Nothing Then
             RemoveHandler _cGrid.CellClick, AddressOf cGrid_CellClick
             RemoveHandler _cGrid.SelectionChanged, AddressOf cGrid_SelectionChanged
