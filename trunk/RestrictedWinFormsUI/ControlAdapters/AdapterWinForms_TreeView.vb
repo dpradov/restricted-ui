@@ -55,7 +55,7 @@ Public Class AdapterWinForms_TreeView
 
         ' We must also add adapters of nodes that may be hidden.
         ' As we had to remove them from the TreeView will not be found with the previous loop
-        For Each adapt In AdapterWinForms_TreeNode.hiddenNodesAdapter(_control)
+        For Each adapt In AdapterWinForms_TreeNode.GetTreeView_NodesSecurity(CType(_control, TreeView)).HiddenNodesAdapter(_control)
             children.Add(adapt)
         Next
 
@@ -86,7 +86,7 @@ Public Class AdapterWinForms_TreeView
                 If control Is Nothing Then
                     ' We check whether that control is one that is hidden
                     ' If so we return directly the existing adapter
-                    For Each adapt As AdapterWinForms_TreeNode In AdapterWinForms_TreeNode.hiddenNodesAdapter(parent)
+                    For Each adapt As AdapterWinForms_TreeNode In AdapterWinForms_TreeNode.GetTreeView_NodesSecurity(CType(_control, TreeView)).HiddenNodesAdapter(parent)
                         If absoluteIdentifier.StartsWith(adapt.Identification.ToUpper) Then
                             If absoluteIdentifier = adapt.Identification.ToUpper Then
                                 Return adapt    ' It is directly the searched element
