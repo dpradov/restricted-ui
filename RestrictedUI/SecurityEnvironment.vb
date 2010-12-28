@@ -167,7 +167,11 @@ Public Class SecurityEnvironment
             Return _host
         End Get
         Set(ByVal value As IHost)
-            If value IsNot Nothing Then
+            If value IsNot Nothing And value IsNot _host Then
+                If _host IsNot Nothing Then
+                    RemoveHandler _host.StateChanged, AddressOf OnStateChanged
+                    RemoveHandler _host.RolesChanged, AddressOf OnRolesChanged
+                End If
                 _host = value
                 AddHandler _host.StateChanged, AddressOf OnStateChanged
                 AddHandler _host.RolesChanged, AddressOf OnRolesChanged

@@ -342,6 +342,11 @@ Friend Class FrmRestrictionsUIDefinition
             RemoveHandler _host.RolesChanged, AddressOf OnRolesChanged
             RemoveHandler _securityComponent.BeforeApplyingRestriction, AddressOf OnBeforeApplyingRestriction
         End If
+
+        _selecControlsMng.Dispose()
+        _selecRolesMng.Dispose()
+        _selecStatesMng.Dispose()
+        _selecRestrictionsMng.Dispose()
     End Sub
 
 
